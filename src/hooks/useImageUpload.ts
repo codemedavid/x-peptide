@@ -15,10 +15,19 @@ export const useImageUpload = (folder: string = 'menu-images') => {
 
       console.log('🚀 Starting upload process...', { fileName: file.name, fileSize: file.size, fileType: file.type });
 
-      // Validate file type
-      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-      if (!allowedTypes.includes(file.type)) {
+      // Validate file type - be more lenient for mobile devices
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/jpg'];
+      const fileExtension = file.name.split('.').pop()?.toLowerCase();
+      const validExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+      
+      // Check both MIME type and file extension (mobile browsers sometimes don't set MIME type correctly)
+      if (!allowedTypes.includes(file.type) && !validExtensions.includes(fileExtension || '')) {
         throw new Error('Please upload a valid image file (JPEG, PNG, WebP, or GIF)');
+      }
+      
+      // Additional validation: ensure file is not a placeholder
+      if (file.size < 100) {
+        throw new Error('The selected file appears to be invalid or empty. Please select a valid image.');
       }
 
       // Validate file size (5MB limit)

@@ -45,12 +45,70 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   }, [currentImage]); // Only depend on currentImage to avoid loops
 
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
+    const files = event.target.files;
+    
+    // Check if files array exists and has items
+    if (!files || files.length === 0) {
+      console.log('⚠️ No file selected');
+      // Reset input to allow selecting the same file again
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+      return;
+    }
 
-    // Validate file
+    const file = files[0];
+    
+    // Log file details for debugging
+    console.log('📁 File selected:', {
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      lastModified: file.lastModified,
+      isFile: file instanceof File,
+      isBlob: file instanceof Blob
+    });
+
+    // Check if file is actually a File object and has valid data
+    if (!(file instanceof File)) {
+      alert('❌ Invalid file selected. Please try again.');
+      // Reset input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+      return;
+    }
+
+    // Check if file has content (size > 0)
+    if (file.size === 0) {
+      alert('❌ The selected file is empty. Please select a valid image.');
+      // Reset input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+      return;
+    }
+
+    // Additional check: verify file name is not a placeholder
+    // Some mobile browsers might set placeholder names like "image.jpg" or "take photo"
+    const fileName = file.name.toLowerCase();
+    const placeholderNames = ['image.jpg', 'image.png', 'image.jpeg', 'take photo', 'camera', 'photo'];
+    if (placeholderNames.some(placeholder => fileName.includes(placeholder)) && file.size < 100) {
+      alert('❌ Please select an actual image file. The selected file appears to be a placeholder.');
+      // Reset input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+      return;
+    }
+
+    // Validate file type - be more lenient for mobile devices
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-    if (!allowedTypes.includes(file.type)) {
+    // Some mobile browsers may not set the correct MIME type, so also check file extension
+    const fileExtension = file.name.split('.').pop()?.toLowerCase();
+    const validExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+    
+    if (!allowedTypes.includes(file.type) && !validExtensions.includes(fileExtension || '')) {
       alert('❌ Please upload a valid image file (JPEG, PNG, WebP, or GIF)');
       return;
     }
@@ -159,6 +217,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         onChange={handleFileSelect}
         className="hidden"
         disabled={uploading}
+        capture="environment"
       />
 
       {!displayImage && (

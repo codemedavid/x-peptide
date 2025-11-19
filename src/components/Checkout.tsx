@@ -100,7 +100,16 @@ const Checkout: React.FC<CheckoutProps> = ({ cartItems, totalPrice, onBack }) =>
 
       if (orderError) {
         console.error('❌ Error saving order:', orderError);
-        alert(`Failed to save order: ${orderError.message}. Please try again.`);
+        
+        // Provide helpful error message if table doesn't exist
+        let errorMessage = orderError.message;
+        if (orderError.message?.includes('Could not find the table') || 
+            orderError.message?.includes('relation "public.orders" does not exist') ||
+            orderError.message?.includes('schema cache')) {
+          errorMessage = `The orders table doesn't exist in the database. Please run the migration: supabase/migrations/20250117000000_ensure_orders_table.sql in your Supabase SQL Editor.`;
+        }
+        
+        alert(`Failed to save order: ${errorMessage}\n\nPlease contact support if this issue persists.`);
         return;
       }
 
