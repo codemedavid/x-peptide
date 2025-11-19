@@ -16,13 +16,40 @@ export const useImageUpload = (folder: string = 'menu-images') => {
       console.log('🚀 Starting upload process...', { fileName: file.name, fileSize: file.size, fileType: file.type });
 
       // Validate file type - be more lenient for mobile devices
-      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/jpg'];
+      // Gallery files on mobile often have empty MIME types, so we rely more on file extension
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif', ''];
       const fileExtension = file.name.split('.').pop()?.toLowerCase();
       const validExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
       
-      // Check both MIME type and file extension (mobile browsers sometimes don't set MIME type correctly)
-      if (!allowedTypes.includes(file.type) && !validExtensions.includes(fileExtension || '')) {
-        throw new Error('Please upload a valid image file (JPEG, PNG, WebP, or GIF)');
+      // Check if file extension is valid (primary check for gallery files)
+      const hasValidExtension = fileExtension && validExtensions.includes(fileExtension);
+      
+      // Check MIME type (may be empty for gallery files on mobile)
+      const hasValidMimeType = file.type && allowedTypes.includes(file.type.toLowerCase());
+      
+      // Allow if either extension OR MIME type is valid (gallery files often have empty MIME type)
+      if (!hasValidExtension && !hasValidMimeType) {
+        console.error('❌ Invalid file type in upload hook:', { 
+          type: file.type, 
+          extension: fileExtension, 
+          name: file.name 
+        });
+        throw new Error(`Please upload a valid image file (JPEG, PNG, WebP, or GIF). File type: ${file.type || 'unknown'}, Extension: ${fileExtension || 'none'}`);
+      }
+      
+      // If MIME type is empty but extension is valid, set a default content type for upload
+      let contentType = file.type;
+      if (!contentType && hasValidExtension) {
+        // Map extension to MIME type
+        const mimeTypeMap: Record<string, string> = {
+          'jpg': 'image/jpeg',
+          'jpeg': 'image/jpeg',
+          'png': 'image/png',
+          'webp': 'image/webp',
+          'gif': 'image/gif'
+        };
+        contentType = mimeTypeMap[fileExtension] || 'image/jpeg';
+        console.log(`📝 Setting content type for gallery file: ${contentType} (was empty)`);
       }
       
       // Additional validation: ensure file is not a placeholder
@@ -97,12 +124,13 @@ export const useImageUpload = (folder: string = 'menu-images') => {
       });
 
       // Now upload the file
+      // Use the determined content type (may have been set from extension if MIME type was empty)
       const uploadPromise = supabase.storage
         .from(folder)
         .upload(fileName, file, {
           cacheControl: '3600',
           upsert: false,
-          contentType: file.type
+          contentType: contentType || 'image/jpeg' // Fallback to jpeg if still empty
         });
 
       const uploadResult = await Promise.race([

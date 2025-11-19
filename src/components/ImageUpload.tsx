@@ -107,14 +107,35 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     }
 
     // Validate file type - be more lenient for mobile devices
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-    // Some mobile browsers may not set the correct MIME type, so also check file extension
+    // Gallery files on mobile often have empty MIME types, so we rely more on file extension
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif', ''];
     const fileExtension = file.name.split('.').pop()?.toLowerCase();
     const validExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
     
-    if (!allowedTypes.includes(file.type) && !validExtensions.includes(fileExtension || '')) {
-      alert('❌ Please upload a valid image file (JPEG, PNG, WebP, or GIF)');
+    // Check if file extension is valid (primary check for gallery files)
+    const hasValidExtension = fileExtension && validExtensions.includes(fileExtension);
+    
+    // Check MIME type (may be empty for gallery files on mobile)
+    const hasValidMimeType = file.type && allowedTypes.includes(file.type.toLowerCase());
+    
+    // Allow if either extension OR MIME type is valid (gallery files often have empty MIME type)
+    if (!hasValidExtension && !hasValidMimeType) {
+      console.error('❌ Invalid file type:', { 
+        type: file.type, 
+        extension: fileExtension, 
+        name: file.name 
+      });
+      alert(`❌ Please upload a valid image file (JPEG, PNG, WebP, or GIF).\n\nFile type: ${file.type || 'unknown'}\nExtension: ${fileExtension || 'none'}`);
+      // Reset input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
       return;
+    }
+    
+    // If MIME type is empty but extension is valid, log it for debugging
+    if (!file.type && hasValidExtension) {
+      console.log('⚠️ Gallery file with empty MIME type but valid extension:', fileExtension);
     }
 
     const maxSize = 5 * 1024 * 1024; // 5MB
@@ -126,7 +147,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     try {
       // Upload to Supabase Storage
       console.log('🚀 Starting image upload...');
-      console.log('📁 File details:', { name: file.name, size: file.size, type: file.type });
+      console.log('📁 File details:', { 
+        name: file.name, 
+        size: file.size, 
+        type: file.type || 'empty (gallery file)',
+        extension: file.name.split('.').pop()?.toLowerCase()
+      });
       
       const imageUrl = await uploadImage(file);
       console.log('✅ Upload complete, received image URL:', imageUrl);
@@ -162,14 +188,16 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         userMessage += '\n\n💡 This might mean the storage bucket doesn\'t exist. Check your Supabase Storage settings.';
       } else if (errorMessage.includes('row-level security') || errorMessage.includes('policy')) {
         userMessage += '\n\n💡 Solution: Run CREATE_STORAGE_BUCKET.sql to set up storage policies.';
+      } else if (errorMessage.includes('Invalid file type') || errorMessage.includes('valid image file')) {
+        userMessage += '\n\n💡 Tip: Make sure you\'re selecting an actual image file from your gallery, not a placeholder.';
       }
       
       alert(userMessage);
-    }
-
-    // Reset file input
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+    } finally {
+      // Reset file input after upload attempt (success or failure) to allow selecting the same file again
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     }
   };
 
@@ -217,7 +245,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/jpeg,image/png,image/webp,image/gif"
+        accept="image/jpeg,image/jpg,image/png,image/webp,image/gif,image/*"
         onChange={handleFileSelect}
         className="hidden"
         disabled={uploading}
