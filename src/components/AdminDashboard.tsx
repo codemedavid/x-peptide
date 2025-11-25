@@ -363,45 +363,45 @@ const AdminDashboard: React.FC = () => {
   // Login Screen
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 flex items-center justify-center px-4">
-        <div className="bg-white/90 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-2xl p-6 md:p-10 w-full max-w-md border-2 border-blue-200">
-          <div className="text-center mb-6 md:mb-8">
-            <div className="relative mx-auto w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 shadow-xl overflow-hidden border-2 border-white">
+      <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white flex items-center justify-center px-4">
+        <div className="bg-white rounded-lg md:rounded-xl shadow-lg p-4 md:p-6 w-full max-w-md border border-gold-300/30">
+          <div className="text-center mb-4 md:mb-6">
+            <div className="relative mx-auto w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-black to-gray-900 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-4 shadow-lg overflow-hidden border-2 border-gold-500/30">
               <img 
                 src="/logo.jpg" 
                 alt="HP GLOW" 
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                <Lock className="h-8 w-8 md:h-10 md:w-10 text-white" />
+              <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                <Lock className="h-6 w-6 md:h-8 md:w-8 text-gold-500" />
               </div>
             </div>
-            <h1 className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">Admin Access</h1>
-            <p className="text-sm md:text-base text-gray-600 flex items-center justify-center gap-2">
+            <h1 className="text-xl md:text-2xl font-bold mb-1.5 bg-gradient-to-r from-black via-gray-900 to-black bg-clip-text text-transparent">Admin Access</h1>
+            <p className="text-xs md:text-sm text-gray-600 flex items-center justify-center gap-1.5">
               Enter password to continue
-              <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-blue-500" />
+              <Sparkles className="w-3 h-3 text-gold-500" />
             </p>
           </div>
           
           <form onSubmit={handleLogin}>
-            <div className="mb-4 md:mb-6">
-              <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2">Password</label>
+            <div className="mb-3 md:mb-4">
+              <label className="block text-xs font-semibold text-gray-700 mb-1.5">Password</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="input-field text-sm md:text-base"
+                className="input-field text-sm"
                 placeholder="Enter admin password"
                 required
               />
               {loginError && (
-                <p className="text-red-500 text-xs md:text-sm mt-2 flex items-center gap-1">
+                <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
                   ❌ {loginError}
                 </p>
               )}
             </div>
             
-            <button type="submit" className="w-full bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 hover:from-blue-700 hover:via-blue-800 hover:to-blue-900 text-white py-2.5 md:py-3 rounded-xl font-bold text-sm md:text-base shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
+            <button type="submit" className="w-full bg-gradient-to-r from-black to-gray-900 hover:from-gray-900 hover:to-black text-white py-2 rounded-lg font-bold text-sm shadow-md hover:shadow-lg hover:shadow-gold-glow border border-gold-500/20 transition-all">
               Access Dashboard ✨
             </button>
           </form>
@@ -412,9 +412,9 @@ const AdminDashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 flex items-center justify-center px-4">
+      <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white flex items-center justify-center px-4">
         <div className="text-center">
-          <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-blue-200 border-t-teal-600 rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-gray-200 border-t-gold-600 rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-sm md:text-base text-gray-600 font-medium">Loading... ✨</p>
         </div>
       </div>
@@ -426,33 +426,33 @@ const AdminDashboard: React.FC = () => {
     return (
       <>
         {variationManagerModal}
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-        <div className="bg-white/90 backdrop-blur-sm shadow-lg border-b-2 border-blue-100">
-          <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-            <div className="flex items-center justify-between h-14 md:h-16 gap-2">
-              <div className="flex items-center space-x-2 md:space-x-4">
+        <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white">
+        <div className="bg-white shadow-md border-b border-gold-300/30">
+          <div className="max-w-6xl mx-auto px-3 sm:px-4">
+            <div className="flex items-center justify-between h-12 md:h-14 gap-2">
+              <div className="flex items-center space-x-2">
                 <button
                   onClick={handleCancel}
-                  className="text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1 md:gap-2 group"
+                  className="text-gray-700 hover:text-gold-600 transition-colors flex items-center gap-1 group"
                 >
-                  <ArrowLeft className="h-4 w-4 md:h-5 md:w-5 group-hover:-translate-x-1 transition-transform" />
-                  <span className="text-sm md:text-base">Back</span>
+                  <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+                  <span className="text-xs md:text-sm">Back</span>
                 </button>
-                <h1 className="text-base md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-teal-600 to-emerald-600 bg-clip-text text-transparent">
+                <h1 className="text-sm md:text-base font-bold bg-gradient-to-r from-black to-gray-900 bg-clip-text text-transparent">
                   {currentView === 'add' ? '✨ Add New' : '✏️ Edit Product'}
                 </h1>
               </div>
-              <div className="flex space-x-2 md:space-x-3">
-                <button onClick={handleCancel} className="px-2 md:px-4 py-1.5 md:py-2 border-2 border-gray-300 hover:border-gray-400 rounded-lg md:rounded-xl hover:bg-gray-50 transition-all flex items-center gap-1 md:gap-2 text-xs md:text-sm">
-                  <X className="h-3 w-3 md:h-4 md:w-4" />
+              <div className="flex space-x-1.5">
+                <button onClick={handleCancel} className="px-2 py-1 border border-gray-300 hover:border-gray-400 rounded-md hover:bg-gray-50 transition-all flex items-center gap-1 text-xs">
+                  <X className="h-3 w-3" />
                   <span className="hidden sm:inline">Cancel</span>
                 </button>
                 <button 
                   onClick={handleSaveProduct} 
                   disabled={isProcessing}
-                  className="bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white px-2 md:px-4 py-1.5 md:py-2 rounded-lg md:rounded-xl transition-all flex items-center gap-1 md:gap-2 shadow-md hover:shadow-lg transform hover:scale-105 disabled:opacity-50 text-xs md:text-sm"
+                  className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-black px-2 md:px-3 py-1 rounded-md transition-all flex items-center gap-1 shadow-sm hover:shadow disabled:opacity-50 text-xs"
                 >
-                  <Save className="h-3 w-3 md:h-4 md:w-4" />
+                  <Save className="h-3 w-3" />
                   {isProcessing ? 'Saving...' : 'Save'}
                 </button>
               </div>
@@ -460,43 +460,43 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="max-w-4xl mx-auto px-3 sm:px-4 py-4 md:py-8">
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-xl p-4 md:p-6 lg:p-8 space-y-4 md:space-y-6 border-2 border-blue-100">
+        <div className="max-w-5xl mx-auto px-3 sm:px-4 py-3 md:py-4">
+          <div className="bg-white rounded-lg md:rounded-xl shadow-lg p-3 md:p-4 lg:p-5 space-y-3 md:space-y-4 border border-gold-300/30">
             {/* Basic Information */}
             <div>
-              <h3 className="text-base md:text-lg font-bold text-gray-900 mb-3 md:mb-4 flex items-center gap-2">
-                <span className="text-xl md:text-2xl">📝</span>
+              <h3 className="text-sm md:text-base font-bold text-gray-900 mb-2 md:mb-3 flex items-center gap-1.5">
+                <span className="text-base md:text-lg">📝</span>
                 Basic Information
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
                 <div className="md:col-span-2">
-                  <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-1.5 md:mb-2">Product Name *</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Product Name *</label>
                   <input
                     type="text"
                     value={formData.name || ''}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="input-field text-sm md:text-base"
+                    className="input-field text-sm"
                     placeholder="e.g., BPC-157 5mg"
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-1.5 md:mb-2">Description *</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Description *</label>
                   <textarea
                     value={formData.description || ''}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="input-field text-sm md:text-base"
+                    className="input-field text-sm"
                     placeholder="Detailed product description..."
                     rows={3}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-1.5 md:mb-2">Category *</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Category *</label>
                   <select
                     value={formData.category || ''}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="input-field text-sm md:text-base"
+                    className="input-field text-sm"
                   >
                     {categories.map(cat => (
                       <option key={cat.id} value={cat.id}>{cat.name}</option>
@@ -505,13 +505,13 @@ const AdminDashboard: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-1.5 md:mb-2">Base Price (₱) *</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Base Price (₱) *</label>
                   <input
                     type="number"
                     step="1"
                     value={formData.base_price || ''}
                     onChange={(e) => setFormData({ ...formData, base_price: Number(e.target.value) })}
-                    className="input-field text-sm md:text-base"
+                    className="input-field text-sm"
                     placeholder="0"
                   />
                   {editingProduct && editingProduct.variations && editingProduct.variations.length > 0 && (
@@ -526,63 +526,63 @@ const AdminDashboard: React.FC = () => {
 
             {/* Scientific Details */}
             <div>
-              <h3 className="text-base md:text-lg font-bold text-gray-900 mb-3 md:mb-4 flex items-center gap-2">
-                <span className="text-xl md:text-2xl">🧪</span>
+              <h3 className="text-sm md:text-base font-bold text-gray-900 mb-2 md:mb-3 flex items-center gap-1.5">
+                <span className="text-base md:text-lg">🧪</span>
                 Scientific Details
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
                 <div>
-                  <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-1.5 md:mb-2">Purity (%)</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Purity (%)</label>
                   <input
                     type="number"
                     step="0.1"
                     value={formData.purity_percentage || ''}
                     onChange={(e) => setFormData({ ...formData, purity_percentage: Number(e.target.value) })}
-                    className="input-field text-sm md:text-base"
+                    className="input-field text-sm"
                     placeholder="99.0"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-1.5 md:mb-2">Molecular Weight</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Molecular Weight</label>
                   <input
                     type="text"
                     value={formData.molecular_weight || ''}
                     onChange={(e) => setFormData({ ...formData, molecular_weight: e.target.value })}
-                    className="input-field text-sm md:text-base"
+                    className="input-field text-sm"
                     placeholder="e.g., 1419.55 g/mol"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-1.5 md:mb-2">CAS Number</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">CAS Number</label>
                   <input
                     type="text"
                     value={formData.cas_number || ''}
                     onChange={(e) => setFormData({ ...formData, cas_number: e.target.value })}
-                    className="input-field text-sm md:text-base"
+                    className="input-field text-sm"
                     placeholder="e.g., 137525-51-0"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-1.5 md:mb-2">Storage Conditions</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Storage Conditions</label>
                   <input
                     type="text"
                     value={formData.storage_conditions || ''}
                     onChange={(e) => setFormData({ ...formData, storage_conditions: e.target.value })}
-                    className="input-field text-sm md:text-base"
+                    className="input-field text-sm"
                     placeholder="Store at -20°C"
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-1.5 md:mb-2">Sequence</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Sequence</label>
                   <input
                     type="text"
                     value={formData.sequence || ''}
                     onChange={(e) => setFormData({ ...formData, sequence: e.target.value })}
-                    className="input-field text-sm md:text-base"
+                    className="input-field text-sm"
                     placeholder="e.g., GEPPPGKPADDAGLV"
                   />
                 </div>
@@ -590,14 +590,14 @@ const AdminDashboard: React.FC = () => {
             </div>
 
             {/* Complete Set Inclusions */}
-            <div className="bg-gradient-to-r from-teal-50 to-emerald-50 border-2 border-blue-200 rounded-xl p-4 md:p-6">
-              <h3 className="text-base md:text-lg font-bold text-gray-900 mb-3 md:mb-4 flex items-center gap-2">
-                <span className="text-xl md:text-2xl">📦</span>
+            <div className="bg-gradient-to-r from-gold-50 to-gray-50 border border-gold-300/30 rounded-lg p-3 md:p-4">
+              <h3 className="text-sm md:text-base font-bold text-gray-900 mb-2 md:mb-3 flex items-center gap-1.5">
+                <span className="text-base md:text-lg">📦</span>
                 Complete Set Inclusions
                 <span className="text-xs font-normal text-gray-600">(Optional)</span>
               </h3>
               <div>
-                <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-1.5 md:mb-2">
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
                   What's included in this set? (One item per line)
                 </label>
                 <textarea
@@ -606,12 +606,12 @@ const AdminDashboard: React.FC = () => {
                     const items = e.target.value.split('\n').filter(item => item.trim() !== '');
                     setFormData({ ...formData, inclusions: items.length > 0 ? items : null });
                   }}
-                  className="input-field text-sm md:text-base min-h-[120px]"
+                  className="input-field text-sm min-h-[80px]"
                   placeholder="Example:&#10;1 vial of Tirzepatide 20mg&#10;1 pack of syringes (10pcs)&#10;1 pack of alcohol swabs (10pcs)&#10;Bacteriostatic water 5ml&#10;Storage instructions card&#10;Dosage guide"
-                  rows={6}
+                  rows={4}
                 />
                 <p className="text-xs text-gray-500 mt-2 flex items-start gap-1.5">
-                  <span className="text-blue-600 font-bold">💡</span>
+                  <span className="text-gold-600 font-bold">💡</span>
                   <span>Enter each item on a new line. These will be displayed as a checklist on the product card. Leave empty if this is not a complete set.</span>
                 </p>
               </div>
@@ -619,41 +619,41 @@ const AdminDashboard: React.FC = () => {
 
             {/* Inventory */}
             <div>
-              <h3 className="text-base md:text-lg font-bold text-gray-900 mb-3 md:mb-4 flex items-center gap-2">
-                <span className="text-xl md:text-2xl">📦</span>
+              <h3 className="text-sm md:text-base font-bold text-gray-900 mb-2 md:mb-3 flex items-center gap-1.5">
+                <span className="text-base md:text-lg">📦</span>
                 Inventory & Availability
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
                 <div>
-                  <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-1.5 md:mb-2">Stock Quantity</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Stock Quantity</label>
                   <input
                     type="number"
                     value={formData.stock_quantity || ''}
                     onChange={(e) => setFormData({ ...formData, stock_quantity: Number(e.target.value) })}
-                    className="input-field text-sm md:text-base"
+                    className="input-field text-sm"
                     placeholder="0"
                   />
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 pt-0 sm:pt-7">
-                  <label className="flex items-center gap-2 cursor-pointer">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 pt-0 sm:pt-6">
+                  <label className="flex items-center gap-1.5 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={formData.featured || false}
                       onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                      className="w-4 h-4 md:w-5 md:h-5 text-blue-600 rounded focus:ring-teal-500"
+                      className="w-4 h-4 text-gold-600 rounded focus:ring-gold-500"
                     />
-                    <span className="text-xs md:text-sm font-semibold text-gray-700">⭐ Featured</span>
+                    <span className="text-xs font-semibold text-gray-700">⭐ Featured</span>
                   </label>
 
-                  <label className="flex items-center gap-2 cursor-pointer">
+                  <label className="flex items-center gap-1.5 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={formData.available ?? true}
                       onChange={(e) => setFormData({ ...formData, available: e.target.checked })}
-                      className="w-4 h-4 md:w-5 md:h-5 text-green-600 rounded focus:ring-green-500"
+                      className="w-4 h-4 text-green-600 rounded focus:ring-green-500"
                     />
-                    <span className="text-xs md:text-sm font-semibold text-gray-700">✅ Available</span>
+                    <span className="text-xs font-semibold text-gray-700">✅ Available</span>
                   </label>
                 </div>
               </div>
@@ -661,32 +661,32 @@ const AdminDashboard: React.FC = () => {
 
             {/* Discount */}
             <div>
-              <h3 className="text-base md:text-lg font-bold text-gray-900 mb-3 md:mb-4 flex items-center gap-2">
-                <span className="text-xl md:text-2xl">💰</span>
+              <h3 className="text-sm md:text-base font-bold text-gray-900 mb-2 md:mb-3 flex items-center gap-1.5">
+                <span className="text-base md:text-lg">💰</span>
                 Discount Pricing
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
                 <div>
-                  <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-1.5 md:mb-2">Discount Price (₱)</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Discount Price (₱)</label>
                   <input
                     type="number"
                     step="1"
                     value={formData.discount_price || ''}
                     onChange={(e) => setFormData({ ...formData, discount_price: Number(e.target.value) || null })}
-                    className="input-field text-sm md:text-base"
+                    className="input-field text-sm"
                     placeholder="0"
                   />
                 </div>
 
-                <div className="flex items-center pt-0 md:pt-7">
-                  <label className="flex items-center gap-2 cursor-pointer">
+                <div className="flex items-center pt-0 md:pt-6">
+                  <label className="flex items-center gap-1.5 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={formData.discount_active || false}
                       onChange={(e) => setFormData({ ...formData, discount_active: e.target.checked })}
-                      className="w-4 h-4 md:w-5 md:h-5 text-red-600 rounded focus:ring-red-500"
+                      className="w-4 h-4 text-red-600 rounded focus:ring-red-500"
                     />
-                    <span className="text-xs md:text-sm font-semibold text-gray-700">🏷️ Enable Discount</span>
+                    <span className="text-xs font-semibold text-gray-700">🏷️ Enable Discount</span>
                   </label>
                 </div>
               </div>
@@ -694,11 +694,11 @@ const AdminDashboard: React.FC = () => {
 
             {/* Product Image */}
             <div>
-              <h3 className="text-base md:text-lg font-bold text-gray-900 mb-3 md:mb-4 flex items-center gap-2">
-                <span className="text-xl md:text-2xl">🖼️</span>
+              <h3 className="text-sm md:text-base font-bold text-gray-900 mb-2 md:mb-3 flex items-center gap-1.5">
+                <span className="text-base md:text-lg">🖼️</span>
                 Product Image
               </h3>
-              <p className="text-xs md:text-sm text-gray-500 mb-3">
+              <p className="text-xs text-gray-500 mb-2">
                 Upload a product image (optional). This will appear on the customer-facing site.
               </p>
               <ImageUpload
@@ -736,46 +736,46 @@ const AdminDashboard: React.FC = () => {
     return (
       <>
         {variationManagerModal}
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-        <div className="bg-white/90 backdrop-blur-sm shadow-lg border-b-2 border-blue-100">
-          <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-            <div className="flex items-center justify-between h-14 md:h-16">
-              <div className="flex items-center space-x-2 md:space-x-4">
+        <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white">
+        <div className="bg-white shadow-md border-b border-gold-300/30">
+          <div className="max-w-6xl mx-auto px-3 sm:px-4">
+            <div className="flex items-center justify-between h-12 md:h-14">
+              <div className="flex items-center space-x-2">
                 <button
                   onClick={() => setCurrentView('dashboard')}
-                  className="text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1 md:gap-2 group"
+                  className="text-gray-700 hover:text-gold-600 transition-colors flex items-center gap-1 group"
                 >
-                  <ArrowLeft className="h-4 w-4 md:h-5 md:w-5 group-hover:-translate-x-1 transition-transform" />
-                  <span className="text-sm md:text-base">Dashboard</span>
+                  <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+                  <span className="text-xs md:text-sm">Dashboard</span>
                 </button>
-                <h1 className="text-base md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-teal-600 to-emerald-600 bg-clip-text text-transparent">Products</h1>
+                <h1 className="text-sm md:text-base font-bold bg-gradient-to-r from-black to-gray-900 bg-clip-text text-transparent">Products</h1>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 <button
                   onClick={handleRefresh}
                   disabled={isRefreshing}
-                  className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-2 md:px-3 py-1.5 md:py-2 rounded-lg md:rounded-xl font-medium text-xs md:text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-1 md:gap-2 disabled:opacity-50"
+                  className="bg-gradient-to-r from-black to-gray-900 hover:from-gray-900 hover:to-black text-white px-2 py-1 rounded-md font-medium text-xs shadow-sm hover:shadow transition-all flex items-center gap-1 disabled:opacity-50 border border-gold-500/20"
                   title="Refresh data"
                 >
-                  <RefreshCw className={`h-3 w-3 md:h-4 md:w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+                  <RefreshCw className={`h-3 w-3 ${isRefreshing ? 'animate-spin' : ''}`} />
                   <span className="hidden sm:inline">{isRefreshing ? 'Refreshing...' : 'Refresh'}</span>
                 </button>
                 {selectedProducts.size > 0 && (
                   <button
                     onClick={handleBulkDelete}
                     disabled={isProcessing}
-                    className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-2 md:px-4 py-1.5 md:py-2 rounded-lg md:rounded-xl font-medium text-xs md:text-sm shadow-md hover:shadow-lg transform hover:scale-105 transition-all flex items-center gap-1 md:gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-2 md:px-3 py-1 rounded-md font-medium text-xs shadow-sm hover:shadow transition-all flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <Trash2 className="h-3 w-3 md:h-4 md:w-4" />
+                    <Trash2 className="h-3 w-3" />
                     <span className="hidden sm:inline">Delete ({selectedProducts.size})</span>
                     <span className="sm:hidden">Delete</span>
                   </button>
                 )}
                 <button
                   onClick={handleAddProduct}
-                  className="bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white px-2 md:px-4 py-1.5 md:py-2 rounded-lg md:rounded-xl font-medium text-xs md:text-sm shadow-md hover:shadow-lg transform hover:scale-105 transition-all flex items-center gap-1 md:gap-2"
+                  className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-black px-2 md:px-3 py-1 rounded-md font-medium text-xs shadow-sm hover:shadow transition-all flex items-center gap-1"
                 >
-                  <Plus className="h-3 w-3 md:h-4 md:w-4" />
+                  <Plus className="h-3 w-3" />
                   <span className="hidden sm:inline">Add New</span>
                   <span className="sm:hidden">Add</span>
                 </button>
@@ -784,18 +784,18 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 md:py-8">
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 py-3 md:py-4">
           {/* Selection Info Banner */}
           {selectedProducts.size > 0 && (
-            <div className="mb-4 bg-blue-50 border-2 border-blue-200 rounded-xl p-3 md:p-4 flex items-center justify-between">
+            <div className="mb-3 bg-gold-50 border border-gold-300 rounded-lg p-2 md:p-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-sm md:text-base font-semibold text-teal-700">
+                <span className="text-xs md:text-sm font-semibold text-gray-900">
                   {selectedProducts.size} product{selectedProducts.size !== 1 ? 's' : ''} selected
                 </span>
               </div>
               <button
                 onClick={() => setSelectedProducts(new Set())}
-                className="text-xs md:text-sm text-blue-600 hover:text-blue-700 font-medium underline"
+                className="text-xs text-gold-600 hover:text-gold-700 font-medium underline"
               >
                 Clear Selection
               </button>
@@ -805,14 +805,14 @@ const AdminDashboard: React.FC = () => {
           {/* Mobile Card View */}
           <div className="md:hidden space-y-3">
             {products.map((product) => (
-              <div key={product.id} className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border-2 border-blue-100 p-3">
+              <div key={product.id} className="bg-white rounded-xl shadow-lg border border-gold-300/30 p-3">
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <div className="flex items-start gap-2 flex-1 min-w-0">
                     <input
                       type="checkbox"
                       checked={selectedProducts.has(product.id)}
                       onChange={() => toggleSelectProduct(product.id)}
-                      className="mt-0.5 w-4 h-4 text-blue-600 rounded focus:ring-teal-500 cursor-pointer shrink-0"
+                      className="mt-0.5 w-4 h-4 text-gold-600 rounded focus:ring-gold-500 cursor-pointer shrink-0"
                     />
                     <div className="flex-1 min-w-0">
                       <h3 className="text-sm font-bold text-gray-900 truncate">{product.name}</h3>
@@ -830,8 +830,8 @@ const AdminDashboard: React.FC = () => {
                       disabled={isProcessing}
                       className={`p-1.5 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                         product.variations && product.variations.length > 0
-                          ? 'bg-purple-500 text-white hover:bg-purple-600 shadow-md cursor-pointer'
-                          : 'text-purple-600 hover:bg-purple-100 cursor-pointer'
+                          ? 'bg-gold-500 text-black hover:bg-gold-600 shadow-md cursor-pointer'
+                          : 'text-gold-600 hover:bg-gold-100 cursor-pointer'
                       }`}
                       title="Manage Sizes - Click to edit prices!"
                     >
@@ -840,7 +840,7 @@ const AdminDashboard: React.FC = () => {
                     <button
                       onClick={() => handleEditProduct(product)}
                       disabled={isProcessing}
-                      className="p-1.5 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                      className="p-1.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                     >
                       <Edit className="h-4 w-4" />
                     </button>
@@ -857,7 +857,7 @@ const AdminDashboard: React.FC = () => {
                   <div className="flex items-center gap-3">
                     <div>
                       <div className="text-[10px] text-gray-500">Price</div>
-                      <div className="text-sm font-bold text-blue-600">
+                      <div className="text-sm font-bold text-gray-900">
                         ₱{product.base_price.toLocaleString('en-PH', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                       </div>
                     </div>
@@ -867,7 +867,7 @@ const AdminDashboard: React.FC = () => {
                     </div>
                     <div>
                       <div className="text-[10px] text-gray-500">Sizes</div>
-                      <div className="text-sm font-semibold text-purple-600">{product.variations?.length || 0}</div>
+                      <div className="text-sm font-semibold text-gold-600">{product.variations?.length || 0}</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-1">
@@ -886,94 +886,94 @@ const AdminDashboard: React.FC = () => {
           </div>
 
           {/* Desktop Table View */}
-          <div className="hidden md:block bg-white/90 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-xl overflow-hidden border-2 border-blue-100">
+          <div className="hidden md:block bg-white rounded-lg md:rounded-xl shadow-lg overflow-hidden border border-gold-300/30">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gradient-to-r from-teal-50 to-emerald-50 border-b-2 border-blue-100">
+                <thead className="bg-gradient-to-r from-gray-50 to-white border-b border-gold-300/30">
                   <tr>
-                    <th className="px-4 py-4 text-center w-12">
+                    <th className="px-3 py-2 text-center w-10">
                       <input
                         type="checkbox"
                         checked={selectedProducts.size === products.length && products.length > 0}
                         onChange={toggleSelectAll}
-                        className="w-4 h-4 text-blue-600 rounded focus:ring-teal-500 cursor-pointer"
+                        className="w-4 h-4 text-gold-600 rounded focus:ring-gold-500 cursor-pointer"
                         title="Select All"
                       />
                     </th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-gray-800">Product</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-gray-800 hidden lg:table-cell">Category</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-gray-800">Price</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-gray-800">Sizes</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-gray-800">Purity</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-gray-800">Stock</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-gray-800 hidden xl:table-cell">Status</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-gray-800">Actions</th>
+                    <th className="px-4 py-2 text-left text-xs font-bold text-gray-800">Product</th>
+                    <th className="px-4 py-2 text-left text-xs font-bold text-gray-800 hidden lg:table-cell">Category</th>
+                    <th className="px-4 py-2 text-left text-xs font-bold text-gray-800">Price</th>
+                    <th className="px-4 py-2 text-left text-xs font-bold text-gray-800">Sizes</th>
+                    <th className="px-4 py-2 text-left text-xs font-bold text-gray-800">Purity</th>
+                    <th className="px-4 py-2 text-left text-xs font-bold text-gray-800">Stock</th>
+                    <th className="px-4 py-2 text-left text-xs font-bold text-gray-800 hidden xl:table-cell">Status</th>
+                    <th className="px-4 py-2 text-left text-xs font-bold text-gray-800">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {products.map((product) => (
-                    <tr key={product.id} className="hover:bg-blue-50/50 transition-colors">
-                      <td className="px-4 py-4 text-center">
+                    <tr key={product.id} className="hover:bg-gold-50/50 transition-colors">
+                      <td className="px-3 py-2 text-center">
                         <input
                           type="checkbox"
                           checked={selectedProducts.has(product.id)}
                           onChange={() => toggleSelectProduct(product.id)}
-                          className="w-4 h-4 text-blue-600 rounded focus:ring-teal-500 cursor-pointer"
+                          className="w-4 h-4 text-gold-600 rounded focus:ring-gold-500 cursor-pointer"
                         />
                       </td>
-                      <td className="px-6 py-4">
-                        <div className="text-sm font-semibold text-gray-900">{product.name}</div>
-                        <div className="text-xs text-gray-500 truncate max-w-xs">{product.description}</div>
+                      <td className="px-4 py-2">
+                        <div className="text-xs font-semibold text-gray-900">{product.name}</div>
+                        <div className="text-[10px] text-gray-500 truncate max-w-xs">{product.description}</div>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-600 hidden lg:table-cell">
+                      <td className="px-4 py-2 text-xs text-gray-600 hidden lg:table-cell">
                         {categories.find(cat => cat.id === product.category)?.name}
                       </td>
-                      <td className="px-6 py-4 text-sm font-bold text-blue-600">
+                      <td className="px-4 py-2 text-xs font-bold text-gray-900">
                         ₱{product.base_price.toLocaleString('en-PH', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                         {product.variations && product.variations.length > 0 && (
-                          <div className="text-[10px] text-orange-600 font-medium mt-1">
+                          <div className="text-[9px] text-gold-600 font-medium mt-0.5">
                             Not used (has sizes)
                           </div>
                         )}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 py-2">
                         {product.variations && product.variations.length > 0 ? (
                           <div>
-                            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-700">
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gold-100 text-gold-900">
                               {product.variations.length} {product.variations.length === 1 ? 'size' : 'sizes'}
                             </span>
-                            <div className="text-[10px] text-gray-500 mt-1">
-                              Click <Layers className="w-3 h-3 inline text-purple-600" /> to edit
+                            <div className="text-[9px] text-gray-500 mt-0.5">
+                              Click <Layers className="w-2.5 h-2.5 inline text-gold-600" /> to edit
                             </div>
                           </div>
                         ) : (
-                          <span className="text-xs text-gray-400">No sizes</span>
+                          <span className="text-[10px] text-gray-400">No sizes</span>
                         )}
                       </td>
-                      <td className="px-6 py-4">
-                        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">
+                      <td className="px-4 py-2">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gray-100 text-gray-700">
                           {product.purity_percentage}%
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                      <td className="px-4 py-2 text-xs font-medium text-gray-900">
                         {product.stock_quantity}
                       </td>
-                      <td className="px-6 py-4 hidden xl:table-cell">
-                        <div className="flex flex-col gap-1">
+                      <td className="px-4 py-2 hidden xl:table-cell">
+                        <div className="flex flex-col gap-0.5">
                           {product.featured && (
-                            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gold-100 text-gold-900">
                               ⭐ Featured
                             </span>
                           )}
-                          <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold ${
                             product.available ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
                           }`}>
                             {product.available ? '✅' : '❌'}
                           </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-2">
+                      <td className="px-4 py-2">
+                        <div className="flex items-center gap-1">
                           <button
                             onClick={(e) => {
                               e.preventDefault();
@@ -982,28 +982,28 @@ const AdminDashboard: React.FC = () => {
                               setManagingVariationsProductId(product.id);
                             }}
                             disabled={isProcessing}
-                            className={`p-2 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
+                            className={`p-1.5 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                               product.variations && product.variations.length > 0
-                                ? 'bg-purple-500 text-white hover:bg-purple-600 shadow-md hover:shadow-lg cursor-pointer'
-                                : 'text-purple-600 hover:bg-purple-100 cursor-pointer'
+                                ? 'bg-gold-500 text-black hover:bg-gold-600 shadow-md hover:shadow-lg cursor-pointer'
+                                : 'text-gold-600 hover:bg-gold-100 cursor-pointer'
                             }`}
                             title="Manage Sizes - Click here to edit prices!"
                           >
-                            <Layers className="h-4 w-4" />
+                            <Layers className="h-3.5 w-3.5" />
                           </button>
                           <button
                             onClick={() => handleEditProduct(product)}
                             disabled={isProcessing}
-                            className="p-2 text-blue-600 hover:bg-teal-100 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                            className="p-1.5 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                           >
-                            <Edit className="h-4 w-4" />
+                            <Edit className="h-3.5 w-3.5" />
                           </button>
                           <button
                             onClick={() => handleDeleteProduct(product.id)}
                             disabled={isProcessing}
-                            className="p-2 text-red-600 hover:bg-red-100 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                            className="p-1.5 text-red-600 hover:bg-red-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <Trash2 className="h-3.5 w-3.5" />
                           </button>
                         </div>
                       </td>
@@ -1032,25 +1032,25 @@ const AdminDashboard: React.FC = () => {
   // Site Settings View
   if (currentView === 'settings') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-        <div className="bg-white/90 backdrop-blur-sm shadow-lg border-b-2 border-blue-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
-              <div className="flex items-center space-x-4">
+        <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white">
+        <div className="bg-white shadow-md border-b border-gold-300/30">
+          <div className="max-w-6xl mx-auto px-3 sm:px-4">
+            <div className="flex items-center justify-between h-12 md:h-14">
+              <div className="flex items-center space-x-2">
                 <button
                   onClick={() => setCurrentView('dashboard')}
-                  className="text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-2 group"
+                  className="text-gray-700 hover:text-gold-600 transition-colors flex items-center gap-1 group"
                 >
-                  <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
-                  Dashboard
+                  <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+                  <span className="text-xs md:text-sm">Dashboard</span>
                 </button>
-                <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">⚙️ Site Settings</h1>
+                <h1 className="text-sm md:text-base font-bold bg-gradient-to-r from-black to-gray-900 bg-clip-text text-transparent">⚙️ Site Settings</h1>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className="max-w-5xl mx-auto px-3 sm:px-4 py-3 md:py-4">
           <SiteSettingsManager />
         </div>
       </div>
@@ -1060,25 +1060,25 @@ const AdminDashboard: React.FC = () => {
   // COA Lab Reports View
   if (currentView === 'coa') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-cyan-50">
-        <div className="bg-white/90 backdrop-blur-sm shadow-lg border-b-2 border-sky-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
-              <div className="flex items-center space-x-4">
+        <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white">
+        <div className="bg-white shadow-md border-b border-gold-300/30">
+          <div className="max-w-6xl mx-auto px-3 sm:px-4">
+            <div className="flex items-center justify-between h-12 md:h-14">
+              <div className="flex items-center space-x-2">
                 <button
                   onClick={() => setCurrentView('dashboard')}
-                  className="text-sky-600 hover:text-sky-700 transition-colors flex items-center gap-2 group"
+                  className="text-gray-700 hover:text-gold-600 transition-colors flex items-center gap-1 group"
                 >
-                  <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
-                  Dashboard
+                  <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+                  <span className="text-xs md:text-sm">Dashboard</span>
                 </button>
-                <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent">🔬 Lab Reports (COA)</h1>
+                <h1 className="text-sm md:text-base font-bold bg-gradient-to-r from-black to-gray-900 bg-clip-text text-transparent">🔬 Lab Reports (COA)</h1>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="max-w-5xl mx-auto px-3 sm:px-4 py-3 md:py-4">
           <COAManager />
         </div>
       </div>
@@ -1099,12 +1099,12 @@ const AdminDashboard: React.FC = () => {
   return (
     <>
       {variationManagerModal}
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200">
-      <div className="bg-white/90 backdrop-blur-sm shadow-lg border-b-2 border-blue-100">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-          <div className="flex items-center justify-between h-14 md:h-16">
-            <div className="flex items-center space-x-2 md:space-x-3">
-              <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg overflow-hidden border-2 border-white">
+      <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white">
+      <div className="bg-white shadow-md border-b border-gold-300/30">
+        <div className="max-w-6xl mx-auto px-3 sm:px-4">
+          <div className="flex items-center justify-between h-12 md:h-14">
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-black to-gray-900 rounded-lg flex items-center justify-center shadow-lg overflow-hidden border-2 border-gold-500/30">
                 <img 
                   src="/logo.jpg" 
                   alt="HP GLOW" 
@@ -1112,27 +1112,27 @@ const AdminDashboard: React.FC = () => {
                 />
               </div>
               <div>
-                <h1 className="text-sm md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-blue-600 via-blue-700 to-blue-900 bg-clip-text text-transparent">
+                <h1 className="text-sm md:text-base font-bold bg-gradient-to-r from-black via-gray-900 to-black bg-clip-text text-transparent">
                   HP GLOW
                 </h1>
-                <p className="text-[10px] md:text-xs text-gray-600 font-medium flex items-center gap-1">
-                  <Sparkles className="w-2 h-2 md:w-3 md:h-3 text-blue-500" />
+                <p className="text-[9px] md:text-[10px] text-gray-600 font-medium flex items-center gap-0.5">
+                  <Sparkles className="w-2 h-2 text-gold-500" />
                   Admin Dashboard
                 </p>
               </div>
             </div>
-            <div className="flex items-center space-x-2 md:space-x-4">
+            <div className="flex items-center space-x-2">
               <a 
                 href="/" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-blue-600 transition-colors font-medium text-xs md:text-sm hidden sm:block"
+                className="text-gray-600 hover:text-gold-600 transition-colors font-medium text-xs hidden sm:block"
               >
                 View Website
               </a>
               <button
                 onClick={handleLogout}
-                className="bg-gradient-to-r from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 text-white px-2 md:px-4 py-1.5 md:py-2 rounded-lg md:rounded-xl transition-all font-medium text-xs md:text-sm shadow-md hover:shadow-lg transform hover:scale-105"
+                className="bg-gradient-to-r from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 text-white px-2 md:px-3 py-1 rounded-md transition-all font-medium text-xs shadow-sm hover:shadow"
               >
                 Logout
               </button>
@@ -1141,172 +1141,176 @@ const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 md:py-8">
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 py-3 md:py-4">
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mb-4 md:mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mb-3 md:mb-4">
           <button
             onClick={() => setCurrentView('products')}
-            className="bg-white/90 backdrop-blur-sm rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all p-3 md:p-6 border-2 border-blue-100 transform hover:-translate-y-1 text-left cursor-pointer"
+            className="bg-white rounded-lg md:rounded-xl shadow-md hover:shadow-lg transition-all p-2 md:p-3 border border-gold-300/30 transform hover:-translate-y-0.5 text-left cursor-pointer"
           >
             <div className="flex items-center">
-              <div className="p-2 md:p-3 bg-gradient-to-br from-teal-400 to-teal-600 rounded-lg md:rounded-xl shadow-md">
-                <Package className="h-4 w-4 md:h-6 md:w-6 text-white" />
+              <div className="p-1.5 md:p-2 bg-gradient-to-br from-black to-gray-900 rounded-md md:rounded-lg shadow-sm">
+                <Package className="h-3 w-3 md:h-4 md:w-4 text-gold-500" />
               </div>
-              <div className="ml-2 md:ml-4">
-                <p className="text-[10px] md:text-sm font-medium text-gray-600">Total Products</p>
-                <p className="text-xl md:text-3xl font-bold bg-gradient-to-r from-teal-600 to-emerald-600 bg-clip-text text-transparent">{totalProducts}</p>
+              <div className="ml-2">
+                <p className="text-[9px] md:text-xs font-medium text-gray-600">Total Products</p>
+                <p className="text-lg md:text-xl font-bold bg-gradient-to-r from-black to-gray-900 bg-clip-text text-transparent">{totalProducts}</p>
               </div>
             </div>
           </button>
 
           <button
             onClick={() => setCurrentView('products')}
-            className="bg-white/90 backdrop-blur-sm rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all p-3 md:p-6 border-2 border-green-100 transform hover:-translate-y-1 text-left cursor-pointer"
+            className="bg-white rounded-lg md:rounded-xl shadow-md hover:shadow-lg transition-all p-2 md:p-3 border border-gold-300/30 transform hover:-translate-y-0.5 text-left cursor-pointer"
           >
             <div className="flex items-center">
-              <div className="p-2 md:p-3 bg-gradient-to-br from-green-400 to-green-600 rounded-lg md:rounded-xl shadow-md">
-                <TrendingUp className="h-4 w-4 md:h-6 md:w-6 text-white" />
+              <div className="p-1.5 md:p-2 bg-gradient-to-br from-gold-500 to-gold-600 rounded-md md:rounded-lg shadow-sm">
+                <TrendingUp className="h-3 w-3 md:h-4 md:w-4 text-black" />
               </div>
-              <div className="ml-2 md:ml-4">
-                <p className="text-[10px] md:text-sm font-medium text-gray-600">Available</p>
-                <p className="text-xl md:text-3xl font-bold bg-gradient-to-r from-green-600 to-green-500 bg-clip-text text-transparent">{availableProducts}</p>
+              <div className="ml-2">
+                <p className="text-[9px] md:text-xs font-medium text-gray-600">Available</p>
+                <p className="text-lg md:text-xl font-bold bg-gradient-to-r from-gold-600 to-gold-500 bg-clip-text text-transparent">{availableProducts}</p>
               </div>
             </div>
           </button>
 
           <button
             onClick={() => setCurrentView('products')}
-            className="bg-white/90 backdrop-blur-sm rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all p-3 md:p-6 border-2 border-purple-100 transform hover:-translate-y-1 text-left cursor-pointer"
+            className="bg-white rounded-lg md:rounded-xl shadow-md hover:shadow-lg transition-all p-2 md:p-3 border border-gold-300/30 transform hover:-translate-y-0.5 text-left cursor-pointer"
           >
             <div className="flex items-center">
-              <div className="p-2 md:p-3 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg md:rounded-xl shadow-md">
-                <Sparkles className="h-4 w-4 md:h-6 md:w-6 text-white" />
+              <div className="p-1.5 md:p-2 bg-gradient-to-br from-gray-800 to-black rounded-md md:rounded-lg shadow-sm">
+                <Sparkles className="h-3 w-3 md:h-4 md:w-4 text-gold-500" />
               </div>
-              <div className="ml-2 md:ml-4">
-                <p className="text-[10px] md:text-sm font-medium text-gray-600">Featured</p>
-                <p className="text-xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">{featuredProducts}</p>
+              <div className="ml-2">
+                <p className="text-[9px] md:text-xs font-medium text-gray-600">Featured</p>
+                <p className="text-lg md:text-xl font-bold bg-gradient-to-r from-black to-gray-700 bg-clip-text text-transparent">{featuredProducts}</p>
               </div>
             </div>
           </button>
 
           <button
             onClick={() => setCurrentView('categories')}
-            className="bg-white/90 backdrop-blur-sm rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all p-3 md:p-6 border-2 border-pink-100 transform hover:-translate-y-1 text-left cursor-pointer"
+            className="bg-white rounded-lg md:rounded-xl shadow-md hover:shadow-lg transition-all p-2 md:p-3 border border-gold-300/30 transform hover:-translate-y-0.5 text-left cursor-pointer"
           >
             <div className="flex items-center">
-              <div className="p-2 md:p-3 bg-gradient-to-br from-pink-400 to-pink-600 rounded-lg md:rounded-xl shadow-md">
-                <Users className="h-4 w-4 md:h-6 md:w-6 text-white" />
+              <div className="p-1.5 md:p-2 bg-gradient-to-br from-gold-400 to-gold-600 rounded-md md:rounded-lg shadow-sm">
+                <Users className="h-3 w-3 md:h-4 md:w-4 text-black" />
               </div>
-              <div className="ml-2 md:ml-4">
-                <p className="text-[10px] md:text-sm font-medium text-gray-600">Categories</p>
-                <p className="text-xl md:text-3xl font-bold bg-gradient-to-r from-pink-600 to-red-600 bg-clip-text text-transparent">{categories.length}</p>
+              <div className="ml-2">
+                <p className="text-[9px] md:text-xs font-medium text-gray-600">Categories</p>
+                <p className="text-lg md:text-xl font-bold bg-gradient-to-r from-gold-600 to-gold-700 bg-clip-text text-transparent">{categories.length}</p>
               </div>
             </div>
           </button>
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-xl p-4 md:p-6 border-2 border-blue-100">
-            <h3 className="text-base md:text-lg font-bold text-gray-900 mb-3 md:mb-4 flex items-center gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+          <div className="bg-white rounded-lg md:rounded-xl shadow-lg p-3 md:p-4 border border-gold-300/30">
+            <h3 className="text-sm md:text-base font-bold text-gray-900 mb-2 md:mb-3 flex items-center gap-1.5">
               Quick Actions
-              <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-yellow-500" />
+              <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-gold-500" />
             </h3>
-            <div className="space-y-1.5 md:space-y-2">
+            <div className="space-y-1 md:space-y-1.5">
               <button
                 onClick={handleAddProduct}
-                className="w-full flex items-center gap-2 md:gap-3 p-2 md:p-3 text-left hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-lg md:rounded-xl transition-all group"
+                className="w-full flex items-center gap-2 p-1.5 md:p-2 text-left hover:bg-gradient-to-r hover:from-gold-50 hover:to-gray-50 rounded-md md:rounded-lg transition-all group"
               >
-                <div className="p-1.5 md:p-2 bg-gradient-to-br from-teal-400 to-teal-600 rounded-md md:rounded-lg text-white">
-                  <Plus className="h-3 w-3 md:h-5 md:w-5" />
+                <div className="p-1 md:p-1.5 bg-gradient-to-br from-black to-gray-900 rounded-md text-gold-500">
+                  <Plus className="h-3 w-3 md:h-4 md:w-4" />
                 </div>
-                <span className="text-xs md:text-sm font-medium text-gray-900">Add New Product</span>
+                <span className="text-xs font-medium text-gray-900">Add New Product</span>
               </button>
               <button
                 onClick={() => setCurrentView('products')}
-                className="w-full flex items-center gap-2 md:gap-3 p-2 md:p-3 text-left hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-lg md:rounded-xl transition-all group"
+                className="w-full flex items-center gap-2 p-1.5 md:p-2 text-left hover:bg-gradient-to-r hover:from-gold-50 hover:to-gray-50 rounded-md md:rounded-lg transition-all group"
               >
-                <div className="p-1.5 md:p-2 bg-gradient-to-br from-purple-400 to-purple-600 rounded-md md:rounded-lg text-white">
-                  <Package className="h-3 w-3 md:h-5 md:w-5" />
+                <div className="p-1 md:p-1.5 bg-gradient-to-br from-gray-800 to-black rounded-md text-gold-500">
+                  <Package className="h-3 w-3 md:h-4 md:w-4" />
                 </div>
-                <span className="text-xs md:text-sm font-medium text-gray-900">Manage Products</span>
+                <span className="text-xs font-medium text-gray-900">Manage Products</span>
               </button>
               <button
                 onClick={() => setCurrentView('categories')}
-                className="w-full flex items-center gap-2 md:gap-3 p-2 md:p-3 text-left hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-lg md:rounded-xl transition-all group"
+                className="w-full flex items-center gap-2 p-1.5 md:p-2 text-left hover:bg-gradient-to-r hover:from-gold-50 hover:to-gray-50 rounded-md md:rounded-lg transition-all group"
               >
-                <div className="p-1.5 md:p-2 bg-gradient-to-br from-pink-400 to-pink-600 rounded-md md:rounded-lg text-white">
-                  <FolderOpen className="h-3 w-3 md:h-5 md:w-5" />
+                <div className="p-1 md:p-1.5 bg-gradient-to-br from-gold-500 to-gold-600 rounded-md text-black">
+                  <FolderOpen className="h-3 w-3 md:h-4 md:w-4" />
                 </div>
-                <span className="text-xs md:text-sm font-medium text-gray-900">Manage Categories</span>
+                <span className="text-xs font-medium text-gray-900">Manage Categories</span>
               </button>
               <button
                 onClick={() => setCurrentView('payments')}
-                className="w-full flex items-center gap-2 md:gap-3 p-2 md:p-3 text-left hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-lg md:rounded-xl transition-all group"
+                className="w-full flex items-center gap-2 p-1.5 md:p-2 text-left hover:bg-gradient-to-r hover:from-gold-50 hover:to-gray-50 rounded-md md:rounded-lg transition-all group"
               >
-                <div className="p-1.5 md:p-2 bg-gradient-to-br from-green-400 to-green-600 rounded-md md:rounded-lg text-white">
-                  <CreditCard className="h-3 w-3 md:h-5 md:w-5" />
+                <div className="p-1 md:p-1.5 bg-gradient-to-br from-black to-gray-900 rounded-md text-gold-500">
+                  <CreditCard className="h-3 w-3 md:h-4 md:w-4" />
                 </div>
-                <span className="text-xs md:text-sm font-medium text-gray-900">Payment Methods</span>
+                <span className="text-xs font-medium text-gray-900">Payment Methods</span>
               </button>
               <button
                 onClick={() => setCurrentView('coa')}
-                className="w-full flex items-center gap-2 md:gap-3 p-2 md:p-3 text-left hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-lg md:rounded-xl transition-all group"
+                className="w-full flex items-center gap-2 p-1.5 md:p-2 text-left hover:bg-gradient-to-r hover:from-gold-50 hover:to-gray-50 rounded-md md:rounded-lg transition-all group"
               >
-                <div className="p-1.5 md:p-2 bg-gradient-to-br from-sky-400 to-blue-600 rounded-md md:rounded-lg text-white">
-                  <Shield className="h-3 w-3 md:h-5 md:w-5" />
+                <div className="p-1 md:p-1.5 bg-gradient-to-br from-gray-800 to-black rounded-md text-gold-500">
+                  <Shield className="h-3 w-3 md:h-4 md:w-4" />
                 </div>
-                <span className="text-xs md:text-sm font-medium text-gray-900">Lab Reports (COA)</span>
+                <span className="text-xs font-medium text-gray-900">Lab Reports (COA)</span>
               </button>
               <button
                 onClick={() => setCurrentView('inventory')}
-                className="w-full flex items-center gap-2 md:gap-3 p-2 md:p-3 text-left hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-lg md:rounded-xl transition-all group"
+                className="w-full flex items-center gap-2 p-1.5 md:p-2 text-left hover:bg-gradient-to-r hover:from-gold-50 hover:to-gray-50 rounded-md md:rounded-lg transition-all group"
               >
-                <div className="p-1.5 md:p-2 bg-gradient-to-br from-pink-400 to-purple-600 rounded-md md:rounded-lg text-white">
-                  <Warehouse className="h-3 w-3 md:h-5 md:w-5" />
+                <div className="p-1 md:p-1.5 bg-gradient-to-br from-gold-400 to-gold-600 rounded-md text-black">
+                  <Warehouse className="h-3 w-3 md:h-4 md:w-4" />
                 </div>
-                <span className="text-xs md:text-sm font-medium text-gray-900">Peptide Inventory</span>
+                <span className="text-xs font-medium text-gray-900">Peptide Inventory</span>
               </button>
               <button
                 onClick={() => setCurrentView('orders')}
-                className="w-full flex items-center gap-2 md:gap-3 p-2 md:p-3 text-left hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-lg md:rounded-xl transition-all group"
+                className="w-full flex items-center gap-2 p-1.5 md:p-2 text-left hover:bg-gradient-to-r hover:from-gold-50 hover:to-gray-50 rounded-md md:rounded-lg transition-all group"
               >
-                <div className="p-1.5 md:p-2 bg-gradient-to-br from-orange-400 to-orange-600 rounded-md md:rounded-lg text-white">
-                  <ShoppingCart className="h-3 w-3 md:h-5 md:w-5" />
+                <div className="p-1 md:p-1.5 bg-gradient-to-br from-black to-gray-900 rounded-md text-gold-500">
+                  <ShoppingCart className="h-3 w-3 md:h-4 md:w-4" />
                 </div>
-                <span className="text-xs md:text-sm font-medium text-gray-900">Orders Management</span>
+                <span className="text-xs font-medium text-gray-900">Orders Management</span>
               </button>
               <button
                 onClick={() => setCurrentView('settings')}
-                className="w-full flex items-center gap-2 md:gap-3 p-2 md:p-3 text-left hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-lg md:rounded-xl transition-all group"
+                className="w-full flex items-center gap-2 p-1.5 md:p-2 text-left hover:bg-gradient-to-r hover:from-gold-50 hover:to-gray-50 rounded-md md:rounded-lg transition-all group"
               >
-                <div className="p-1.5 md:p-2 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-md md:rounded-lg text-white">
-                  <Settings className="h-3 w-3 md:h-5 md:w-5" />
+                <div className="p-1 md:p-1.5 bg-gradient-to-br from-gray-800 to-black rounded-md text-gold-500">
+                  <Settings className="h-3 w-3 md:h-4 md:w-4" />
                 </div>
-                <span className="text-xs md:text-sm font-medium text-gray-900">Site Settings</span>
+                <span className="text-xs font-medium text-gray-900">Site Settings</span>
               </button>
             </div>
           </div>
 
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-xl p-4 md:p-6 border-2 border-purple-100">
-            <h3 className="text-base md:text-lg font-bold text-gray-900 mb-3 md:mb-4 flex items-center gap-2">
+          <div className="bg-white rounded-lg md:rounded-xl shadow-lg p-3 md:p-4 border border-gold-300/30">
+            <h3 className="text-sm md:text-base font-bold text-gray-900 mb-2 md:mb-3 flex items-center gap-1.5">
               Categories Overview
-              <Heart className="w-4 h-4 md:w-5 md:h-5 text-pink-500 animate-pulse" />
+              <Heart className="w-3 h-3 md:w-4 md:h-4 text-gold-500 animate-pulse" />
             </h3>
-            <div className="space-y-2 md:space-y-3">
+            <div className="space-y-1 md:space-y-1.5">
               {categoryCounts.map((category, index) => {
                 const colors = [
-                  'from-teal-400 to-teal-600',
-                  'from-emerald-400 to-emerald-600',
-                  'from-green-400 to-green-600',
-                  'from-green-400 to-green-600',
-                  'from-orange-400 to-orange-600',
-                  'from-cyan-400 to-cyan-600'
+                  'from-black to-gray-900',
+                  'from-gray-800 to-black',
+                  'from-gold-500 to-gold-600',
+                  'from-gold-400 to-gold-600',
+                  'from-gray-700 to-gray-900',
+                  'from-black to-gray-800'
                 ];
                 return (
-                  <div key={category.id} className="flex items-center justify-between py-1.5 md:py-2 hover:bg-gradient-to-r hover:from-teal-50 hover:to-emerald-50 rounded-lg md:rounded-xl px-2 md:px-3 transition-all">
-                    <span className="text-xs md:text-sm font-semibold text-gray-900">{category.name}</span>
-                    <span className={`text-[10px] md:text-sm font-bold text-white bg-gradient-to-r ${colors[index % colors.length]} px-2 md:px-3 py-0.5 md:py-1 rounded-full shadow-md`}>
+                  <div key={category.id} className="flex items-center justify-between py-1 md:py-1.5 hover:bg-gradient-to-r hover:from-gold-50 hover:to-gray-50 rounded-md md:rounded-lg px-2 transition-all">
+                    <span className="text-xs font-semibold text-gray-900">{category.name}</span>
+                    <span className={`text-[10px] md:text-xs font-bold ${
+                      index % 3 === 0 ? 'text-white bg-gradient-to-r from-black to-gray-900' :
+                      index % 3 === 1 ? 'text-black bg-gradient-to-r from-gold-500 to-gold-600' :
+                      'text-white bg-gradient-to-r from-gray-800 to-black'
+                    } px-2 py-0.5 rounded-full shadow-sm`}>
                       {category.count}
                     </span>
                   </div>
