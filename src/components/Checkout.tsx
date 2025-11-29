@@ -1,71 +1,8 @@
-import React, { useState, useRef } from 'react';
-import { ArrowLeft, ShieldCheck, Package, CreditCard, Sparkles, Heart, Copy, Check, MessageCircle, Upload, X, Image as ImageIcon, Instagram, Phone } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowLeft, ShieldCheck, Package, CreditCard, Sparkles, Heart, Copy, Check, MessageCircle, Instagram, Phone } from 'lucide-react';
 import type { CartItem } from '../types';
 import { usePaymentMethods } from '../hooks/usePaymentMethods';
-import { useImageUpload } from '../hooks/useImageUpload';
 import { supabase } from '../lib/supabase';
-
-// Component to display payment proof with better error handling
-const PaymentProofDisplay: React.FC<{ imageUrl: string; contactMethod: string }> = ({ imageUrl, contactMethod }) => {
-  const [imageError, setImageError] = useState(false);
-  const [retryCount, setRetryCount] = useState(0);
-
-  const handleImageError = () => {
-    console.error('❌ Error loading payment proof image:', imageUrl);
-    setImageError(true);
-  };
-
-  const handleRetry = () => {
-    setImageError(false);
-    setRetryCount(prev => prev + 1);
-  };
-
-  if (imageError) {
-    return (
-      <div className="bg-white rounded-lg p-8 border-2 border-red-300 shadow-lg text-center">
-        <div className="text-red-600 mb-4">
-          <X className="w-12 h-12 mx-auto mb-2" />
-          <p className="font-semibold text-lg">⚠️ Image failed to load</p>
-          <p className="text-sm mt-2">Unable to display payment proof image.</p>
-        </div>
-        <div className="space-y-2 text-sm text-gray-600">
-          <p><strong>Possible reasons:</strong></p>
-          <ul className="text-left max-w-md mx-auto space-y-1">
-            <li>• Image was uploaded but URL is not accessible</li>
-            <li>• Storage bucket permissions issue</li>
-            <li>• Network connection problem</li>
-          </ul>
-        </div>
-        <button
-          onClick={handleRetry}
-          className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all"
-        >
-          Retry Loading Image
-        </button>
-        <p className="text-xs text-gray-500 mt-4">
-          💡 <strong>Note:</strong> Your payment proof was uploaded successfully. Please check your uploaded file or contact support if this persists.
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="bg-white rounded-lg p-4 border-2 border-green-300 shadow-lg">
-      <img
-        key={retryCount}
-        src={imageUrl}
-        alt="Payment Proof - Screenshot this image"
-        className="w-full max-w-2xl mx-auto rounded-lg shadow-md object-contain cursor-pointer hover:opacity-95 transition-opacity"
-        style={{ maxHeight: '600px', minHeight: '300px' }}
-        onError={handleImageError}
-        onLoad={() => {
-          console.log('✅ Payment proof image loaded successfully:', imageUrl);
-          setImageError(false);
-        }}
-      />
-    </div>
-  );
-};
 
 interface CheckoutProps {
   cartItems: CartItem[];
@@ -75,9 +12,7 @@ interface CheckoutProps {
 
 const Checkout: React.FC<CheckoutProps> = ({ cartItems, totalPrice, onBack }) => {
   const { paymentMethods } = usePaymentMethods();
-  const { uploadImage, uploading: uploadingProof } = useImageUpload('payment-proofs');
   const [step, setStep] = useState<'details' | 'payment' | 'confirmation'>('details');
-  const fileInputRef = useRef<HTMLInputElement>(null);
   
   // Customer Details
   const [fullName, setFullName] = useState('');
@@ -86,15 +21,14 @@ const Checkout: React.FC<CheckoutProps> = ({ cartItems, totalPrice, onBack }) =>
   
   // Shipping Details
   const [address, setAddress] = useState('');
+  const [barangay, setBarangay] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [zipCode, setZipCode] = useState('');
-  const [country, setCountry] = useState('');
   const [shippingLocation, setShippingLocation] = useState<'NCR' | 'LUZON' | 'VISAYAS_MINDANAO' | ''>('');
   
   // Payment
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
-  const [paymentProofUrl, setPaymentProofUrl] = useState<string | undefined>(undefined);
   const [contactMethod, setContactMethod] = useState<'instagram' | 'viber' | ''>('');
   const [notes, setNotes] = useState('');
   
@@ -117,17 +51,6 @@ const Checkout: React.FC<CheckoutProps> = ({ cartItems, totalPrice, onBack }) =>
   const calculateShippingFee = (): number => {
     if (!shippingLocation) return 0;
     
-    // Check if medium box applies (3+ peptide sets)
-    const totalPeptideSets = cartItems.reduce((sum, item) => {
-      // Count items that are peptide products (not syringes)
-      const isPeptide = !item.product.name.toLowerCase().includes('syringe');
-      return sum + (isPeptide ? item.quantity : 0);
-    }, 0);
-    
-    if (totalPeptideSets >= 3) {
-      return 220; // MEDIUM BOX
-    }
-    
     switch (shippingLocation) {
       case 'NCR':
         return 160;
@@ -148,10 +71,10 @@ const Checkout: React.FC<CheckoutProps> = ({ cartItems, totalPrice, onBack }) =>
     email.trim() !== '' &&
     phone.trim() !== '' &&
     address.trim() !== '' &&
+    barangay.trim() !== '' &&
     city.trim() !== '' &&
     state.trim() !== '' &&
     zipCode.trim() !== '' &&
-    country.trim() !== '' &&
     shippingLocation !== '';
 
   const handleProceedToPayment = () => {
@@ -160,33 +83,8 @@ const Checkout: React.FC<CheckoutProps> = ({ cartItems, totalPrice, onBack }) =>
     }
   };
 
-  const handleProofUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    try {
-      const imageUrl = await uploadImage(file);
-      setPaymentProofUrl(imageUrl);
-    } catch (error) {
-      alert(error instanceof Error ? error.message : 'Failed to upload proof of payment');
-    }
-
-    // Reset file input
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  };
-
-  const handleRemoveProof = () => {
-    setPaymentProofUrl(undefined);
-  };
 
   const handlePlaceOrder = async () => {
-    if (!paymentProofUrl) {
-      alert('Please upload proof of payment screenshot before proceeding.');
-      return;
-    }
-    
     if (!contactMethod) {
       alert('Please select your preferred contact method (Instagram or Viber).');
       return;
@@ -220,17 +118,17 @@ const Checkout: React.FC<CheckoutProps> = ({ cartItems, totalPrice, onBack }) =>
           customer_email: email,
           customer_phone: phone,
           shipping_address: address,
+          shipping_barangay: barangay,
           shipping_city: city,
           shipping_state: state,
           shipping_zip_code: zipCode,
-          shipping_country: country,
           order_items: orderItems,
           total_price: totalPrice,
           shipping_fee: shippingFee,
           shipping_location: shippingLocation,
           payment_method_id: paymentMethod?.id || null,
           payment_method_name: paymentMethod?.name || null,
-          payment_proof_url: paymentProofUrl || null,
+          payment_proof_url: null,
           contact_method: contactMethod || null,
           notes: notes.trim() || null,
           order_status: 'new',
@@ -255,7 +153,6 @@ const Checkout: React.FC<CheckoutProps> = ({ cartItems, totalPrice, onBack }) =>
       }
 
       console.log('✅ Order saved to database:', orderData);
-      console.log('📸 Payment proof URL:', paymentProofUrl); // Debug log
 
       // Get current date and time
       const now = new Date();
@@ -270,10 +167,6 @@ const Checkout: React.FC<CheckoutProps> = ({ cartItems, totalPrice, onBack }) =>
         hour12: true
       });
       
-      // Ensure payment proof URL is available
-      const proofUrl = paymentProofUrl || orderData.payment_proof_url || null;
-      console.log('🔍 Using payment proof URL:', proofUrl); // Debug log
-      
       const orderDetails = `
 ✨ HP GLOW - NEW ORDER
 
@@ -287,8 +180,8 @@ Phone: ${phone}
 
 📦 SHIPPING ADDRESS
 ${address}
+${barangay}
 ${city}, ${state} ${zipCode}
-${country}
 
 🛒 ORDER DETAILS
 ${cartItems.map(item => {
@@ -311,7 +204,7 @@ ${paymentMethod?.name || 'N/A'}
 ${paymentMethod ? `Account: ${paymentMethod.account_number}` : ''}
 
 📸 PROOF OF PAYMENT
-${proofUrl ? `✅ Payment proof has been uploaded and is visible on this page.\nPlease attach the payment proof image when sending this message.` : '❌ Payment proof not provided - Please upload proof before placing order'}
+Please attach your payment screenshot when sending this message.
 
 📱 CONTACT METHOD
 ${contactMethod === 'instagram' ? 'Instagram: https://www.instagram.com/hpglowpeptides' : contactMethod === 'viber' ? 'Viber: 09062349763' : 'Not selected'}
@@ -406,51 +299,12 @@ Please confirm this order. Thank you!
               <ShieldCheck className="w-14 h-14 text-white" />
             </div>
             <h1 className="text-3xl md:text-4xl font-bold mb-4 flex items-center justify-center gap-2 flex-wrap">
-              <span className="bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">Order Sent!</span>
+              <span className="bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">COMPLETE YOUR ORDER</span>
               <Sparkles className="w-7 h-7 text-yellow-500" />
             </h1>
             <p className="text-gray-600 mb-8 text-base md:text-lg leading-relaxed">
-              ✅ Your order has been automatically saved to our system!
-              {contactOpened ? (
-                <>
-                  <br />
-                  {contactMethod === 'instagram' ? 'Instagram' : 'Viber'} has been opened. 
-                  <Heart className="inline w-5 h-5 text-pink-500 mx-1" />
-                  Please send the order message to complete your order.
-                </>
-              ) : (
-                <>
-                  <br />
-                  <span className="text-orange-600 font-semibold">⚠️ Contact method didn't open automatically.</span>
-                  <br />
-                  Use the buttons below to open {contactMethod === 'instagram' ? 'Instagram' : 'Viber'} or copy the message manually.
-                </>
-              )}
+              Copy the order message below and send it to your preferred platform (IG/viber) along with your payment screenshot.
             </p>
-
-            {/* Payment Proof Image Display */}
-            {paymentProofUrl && (
-              <div className="bg-gradient-to-br from-green-50 to-blue-50 rounded-2xl p-6 mb-6 border-2 border-green-200">
-                <div className="mb-4 text-center">
-                  <h3 className="font-bold text-gray-900 flex items-center justify-center gap-2 mb-2">
-                    <ImageIcon className="w-5 h-5 text-green-600" />
-                    Your Payment Proof
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    📸 Screenshot this image and attach it when sending your order message
-                  </p>
-                </div>
-                <PaymentProofDisplay 
-                  imageUrl={paymentProofUrl} 
-                  contactMethod={contactMethod}
-                />
-                <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                  <p className="text-sm text-blue-800 text-center">
-                    💡 <strong>Tip:</strong> Take a screenshot of the image above, then attach it when sending your order message via {contactMethod === 'instagram' ? 'Instagram' : 'Viber'}.
-                  </p>
-                </div>
-              </div>
-            )}
 
             {/* Order Message Display */}
             <div className="bg-gray-50 rounded-2xl p-6 mb-6 text-left border-2 border-gray-200">
@@ -484,7 +338,7 @@ Please confirm this order. Thank you!
               {copied && (
                 <p className="text-green-600 text-sm mt-2 flex items-center gap-1">
                   <Check className="w-4 h-4" />
-                  Message copied to clipboard! Paste it in {contactMethod === 'instagram' ? 'Instagram' : 'Viber'} and attach the payment proof image above.
+                  Message copied to clipboard! Paste it in {contactMethod === 'instagram' ? 'Instagram' : 'Viber'} along with your payment screenshot.
                 </p>
               )}
             </div>
@@ -508,29 +362,25 @@ Please confirm this order. Thank you!
             
             <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl p-6 mb-8 text-left border-2 border-blue-100">
               <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                What happens next? 
+                What Happens Next?
                 <Sparkles className="w-5 h-5 text-yellow-500" />
               </h3>
               <ul className="space-y-3 text-sm md:text-base text-gray-700">
                 <li className="flex items-start gap-3">
                   <span className="text-2xl">1️⃣</span>
-                  <span>Copy the order message above and attach the payment proof image (shown above) when sending via {contactMethod === 'instagram' ? 'Instagram' : 'Viber'}</span>
+                  <span>Send your order details and payment screenshot — we'll confirm within 24 hours or less.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-2xl">2️⃣</span>
-                  <span>We'll confirm your order on {contactMethod === 'instagram' ? 'Instagram' : 'Viber'} within 24 hours</span>
+                  <span>Your products are carefully packed and prepared for shipping.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-2xl">3️⃣</span>
-                  <span>Send payment via your selected method</span>
+                  <span>Pay today, ship tomorrow. Payments made before 1 PM are shipped the same day.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-2xl">4️⃣</span>
-                  <span>Products carefully packaged and shipped</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-2xl">5️⃣</span>
-                  <span>Delivery in 3-5 business days 🚚</span>
+                  <span>Tracking numbers are sent via Viber from 11 PM onwards.</span>
                 </li>
               </ul>
             </div>
@@ -638,7 +488,20 @@ Please confirm this order. Thank you!
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
                       className="input-field"
-                      placeholder="123 Rizal Street, Brgy. San Antonio"
+                      placeholder="123 Rizal Street"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Barangay *
+                    </label>
+                    <input
+                      type="text"
+                      value={barangay}
+                      onChange={(e) => setBarangay(e.target.value)}
+                      className="input-field"
+                      placeholder="Brgy. San Antonio"
                       required
                     />
                   </div>
@@ -670,43 +533,31 @@ Please confirm this order. Thank you!
                       />
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        ZIP/Postal Code *
-                      </label>
-                      <input
-                        type="text"
-                        value={zipCode}
-                        onChange={(e) => setZipCode(e.target.value)}
-                        className="input-field"
-                        placeholder="1100"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Country *
-                      </label>
-                      <input
-                        type="text"
-                        value={country}
-                        onChange={(e) => setCountry(e.target.value)}
-                        className="input-field"
-                        placeholder="Philippines"
-                        required
-                      />
-                    </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      ZIP/Postal Code *
+                    </label>
+                    <input
+                      type="text"
+                      value={zipCode}
+                      onChange={(e) => setZipCode(e.target.value)}
+                      className="input-field"
+                      placeholder="1100"
+                      required
+                    />
                   </div>
                 </div>
               </div>
 
               {/* Shipping Location Selection */}
               <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-5 md:p-6 border-2 border-purple-100">
-                <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4 md:mb-6 flex items-center gap-2">
+                <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 flex items-center gap-2">
                   <Package className="w-5 h-5 md:w-6 md:h-6 text-purple-600" />
                   Choose Shipping Location *
                 </h2>
+                <p className="text-xs md:text-sm text-gray-600 mb-4 md:mb-6">
+                  Covers up to 4 sets/boxes. Any added fees will be discussed after check out.
+                </p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   <button
                     onClick={() => setShippingLocation('NCR')}
@@ -742,13 +593,6 @@ Please confirm this order. Thank you!
                     <p className="text-xs text-gray-500">₱190</p>
                   </button>
                 </div>
-                {cartItems.reduce((sum, item) => sum + (!item.product.name.toLowerCase().includes('syringe') ? item.quantity : 0), 0) >= 3 && (
-                  <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                    <p className="text-xs text-blue-800">
-                      <strong>Medium Box:</strong> ₱220 applies (3+ peptide sets)
-                    </p>
-                  </div>
-                )}
               </div>
 
               <button
@@ -849,10 +693,13 @@ Please confirm this order. Thank you!
           <div className="lg:col-span-2 space-y-4 md:space-y-6">
             {/* Shipping Location Selection */}
             <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-5 md:p-6 border-2 border-purple-100">
-              <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4 md:mb-6 flex items-center gap-2">
+              <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 flex items-center gap-2">
                 <Package className="w-5 h-5 md:w-6 md:h-6 text-purple-600" />
                 Choose Shipping Location *
               </h2>
+              <p className="text-xs md:text-sm text-gray-600 mb-4 md:mb-6">
+                Covers up to 4 sets/boxes. Any added fees will be discussed after check out.
+              </p>
               <div className="grid grid-cols-1 gap-3">
                 <button
                   onClick={() => setShippingLocation('NCR')}
@@ -909,13 +756,6 @@ Please confirm this order. Thank you!
                   )}
                 </button>
               </div>
-              {cartItems.reduce((sum, item) => sum + (!item.product.name.toLowerCase().includes('syringe') ? item.quantity : 0), 0) >= 3 && (
-                <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                  <p className="text-sm text-blue-800">
-                    <strong>Medium Box Fee:</strong> ₱220 applies for 3+ peptide sets
-                  </p>
-                </div>
-              )}
             </div>
 
             {/* Payment Method Selection */}
@@ -979,56 +819,6 @@ Please confirm this order. Thank you!
                   )}
                 </div>
               )}
-            </div>
-
-            {/* Payment Proof Upload */}
-            <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-5 md:p-6 border-2 border-red-100">
-              <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4 md:mb-6 flex items-center gap-2">
-                <ImageIcon className="w-5 h-5 md:w-6 md:h-6 text-red-600" />
-                Upload Proof of Payment *
-              </h2>
-              {paymentProofUrl ? (
-                <div className="relative">
-                  <img
-                    src={paymentProofUrl}
-                    alt="Payment Proof"
-                    className="w-full max-w-md mx-auto object-contain rounded-lg border-2 border-gray-200 shadow-lg"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleRemoveProof}
-                    className="absolute top-2 right-2 p-2 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg transition-all"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              ) : (
-                <div
-                  onClick={() => fileInputRef.current?.click()}
-                  className="border-2 border-dashed border-gray-300 rounded-lg p-8 flex flex-col items-center justify-center cursor-pointer hover:border-gold-400 hover:bg-gold-50/50 transition-all"
-                >
-                  {uploadingProof ? (
-                    <div className="text-center">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gold-600 mx-auto mb-2"></div>
-                      <p className="text-sm text-gray-600">Uploading...</p>
-                    </div>
-                  ) : (
-                    <>
-                      <Upload className="h-12 w-12 text-gray-400 mb-3" />
-                      <p className="text-sm font-medium text-gray-700 mb-1">Click to upload payment proof</p>
-                      <p className="text-xs text-gray-500">Screenshot of your payment transaction</p>
-                    </>
-                  )}
-                </div>
-              )}
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleProofUpload}
-                className="hidden"
-                disabled={uploadingProof}
-              />
             </div>
 
             {/* Contact Method Selection */}
@@ -1100,15 +890,15 @@ Please confirm this order. Thank you!
 
             <button
               onClick={handlePlaceOrder}
-              disabled={!paymentProofUrl || !contactMethod || !shippingLocation || uploadingProof}
+              disabled={!contactMethod || !shippingLocation}
               className={`w-full py-3 md:py-4 rounded-2xl font-bold text-base md:text-lg shadow-lg transition-all flex items-center justify-center gap-2 ${
-                paymentProofUrl && contactMethod && shippingLocation && !uploadingProof
+                contactMethod && shippingLocation
                   ? 'bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 hover:from-blue-700 hover:via-blue-800 hover:to-blue-900 text-white hover:shadow-xl transform hover:scale-105'
                   : 'bg-gray-300 text-gray-500 cursor-not-allowed'
               }`}
             >
               <ShieldCheck className="w-5 h-5 md:w-6 md:h-6" />
-              {uploadingProof ? 'Uploading...' : 'Complete Order'}
+              Complete Order
             </button>
           </div>
 
@@ -1127,8 +917,8 @@ Please confirm this order. Thank you!
                 <p className="text-gray-600">{phone}</p>
                 <div className="mt-3 pt-3 border-t border-gray-200 text-gray-600">
                   <p>{address}</p>
+                  <p>{barangay}</p>
                   <p>{city}, {state} {zipCode}</p>
-                  <p>{country}</p>
                 </div>
               </div>
 

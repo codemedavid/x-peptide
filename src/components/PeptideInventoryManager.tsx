@@ -10,7 +10,7 @@ interface PeptideInventoryManagerProps {
 }
 
 const PeptideInventoryManager: React.FC<PeptideInventoryManagerProps> = ({ onBack }) => {
-  const { products, loading, refreshProducts } = useMenu();
+  const { products, loading, refreshProducts, deleteProduct, deleteVariation } = useMenu();
   const { categories } = useCategories();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -184,6 +184,40 @@ const PeptideInventoryManager: React.FC<PeptideInventoryManagerProps> = ({ onBac
     }
   };
 
+  const handleDeleteProduct = async (productId: string, productName: string) => {
+    if (confirm(`Are you sure you want to delete "${productName}"? This action cannot be undone.`)) {
+      try {
+        const result = await deleteProduct(productId);
+        if (result.success) {
+          alert('Product deleted successfully!');
+          await refreshProducts();
+        } else {
+          alert(result.error || 'Failed to delete product');
+        }
+      } catch (error) {
+        console.error('Error deleting product:', error);
+        alert('Failed to delete product. Please try again.');
+      }
+    }
+  };
+
+  const handleDeleteVariation = async (variationId: string, variationName: string) => {
+    if (confirm(`Are you sure you want to delete "${variationName}"? This action cannot be undone.`)) {
+      try {
+        const result = await deleteVariation(variationId);
+        if (result.success) {
+          alert('Variation deleted successfully!');
+          await refreshProducts();
+        } else {
+          alert(result.error || 'Failed to delete variation');
+        }
+      } catch (error) {
+        console.error('Error deleting variation:', error);
+        alert('Failed to delete variation. Please try again.');
+      }
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white flex items-center justify-center">
@@ -319,6 +353,8 @@ const PeptideInventoryManager: React.FC<PeptideInventoryManagerProps> = ({ onBac
                 product={product}
                 categories={categories}
                 onUpdateStock={handleUpdateStock}
+                onDeleteProduct={handleDeleteProduct}
+                onDeleteVariation={handleDeleteVariation}
               />
             ))
           )}
@@ -333,9 +369,11 @@ interface InventoryItemCardProps {
   product: Product;
   categories: Array<{ id: string; name: string }>;
   onUpdateStock: (productId: string, variationId: string | null, newStock: number) => void;
+  onDeleteProduct: (productId: string, productName: string) => void;
+  onDeleteVariation: (variationId: string, variationName: string) => void;
 }
 
-const InventoryItemCard: React.FC<InventoryItemCardProps> = ({ product, categories, onUpdateStock }) => {
+const InventoryItemCard: React.FC<InventoryItemCardProps> = ({ product, categories, onUpdateStock, onDeleteProduct, onDeleteVariation }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editStock, setEditStock] = useState<{ [key: string]: number }>({});
 
@@ -425,18 +463,25 @@ const InventoryItemCard: React.FC<InventoryItemCardProps> = ({ product, categori
                       </button>
                     </div>
                   ) : (
-                    <>
+                    <div className="flex gap-2">
                       <button
                         onClick={() => {
                           setIsEditing(true);
                           setEditStock({ [stockKey]: variation.stock_quantity });
                         }}
-                        className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-black rounded-md font-medium flex items-center justify-center gap-1.5 text-xs md:text-sm transition-colors"
+                        className="flex-1 px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-black rounded-md font-medium flex items-center justify-center gap-1.5 text-xs md:text-sm transition-colors"
                       >
                         <Edit className="w-3 h-3 md:w-4 md:h-4" />
                         Edit
                       </button>
-                    </>
+                      <button
+                        onClick={() => onDeleteVariation(variation.id, `${product.name} ${variation.name}`)}
+                        className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-md font-medium flex items-center justify-center gap-1.5 text-xs md:text-sm transition-colors"
+                      >
+                        <Trash2 className="w-3 h-3 md:w-4 md:h-4" />
+                        Delete
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>
@@ -528,16 +573,25 @@ const InventoryItemCard: React.FC<InventoryItemCardProps> = ({ product, categori
               </button>
             </div>
           ) : (
-            <button
-              onClick={() => {
-                setIsEditing(true);
-                setEditStock({ [stockKey]: product.stock_quantity });
-              }}
-              className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-black rounded-md font-medium flex items-center justify-center gap-1.5 text-xs md:text-sm transition-colors"
-            >
-              <Edit className="w-3 h-3 md:w-4 md:h-4" />
-              Edit
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={() => {
+                  setIsEditing(true);
+                  setEditStock({ [stockKey]: product.stock_quantity });
+                }}
+                className="flex-1 px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-black rounded-md font-medium flex items-center justify-center gap-1.5 text-xs md:text-sm transition-colors"
+              >
+                <Edit className="w-3 h-3 md:w-4 md:h-4" />
+                Edit
+              </button>
+              <button
+                onClick={() => onDeleteProduct(product.id, product.name)}
+                className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-md font-medium flex items-center justify-center gap-1.5 text-xs md:text-sm transition-colors"
+              >
+                <Trash2 className="w-3 h-3 md:w-4 md:h-4" />
+                Delete
+              </button>
+            </div>
           )}
         </div>
       </div>

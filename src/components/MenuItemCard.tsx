@@ -36,6 +36,11 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
 
   const availableStock = selectedVariation ? selectedVariation.stock_quantity : product.stock_quantity;
   
+  // Check if product has any available stock (either in variations or product itself)
+  const hasAnyStock = product.variations && product.variations.length > 0
+    ? product.variations.some(v => v.stock_quantity > 0)
+    : product.stock_quantity > 0;
+  
   const incrementQuantity = () => {
     setQuantity(prev => {
       if (prev >= availableStock) {
@@ -113,8 +118,8 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
           </div>
         </div>
 
-        {/* Stock Status */}
-        {product.stock_quantity === 0 && (
+        {/* Stock Status - Only show if product has no variations and is out of stock, OR all variations are out of stock */}
+        {!hasAnyStock && (
           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <span className="bg-red-500 text-white px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 rounded sm:rounded-md md:rounded-lg font-semibold text-[10px] sm:text-xs md:text-sm">
               Out of Stock
@@ -146,30 +151,43 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
                 Size:
               </label>
               <div className="grid grid-cols-3 gap-1 md:gap-2 max-h-[60px] overflow-y-auto scrollbar-thin">
-              {product.variations.slice(0, 3).map((variation) => (
-                <button
-                  key={variation.id}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedVariation(variation);
-                  }}
-                  disabled={variation.stock_quantity === 0}
-                  className={`
-                    px-1 py-0.5 sm:px-1.5 sm:py-1 md:px-2 md:py-1.5 rounded md:rounded-lg text-[9px] sm:text-[10px] md:text-xs font-medium transition-all relative z-20
-                    ${selectedVariation?.id === variation.id
-                      ? 'bg-black text-white shadow-md border border-gold-500/30'
-                      : variation.stock_quantity === 0
-                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-black border border-gray-300'
-                    }
-                  `}
-                >
-                  <div className="truncate">{variation.name}</div>
-                  <div className="text-[8px] sm:text-[9px] md:text-[10px] mt-0.5">
-                    ₱{variation.price.toLocaleString('en-PH', { minimumFractionDigits: 0 })}
-                  </div>
-                </button>
-              ))}
+              {product.variations.slice(0, 3).map((variation) => {
+                const isOutOfStock = variation.stock_quantity === 0;
+                return (
+                  <button
+                    key={variation.id}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (!isOutOfStock) {
+                        setSelectedVariation(variation);
+                      }
+                    }}
+                    disabled={isOutOfStock}
+                    className={`
+                      px-1 py-0.5 sm:px-1.5 sm:py-1 md:px-2 md:py-1.5 rounded md:rounded-lg text-[9px] sm:text-[10px] md:text-xs font-medium transition-all relative z-20
+                      ${selectedVariation?.id === variation.id && !isOutOfStock
+                        ? 'bg-black text-white shadow-md border border-gold-500/30'
+                        : isOutOfStock
+                          ? 'bg-gray-50 text-gray-400 cursor-not-allowed border border-gray-200 border-dashed opacity-60'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-black border border-gray-300'
+                      }
+                    `}
+                  >
+                    <div className={`truncate ${isOutOfStock ? 'line-through' : ''}`}>
+                      {variation.name}
+                    </div>
+                    {isOutOfStock ? (
+                      <div className="text-[7px] sm:text-[8px] md:text-[9px] mt-0.5 text-red-500 font-semibold">
+                        Out of Stock
+                      </div>
+                    ) : (
+                      <div className="text-[8px] sm:text-[9px] md:text-[10px] mt-0.5">
+                        ₱{variation.price.toLocaleString('en-PH', { minimumFractionDigits: 0 })}
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
               </div>
               {product.variations.length > 3 && (
                 <p className="text-[8px] sm:text-[9px] md:text-[10px] text-gold-600 mt-0.5 sm:mt-1 font-medium">
@@ -236,7 +254,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
               }
               handleAddToCart();
             }}
-            disabled={!product.available || availableStock === 0 || quantity === 0}
+            disabled={!hasAnyStock || availableStock === 0 || quantity === 0}
             className="flex-1 bg-gradient-to-r from-black to-gray-900 hover:from-gray-900 hover:to-black text-white px-1.5 py-1 sm:px-2 sm:py-1.5 md:px-4 md:py-2 lg:px-6 lg:py-3 rounded sm:rounded-md md:rounded-lg font-semibold transition-all duration-200 active:scale-95 shadow-md hover:shadow-gold-glow disabled:opacity-50 disabled:cursor-not-allowed text-[10px] sm:text-[11px] md:text-sm lg:text-base border border-gold-500/20"
           >
             <ShoppingCart className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 inline mr-0.5 sm:mr-1 md:mr-2" />

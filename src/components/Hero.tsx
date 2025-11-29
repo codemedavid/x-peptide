@@ -81,25 +81,25 @@ const Hero: React.FC = () => {
           {/* Compact Trust Badges - 2 Cards */}
           <div className="grid grid-cols-2 gap-3 md:gap-4 max-w-xl md:max-w-2xl mx-auto mb-5 md:mb-6">
             <div className="group bg-white/95 backdrop-blur-sm rounded-lg p-4 md:p-5 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-200 hover:border-gold-300">
-              <div className="bg-gradient-to-br from-black to-gray-900 p-2.5 md:p-3 rounded-lg mb-2.5 md:mb-3 inline-block shadow-md border border-gold-500/30 group-hover:scale-105 transition-transform">
+              <div className="bg-gradient-to-br from-black to-gray-900 p-2.5 md:p-3 rounded-lg mb-2.5 md:mb-3 mx-auto shadow-md border border-gold-500/30 group-hover:scale-105 transition-transform w-fit">
                 <Shield className="w-5 h-5 md:w-6 md:h-6 text-gold-500" />
               </div>
-              <div className="flex items-center gap-1.5 mb-1">
+              <div className="flex items-center justify-center gap-1.5 mb-1">
                 <CheckCircle2 className="w-4 h-4 text-green-600" />
-                <h3 className="text-sm md:text-base font-bold text-black">Premium Quality</h3>
+                <h3 className="text-sm md:text-base font-bold text-black text-center">Premium Quality</h3>
               </div>
-              <p className="text-xs md:text-sm text-gray-600 font-medium">Lab verified</p>
+              <p className="text-xs md:text-sm text-gray-600 font-medium text-center">Lab verified</p>
             </div>
             
             <div className="group bg-gradient-to-br from-gold-50/60 via-white to-gold-50/60 backdrop-blur-sm rounded-lg p-4 md:p-5 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gold-200/50 hover:border-gold-400/50">
               <div className="bg-gradient-to-br from-gold-500 to-gold-600 p-2.5 md:p-3 rounded-lg mb-2.5 md:mb-3 inline-block shadow-md group-hover:scale-105 transition-transform">
                 <Beaker className="w-5 h-5 md:w-6 md:h-6 text-black" />
               </div>
-              <div className="flex items-center gap-1.5 mb-1">
+              <div className="flex items-center justify-center gap-1.5 mb-1">
                 <CheckCircle2 className="w-4 h-4 text-green-600" />
-                <h3 className="text-sm md:text-base font-bold text-black">Excellence</h3>
+                <h3 className="text-sm md:text-base font-bold text-black text-center">Excellence</h3>
               </div>
-              <p className="text-xs md:text-sm text-gray-600 font-medium">Luxury standard</p>
+              <p className="text-xs md:text-sm text-gray-600 font-medium text-center">Luxury standard</p>
             </div>
           </div>
           

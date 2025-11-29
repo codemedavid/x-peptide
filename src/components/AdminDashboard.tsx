@@ -337,7 +337,7 @@ const AdminDashboard: React.FC = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === 'PeptideGlow@Admin!2025') {
+    if (password === 'HPGlow@Admin!2025') {
       setIsAuthenticated(true);
       localStorage.setItem('peptide_admin_auth', 'true');
       setLoginError('');
@@ -590,30 +590,59 @@ const AdminDashboard: React.FC = () => {
 
             {/* Complete Set Inclusions */}
             <div className="bg-gradient-to-r from-gold-50 to-gray-50 border border-gold-300/30 rounded-lg p-3 md:p-4">
-              <h3 className="text-sm md:text-base font-bold text-gray-900 mb-2 md:mb-3 flex items-center gap-1.5">
-                <span className="text-base md:text-lg">📦</span>
-                Complete Set Inclusions
-                <span className="text-xs font-normal text-gray-600">(Optional)</span>
-              </h3>
-              <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">
-                  What's included in this set? (One item per line)
+              <div className="flex items-center justify-between mb-2 md:mb-3">
+                <h3 className="text-sm md:text-base font-bold text-gray-900 flex items-center gap-1.5">
+                  <span className="text-base md:text-lg">📦</span>
+                  Complete Set Inclusions
+                </h3>
+                <label className="flex items-center gap-1.5 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={formData.inclusions !== null && formData.inclusions !== undefined}
+                    onChange={(e) => {
+                      if (!e.target.checked) {
+                        setFormData({ ...formData, inclusions: null });
+                      } else {
+                        setFormData({ ...formData, inclusions: formData.inclusions || [] });
+                      }
+                    }}
+                    className="w-4 h-4 text-gold-600 rounded focus:ring-gold-500"
+                  />
+                  <span className="text-xs font-semibold text-gray-700">This is a SET product</span>
                 </label>
-                <textarea
-                  value={formData.inclusions?.join('\n') || ''}
-                  onChange={(e) => {
-                    const items = e.target.value.split('\n').filter(item => item.trim() !== '');
-                    setFormData({ ...formData, inclusions: items.length > 0 ? items : null });
-                  }}
-                  className="input-field text-sm min-h-[80px]"
-                  placeholder="Example:&#10;1 vial of Tirzepatide 20mg&#10;1 pack of syringes (10pcs)&#10;1 pack of alcohol swabs (10pcs)&#10;Bacteriostatic water 5ml&#10;Storage instructions card&#10;Dosage guide"
-                  rows={4}
-                />
-                <p className="text-xs text-gray-500 mt-2 flex items-start gap-1.5">
-                  <span className="text-gold-600 font-bold">💡</span>
-                  <span>Enter each item on a new line. These will be displayed as a checklist on the product card. Leave empty if this is not a complete set.</span>
-                </p>
               </div>
+              {formData.inclusions !== null && formData.inclusions !== undefined ? (
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">
+                    What's included in this set? (One item per line)
+                  </label>
+                  <textarea
+                    value={formData.inclusions?.join('\n') || ''}
+                    onChange={(e) => {
+                      const items = e.target.value.split('\n').filter(item => item.trim() !== '');
+                      setFormData({ ...formData, inclusions: items.length > 0 ? items : null });
+                    }}
+                    className="input-field text-sm min-h-[80px]"
+                    placeholder="Example:&#10;Syringe for Reconstitution&#10;6 Insulin Syringes (7pcs for 30mg)&#10;10pcs Alcohol Pads&#10;Tirzepatide Printed Guide&#10;Transparent vial case and vial cap&#10;Peptide Injection and Inventory Spreadsheet tracker"
+                    rows={6}
+                  />
+                  <p className="text-xs text-gray-500 mt-2 flex items-start gap-1.5">
+                    <span className="text-gold-600 font-bold">💡</span>
+                    <span>Enter each item on a new line. These will be displayed as a checklist on the product detail page. Check "This is a SET product" above to enable this feature.</span>
+                  </p>
+                </div>
+              ) : (
+                <div className="text-center py-4">
+                  <p className="text-xs text-gray-500 mb-2">Enable "This is a SET product" to add inclusions</p>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, inclusions: [] })}
+                    className="text-xs text-gold-600 hover:text-gold-700 font-medium"
+                  >
+                    Enable SET feature
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Inventory */}

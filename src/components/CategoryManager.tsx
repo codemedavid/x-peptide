@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Plus, Edit, Trash2, Save, X, ArrowLeft, GripVertical } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Plus, Edit, Trash2, Save, X, ArrowLeft, GripVertical, Package } from 'lucide-react';
 import { useCategories, Category } from '../hooks/useCategories';
+import { supabase } from '../lib/supabase';
 
 interface CategoryManagerProps {
   onBack: () => void;
@@ -10,6 +11,7 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({ onBack }) => {
   const { categories, addCategory, updateCategory, deleteCategory, reorderCategories } = useCategories();
   const [currentView, setCurrentView] = useState<'list' | 'add' | 'edit'>('list');
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+  const [categoryProductCounts, setCategoryProductCounts] = useState<Record<string, number>>({});
   const [formData, setFormData] = useState({
     id: '',
     name: '',
@@ -17,6 +19,33 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({ onBack }) => {
     sort_order: 0,
     active: true
   });
+
+  // Fetch product counts for each category
+  useEffect(() => {
+    const fetchProductCounts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('products')
+          .select('category');
+
+        if (error) throw error;
+
+        const counts: Record<string, number> = {};
+        if (data) {
+          data.forEach((product) => {
+            counts[product.category] = (counts[product.category] || 0) + 1;
+          });
+        }
+        setCategoryProductCounts(counts);
+      } catch (error) {
+        console.error('Error fetching product counts:', error);
+      }
+    };
+
+    if (categories.length > 0) {
+      fetchProductCounts();
+    }
+  }, [categories]);
 
   const handleAddCategory = () => {
     const nextSortOrder = Math.max(...categories.map(c => c.sort_order), 0) + 1;
@@ -103,35 +132,36 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({ onBack }) => {
   // Form View (Add/Edit)
   if (currentView === 'add' || currentView === 'edit') {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="bg-white shadow-sm border-b">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
-              <div className="flex items-center space-x-4">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="bg-white/80 backdrop-blur-sm shadow-sm border-b border-gray-200/50 sticky top-0 z-10">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+            <div className="flex items-center justify-between h-14 sm:h-16 gap-2 sm:gap-4">
+              <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
                 <button
                   onClick={handleCancel}
-                  className="flex items-center space-x-2 text-gray-600 hover:text-black transition-colors duration-200"
+                  className="text-gray-600 hover:text-gold-600 transition-colors flex items-center gap-1 sm:gap-2 group flex-shrink-0"
                 >
-                  <ArrowLeft className="h-5 w-5" />
-                  <span>Back</span>
+                  <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 group-hover:-translate-x-1 transition-transform" />
+                  <span className="text-xs sm:text-sm font-medium hidden sm:inline">Back</span>
                 </button>
-                <h1 className="text-2xl font-playfair font-semibold text-black">
+                <div className="h-5 sm:h-6 w-px bg-gray-300 hidden sm:block"></div>
+                <h1 className="text-sm sm:text-lg lg:text-xl font-bold text-gray-900 truncate">
                   {currentView === 'add' ? 'Add New Category' : 'Edit Category'}
                 </h1>
               </div>
-              <div className="flex space-x-3">
+              <div className="flex gap-1.5 sm:gap-2 flex-shrink-0">
                 <button
                   onClick={handleCancel}
-                  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 flex items-center space-x-2"
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 border border-gray-300 hover:border-gray-400 rounded-lg hover:bg-gray-50 transition-all flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium"
                 >
-                  <X className="h-4 w-4" />
-                  <span>Cancel</span>
+                  <X className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Cancel</span>
                 </button>
                 <button
                   onClick={handleSaveCategory}
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center space-x-2"
+                  className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-all flex items-center gap-1.5 sm:gap-2 shadow-md hover:shadow-lg disabled:opacity-50 text-xs sm:text-sm font-semibold active:scale-95"
                 >
-                  <Save className="h-4 w-4" />
+                  <Save className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   <span>Save</span>
                 </button>
               </div>
@@ -139,80 +169,90 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({ onBack }) => {
           </div>
         </div>
 
-        <div className="max-w-2xl mx-auto px-4 py-8">
-          <div className="bg-white rounded-xl shadow-sm p-8">
-            <div className="space-y-6">
+        <div className="max-w-2xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8">
+          <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 lg:p-8">
+            <div className="space-y-4 sm:space-y-6">
               <div>
-                <label className="block text-sm font-medium text-black mb-2">Category Name *</label>
+                <label className="block text-xs sm:text-sm font-semibold text-gray-900 mb-1.5 sm:mb-2">
+                  Category Name <span className="text-red-500">*</span>
+                </label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => handleNameChange(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
-                  placeholder="Enter category name"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all text-sm"
+                  placeholder="e.g., Research Peptides"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-black mb-2">Category ID *</label>
+                <label className="block text-xs sm:text-sm font-semibold text-gray-900 mb-1.5 sm:mb-2">
+                  Category ID <span className="text-red-500">*</span>
+                </label>
                 <input
                   type="text"
                   value={formData.id}
                   onChange={(e) => setFormData({ ...formData, id: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
-                  placeholder="kebab-case-id"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all text-xs sm:text-sm font-mono disabled:bg-gray-50 disabled:cursor-not-allowed disabled:text-gray-500"
+                  placeholder="e.g., research-peptides"
                   disabled={currentView === 'edit'}
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-[10px] sm:text-xs text-gray-500 mt-1.5 sm:mt-2">
                   {currentView === 'edit' 
                     ? 'Category ID cannot be changed after creation'
-                    : 'Use kebab-case format (e.g., "hot-drinks", "cold-beverages")'
+                    : 'Automatically generated from name, or enter manually in kebab-case format'
                   }
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-black mb-2">Icon *</label>
-                <div className="flex items-center space-x-3">
+                <label className="block text-xs sm:text-sm font-semibold text-gray-900 mb-1.5 sm:mb-2">
+                  Icon <span className="text-red-500">*</span>
+                </label>
+                <div className="flex items-center gap-2 sm:gap-3">
                   <input
                     type="text"
                     value={formData.icon}
                     onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
-                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    placeholder="Enter emoji or icon"
+                    className="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all text-sm"
+                    placeholder="Enter emoji (e.g., ☕, 🧪, 💊)"
                   />
-                  <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center text-2xl">
-                    {formData.icon}
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg flex items-center justify-center text-2xl sm:text-3xl border border-gray-200 shadow-sm overflow-hidden flex-shrink-0">
+                    <span className="leading-none select-none">{formData.icon || '?'}</span>
                   </div>
                 </div>
-                <p className="text-xs text-gray-500 mt-1">
-                  Use an emoji or icon character (e.g., ☕, 🧊, 🫖, 🥐)
+                <p className="text-[10px] sm:text-xs text-gray-500 mt-1.5 sm:mt-2">
+                  Use an emoji or icon character to represent this category
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-black mb-2">Sort Order</label>
+                <label className="block text-xs sm:text-sm font-semibold text-gray-900 mb-1.5 sm:mb-2">
+                  Sort Order
+                </label>
                 <input
                   type="number"
                   value={formData.sort_order}
                   onChange={(e) => setFormData({ ...formData, sort_order: Number(e.target.value) })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all text-sm"
                   placeholder="0"
                 />
-                <p className="text-xs text-gray-500 mt-1">
-                  Lower numbers appear first in the menu
+                <p className="text-[10px] sm:text-xs text-gray-500 mt-1.5 sm:mt-2">
+                  Lower numbers appear first in the menu. Categories are sorted in ascending order.
                 </p>
               </div>
 
-              <div className="flex items-center">
-                <label className="flex items-center space-x-2">
+              <div className="flex items-center pt-1 sm:pt-2">
+                <label className="flex items-center gap-2 sm:gap-3 cursor-pointer group">
                   <input
                     type="checkbox"
                     checked={formData.active}
                     onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
-                    className="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-gold-600 rounded border-gray-300 focus:ring-2 focus:ring-gold-500 focus:ring-offset-2 cursor-pointer"
                   />
-                  <span className="text-sm font-medium text-black">Active Category</span>
+                  <span className="text-xs sm:text-sm font-semibold text-gray-900 group-hover:text-gray-700">
+                    Active Category
+                  </span>
                 </label>
               </div>
             </div>
@@ -224,94 +264,142 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({ onBack }) => {
 
   // List View
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      <div className="bg-white/80 backdrop-blur-sm shadow-sm border-b border-gray-200/50 sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16 gap-2 sm:gap-4">
+            <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
               <button
                 onClick={onBack}
-                className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200"
+                className="text-gray-600 hover:text-gold-600 transition-colors flex items-center gap-1 sm:gap-2 group flex-shrink-0"
               >
-                <ArrowLeft className="h-5 w-5" />
-                <span>Dashboard</span>
+                <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 group-hover:-translate-x-1 transition-transform" />
+                <span className="text-xs sm:text-sm font-medium hidden sm:inline">Dashboard</span>
               </button>
-              <h1 className="text-2xl font-playfair font-semibold text-black">Manage Categories</h1>
+              <div className="h-5 sm:h-6 w-px bg-gray-300 hidden sm:block"></div>
+              <h1 className="text-sm sm:text-lg lg:text-xl font-bold text-gray-900 truncate">
+                Manage Categories
+              </h1>
             </div>
             <button
               onClick={handleAddCategory}
-              className="flex items-center space-x-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-200"
+              className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg transition-all flex items-center gap-1.5 sm:gap-2 shadow-md hover:shadow-lg text-xs sm:text-sm font-semibold active:scale-95 flex-shrink-0"
             >
-              <Plus className="h-4 w-4" />
-              <span>Add Category</span>
+              <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              <span className="hidden sm:inline">Add Category</span>
+              <span className="sm:hidden">Add</span>
             </button>
           </div>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-          <div className="p-6">
-            <h2 className="text-lg font-playfair font-medium text-black mb-4">Categories</h2>
-            
-            {categories.length === 0 ? (
-              <div className="text-center py-8">
-                <p className="text-gray-500 mb-4">No categories found</p>
-                <button
-                  onClick={handleAddCategory}
-                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200"
-                >
-                  Add First Category
-                </button>
+      <div className="max-w-5xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8">
+        <div className="mb-4 sm:mb-6">
+          <h2 className="text-base sm:text-lg font-semibold text-gray-900 mb-0.5 sm:mb-1">Categories</h2>
+          <p className="text-xs sm:text-sm text-gray-500">
+            {categories.length} {categories.length === 1 ? 'category' : 'categories'} total
+          </p>
+        </div>
+        
+        {categories.length === 0 ? (
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 sm:p-12 text-center">
+            <div className="max-w-sm mx-auto">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                <Package className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
               </div>
-            ) : (
-              <div className="space-y-3">
-                {categories.map((category) => (
-                  <div
-                    key={category.id}
-                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center space-x-2 text-gray-400 cursor-move">
-                        <GripVertical className="h-4 w-4" />
-                        <span className="text-sm text-gray-500">#{category.sort_order}</span>
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">No categories yet</h3>
+              <p className="text-gray-500 mb-6 text-xs sm:text-sm">
+                Get started by creating your first category to organize your products.
+              </p>
+              <button
+                onClick={handleAddCategory}
+                className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-all shadow-md hover:shadow-lg font-medium text-xs sm:text-sm active:scale-95"
+              >
+                <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4 inline mr-1.5 sm:mr-2" />
+                Create First Category
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-2 sm:space-y-3">
+            {categories.map((category) => {
+              const productCount = categoryProductCounts[category.id] || 0;
+              const hasProducts = productCount > 0;
+              const isAllCategory = category.id === 'all';
+              
+              return (
+                <div
+                  key={category.id}
+                  className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-3 sm:p-4 lg:p-5 shadow-sm hover:shadow-md transition-all duration-200 hover:border-gold-300/50"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
+                    <div className="flex items-start gap-2 sm:gap-3 lg:gap-4 flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5 sm:gap-2 text-gray-400 group-hover:text-gray-500 transition-colors flex-shrink-0 pt-0.5">
+                        <GripVertical className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                        <span className="text-[10px] sm:text-xs font-mono text-gray-400">#{category.sort_order}</span>
                       </div>
-                      <div className="text-2xl">{category.icon}</div>
-                      <div>
-                        <h3 className="font-medium text-black">{category.name}</h3>
-                        <p className="text-sm text-gray-500">ID: {category.id}</p>
+                      
+                      <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center text-xl sm:text-2xl border border-gray-200 overflow-hidden">
+                        <span className="leading-none select-none">{category.icon}</span>
+                      </div>
+                      
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3 mb-1.5 sm:mb-2">
+                          <h3 className="font-semibold text-gray-900 text-sm sm:text-base leading-tight break-words">
+                            {category.name}
+                          </h3>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            {hasProducts && (
+                              <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 whitespace-nowrap">
+                                <Package className="w-3 h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
+                                {productCount} {productCount === 1 ? 'product' : 'products'}
+                              </span>
+                            )}
+                            {!hasProducts && !isAllCategory && (
+                              <span className="inline-flex items-center px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-xs font-medium bg-gray-50 text-gray-500 border border-gray-200 whitespace-nowrap">
+                                No products
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <p className="text-[10px] sm:text-xs text-gray-500 font-mono break-all">ID: {category.id}</p>
                       </div>
                     </div>
                     
-                    <div className="flex items-center space-x-3">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                    <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-2 flex-shrink-0 sm:border-l sm:border-gray-200 sm:pl-3 sm:ml-1">
+                      <span className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded-md text-[10px] sm:text-xs font-semibold transition-colors whitespace-nowrap ${
                         category.active 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-red-100 text-red-800'
+                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
+                          : 'bg-red-50 text-red-700 border border-red-200'
                       }`}>
                         {category.active ? 'Active' : 'Inactive'}
                       </span>
                       
-                      <button
-                        onClick={() => handleEditCategory(category)}
-                        className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded transition-colors duration-200"
-                      >
-                        <Edit className="h-4 w-4" />
-                      </button>
-                      
-                      <button
-                        onClick={() => handleDeleteCategory(category.id)}
-                        className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors duration-200"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
+                      <div className="flex items-center gap-0.5 sm:gap-1">
+                        <button
+                          onClick={() => handleEditCategory(category)}
+                          className="p-1.5 sm:p-2 text-gray-400 hover:text-gold-600 hover:bg-gold-50 rounded-lg transition-all duration-200"
+                          title="Edit category"
+                        >
+                          <Edit className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                        </button>
+                        
+                        <button
+                          onClick={() => handleDeleteCategory(category.id)}
+                          disabled={hasProducts && !isAllCategory}
+                          className="p-1.5 sm:p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-gray-400 disabled:hover:bg-transparent"
+                          title={hasProducts && !isAllCategory ? 'Cannot delete category with products' : 'Delete category'}
+                        >
+                          <Trash2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
+                </div>
+              );
+            })}
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

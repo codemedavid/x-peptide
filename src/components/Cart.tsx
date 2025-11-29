@@ -197,9 +197,9 @@ const Cart: React.FC<CartProps> = ({
                   <span>Subtotal ({cartItems.reduce((sum, item) => sum + item.quantity, 0)} items)</span>
                   <span className="font-semibold">₱{totalPrice.toLocaleString('en-PH', { minimumFractionDigits: 0 })}</span>
                 </div>
-                <div className="flex justify-between text-gray-700 text-xs md:text-sm italic">
+                <div className="flex justify-between text-gray-700 text-xs md:text-sm">
                   <span>Shipping</span>
-                  <span className="text-gray-700 font-medium">To be discussed</span>
+                  <span className="text-gray-700 font-medium">Make sure to choose your location on the next page so the shipping fee is applied accurately.</span>
                 </div>
 
                 <div className="border-t-2 border-dashed border-gray-200 pt-3 mt-4">
@@ -209,7 +209,7 @@ const Cart: React.FC<CartProps> = ({
                       ₱{finalTotal.toLocaleString('en-PH', { minimumFractionDigits: 0 })}
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500 mt-1 text-right italic">+ Shipping fee (to be discussed)</p>
+                  <p className="text-xs text-gray-500 mt-1 text-right">+ Shipping fee (calculated on checkout)</p>
                 </div>
               </div>
 
