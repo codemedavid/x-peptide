@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useCOAPageSetting } from '../hooks/useCOAPageSetting';
-import { ShoppingCart, Menu, X, MessageCircle, Calculator, FileText, HelpCircle, Truck } from 'lucide-react';
+import { ShoppingCart, Menu, X, Calculator, FileText, HelpCircle, Truck } from 'lucide-react';
 
 interface HeaderProps {
   cartItemsCount: number;
@@ -81,15 +81,7 @@ const Header: React.FC<HeaderProps> = ({ cartItemsCount, onCartClick, onMenuClic
                   <HelpCircle className="w-4 h-4" />
                   FAQ
                 </a>
-                <a
-                  href="https://t.me/+kdn_GOqZXxI1Y2Jl"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium text-gray-400 hover:text-white px-3 py-2 rounded-lg hover:bg-white/5 transition-all flex items-center gap-1.5"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  Community
-                </a>
+
               </nav>
 
               {/* Cart Button */}
@@ -198,17 +190,7 @@ const Header: React.FC<HeaderProps> = ({ cartItemsCount, onCartClick, onMenuClic
                   </div>
                   FAQ
                 </a>
-                <a
-                  href="https://t.me/+kdn_GOqZXxI1Y2Jl"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-4 rounded-xl text-left font-medium text-white hover:bg-white/5 transition-all"
-                >
-                  <div className="p-2 rounded-lg bg-white/10">
-                    <MessageCircle className="w-[18px] h-[18px]" />
-                  </div>
-                  Join Community
-                </a>
+
               </div>
             </nav>
           </div>

@@ -7,6 +7,7 @@ interface TrackingOrder {
     order_status: string;
     payment_status: string;
     tracking_number: string | null;
+    shipping_provider: string | null;
     shipping_note: string | null;
     total_price: number;
     shipping_fee: number;
@@ -100,7 +101,7 @@ const OrderTracking: React.FC = () => {
                                 value={orderId}
                                 onChange={(e) => setOrderId(e.target.value)}
                                 placeholder="Enter Order ID (e.g., 8a2b3c...)"
-                                className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-navy-900 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-lg"
+                                className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-navy-900 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all text-lg text-gray-900"
                             />
                         </div>
                         <button
@@ -209,17 +210,22 @@ const OrderTracking: React.FC = () => {
                                         {order.tracking_number ? (
                                             <div className="space-y-4">
                                                 <div>
-                                                    <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Tracking Number (J&T)</p>
+                                                    <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">
+                                                        Tracking Number ({order.shipping_provider === 'spx' ? 'SPX Express' : 'J&T Express'})
+                                                    </p>
                                                     <p className="text-xl font-mono font-bold text-navy-900 tracking-wide">{order.tracking_number}</p>
                                                 </div>
 
                                                 <a
-                                                    href={`https://www.jtexpress.ph/trajectoryQuery?bills=${order.tracking_number}`}
+                                                    href={order.shipping_provider === 'spx'
+                                                        ? `https://spx.ph/track`
+                                                        : `https://www.jtexpress.ph/trajectoryQuery?bills=${order.tracking_number}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="block w-full py-3 bg-blue-600 hover:bg-blue-700 text-white text-center rounded-lg font-bold transition-colors shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                                                    className={`block w-full py-3 text-white text-center rounded-lg font-bold transition-colors shadow-md hover:shadow-lg flex items-center justify-center gap-2 ${order.shipping_provider === 'spx' ? 'bg-orange-500 hover:bg-orange-600' : 'bg-red-600 hover:bg-red-700'
+                                                        }`}
                                                 >
-                                                    Track on J&T Express
+                                                    Track on {order.shipping_provider === 'spx' ? 'SPX Express' : 'J&T Express'}
                                                     <ExternalLink className="w-4 h-4" />
                                                 </a>
                                             </div>

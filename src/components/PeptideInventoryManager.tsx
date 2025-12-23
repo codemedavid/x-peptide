@@ -304,13 +304,13 @@ const PeptideInventoryManager: React.FC<PeptideInventoryManagerProps> = ({ onBac
                 placeholder="Search by name..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-3 py-1.5 md:py-2 text-sm border border-gray-300 rounded-md focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-gold-500 transition-colors"
+                className="w-full pl-9 pr-3 py-1.5 md:py-2 text-sm border border-gray-300 rounded-md focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-gold-500 transition-colors text-gray-900"
               />
             </div>
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-3 py-1.5 md:py-2 text-sm border border-gray-300 rounded-md focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-gold-500 bg-white transition-colors"
+              className="px-3 py-1.5 md:py-2 text-sm border border-gray-300 rounded-md focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-gold-500 bg-white transition-colors text-gray-900"
             >
               <option value="all">All Categories</option>
               {categories.map(cat => (
@@ -320,7 +320,7 @@ const PeptideInventoryManager: React.FC<PeptideInventoryManagerProps> = ({ onBac
             <select
               value={selectedFilter}
               onChange={(e) => setSelectedFilter(e.target.value)}
-              className="px-3 py-1.5 md:py-2 text-sm border border-gray-300 rounded-md focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-gold-500 bg-white transition-colors"
+              className="px-3 py-1.5 md:py-2 text-sm border border-gray-300 rounded-md focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-gold-500 bg-white transition-colors text-gray-900"
             >
               <option value="all">All Items</option>
               <option value="in-stock">In Stock</option>
@@ -438,7 +438,7 @@ const InventoryItemCard: React.FC<InventoryItemCardProps> = ({ product, categori
                         type="number"
                         value={currentStock}
                         onChange={(e) => setEditStock({ ...editStock, [stockKey]: parseInt(e.target.value) || 0 })}
-                        className="w-16 md:w-20 px-2 py-1 text-xs md:text-sm border border-gray-300 rounded text-center focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-gold-500"
+                        className="w-16 md:w-20 px-2 py-1 text-xs md:text-sm border border-gray-300 rounded text-center focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-gold-500 text-gray-900"
                         min="0"
                       />
                       <button
@@ -547,7 +547,7 @@ const InventoryItemCard: React.FC<InventoryItemCardProps> = ({ product, categori
                 type="number"
                 value={currentStock}
                 onChange={(e) => setEditStock({ ...editStock, [stockKey]: parseInt(e.target.value) || 0 })}
-                className="w-16 md:w-20 px-2 py-1 text-xs md:text-sm border border-gray-300 rounded text-center focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-gold-500"
+                className="w-16 md:w-20 px-2 py-1 text-xs md:text-sm border border-gray-300 rounded text-center focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-gold-500 text-gray-900"
                 min="0"
               />
               <button

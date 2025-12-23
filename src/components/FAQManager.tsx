@@ -143,7 +143,7 @@ const FAQManager: React.FC<FAQManagerProps> = ({ onBack }) => {
                                 type="text"
                                 value={formData.question}
                                 onChange={(e) => setFormData({ ...formData, question: e.target.value })}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy-900 focus:border-transparent"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy-900 focus:border-transparent text-gray-900"
                                 placeholder="Enter the question"
                                 required
                             />
@@ -155,7 +155,7 @@ const FAQManager: React.FC<FAQManagerProps> = ({ onBack }) => {
                             <textarea
                                 value={formData.answer}
                                 onChange={(e) => setFormData({ ...formData, answer: e.target.value })}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy-900 focus:border-transparent"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy-900 focus:border-transparent text-gray-900"
                                 placeholder="Enter the answer (supports line breaks)"
                                 rows={5}
                                 required
@@ -169,7 +169,7 @@ const FAQManager: React.FC<FAQManagerProps> = ({ onBack }) => {
                                 <select
                                     value={formData.category}
                                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy-900 focus:border-transparent"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy-900 focus:border-transparent text-gray-900"
                                 >
                                     {categories.map((cat) => (
                                         <option key={cat} value={cat}>
@@ -186,7 +186,7 @@ const FAQManager: React.FC<FAQManagerProps> = ({ onBack }) => {
                                     type="number"
                                     value={formData.order_index}
                                     onChange={(e) => setFormData({ ...formData, order_index: parseInt(e.target.value) })}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy-900 focus:border-transparent"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy-900 focus:border-transparent text-gray-900"
                                     min={1}
                                 />
                             </div>

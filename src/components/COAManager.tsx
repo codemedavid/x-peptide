@@ -311,7 +311,7 @@ const COAManager: React.FC<COAManagerProps> = ({ onBack }) => {
                   required
                   value={formData.product_name}
                   onChange={(e) => setFormData({ ...formData, product_name: e.target.value })}
-                  className="input-field"
+                  className="input-field text-black"
                   placeholder="e.g., Tirzepatide 15mg"
                 />
               </div>
@@ -324,7 +324,7 @@ const COAManager: React.FC<COAManagerProps> = ({ onBack }) => {
                   type="text"
                   value={formData.batch}
                   onChange={(e) => setFormData({ ...formData, batch: e.target.value })}
-                  className="input-field"
+                  className="input-field text-black"
                   placeholder="Unknown"
                 />
               </div>
@@ -338,7 +338,7 @@ const COAManager: React.FC<COAManagerProps> = ({ onBack }) => {
                   required
                   value={formData.test_date}
                   onChange={(e) => setFormData({ ...formData, test_date: e.target.value })}
-                  className="input-field"
+                  className="input-field text-black"
                 />
               </div>
 
@@ -352,7 +352,7 @@ const COAManager: React.FC<COAManagerProps> = ({ onBack }) => {
                   required
                   value={formData.purity_percentage}
                   onChange={(e) => setFormData({ ...formData, purity_percentage: parseFloat(e.target.value) })}
-                  className="input-field"
+                  className="input-field text-black"
                   placeholder="99.658"
                 />
               </div>
@@ -366,7 +366,7 @@ const COAManager: React.FC<COAManagerProps> = ({ onBack }) => {
                   required
                   value={formData.quantity}
                   onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
-                  className="input-field"
+                  className="input-field text-black"
                   placeholder="e.g., 16.80 mg"
                 />
               </div>
@@ -380,7 +380,7 @@ const COAManager: React.FC<COAManagerProps> = ({ onBack }) => {
                   required
                   value={formData.task_number}
                   onChange={(e) => setFormData({ ...formData, task_number: e.target.value })}
-                  className="input-field"
+                  className="input-field text-black"
                   placeholder="#68396"
                 />
               </div>
@@ -394,7 +394,7 @@ const COAManager: React.FC<COAManagerProps> = ({ onBack }) => {
                   required
                   value={formData.verification_key}
                   onChange={(e) => setFormData({ ...formData, verification_key: e.target.value })}
-                  className="input-field"
+                  className="input-field text-black"
                   placeholder="9AUYT3EZV9Y9"
                 />
               </div>
@@ -418,7 +418,7 @@ const COAManager: React.FC<COAManagerProps> = ({ onBack }) => {
                   type="text"
                   value={formData.manufacturer}
                   onChange={(e) => setFormData({ ...formData, manufacturer: e.target.value })}
-                  className="input-field"
+                  className="input-field text-black"
                 />
               </div>
 
@@ -430,7 +430,7 @@ const COAManager: React.FC<COAManagerProps> = ({ onBack }) => {
                   type="text"
                   value={formData.laboratory}
                   onChange={(e) => setFormData({ ...formData, laboratory: e.target.value })}
-                  className="input-field"
+                  className="input-field text-black"
                 />
               </div>
             </div>

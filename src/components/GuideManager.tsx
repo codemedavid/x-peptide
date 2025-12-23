@@ -361,7 +361,7 @@ export default function GuideManager() {
                                     type="text"
                                     value={modalData.title}
                                     onChange={(e) => setModalData({ ...modalData, title: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-theme-accent focus:border-transparent"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-theme-accent focus:border-transparent text-gray-900"
                                     placeholder="e.g., Understanding Weight Loss Plateaus and How to Overcome Them"
                                 />
                             </div>
@@ -388,7 +388,7 @@ export default function GuideManager() {
                                     onChange={(e) => setModalData({ ...modalData, preview: e.target.value })}
                                     rows={2}
                                     maxLength={150}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-theme-accent focus:border-transparent text-sm"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-theme-accent focus:border-transparent text-sm text-gray-900"
                                     placeholder="Short 1-2 line preview (max 150 characters)"
                                 />
                                 <p className="text-xs text-gray-500 mt-1">
@@ -405,7 +405,7 @@ export default function GuideManager() {
                                     value={modalData.content}
                                     onChange={(e) => setModalData({ ...modalData, content: e.target.value })}
                                     rows={15}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-theme-accent focus:border-transparent font-mono text-sm"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-theme-accent focus:border-transparent font-mono text-sm text-gray-900"
                                     placeholder="Write your full article content here. Use line breaks for paragraphs."
                                 />
                                 <p className="text-xs text-gray-500 mt-2">
@@ -423,7 +423,7 @@ export default function GuideManager() {
                                         type="text"
                                         value={modalData.author}
                                         onChange={(e) => setModalData({ ...modalData, author: e.target.value })}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-theme-accent focus:border-transparent"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-theme-accent focus:border-transparent text-gray-900"
                                     />
                                 </div>
 
@@ -435,7 +435,7 @@ export default function GuideManager() {
                                         type="date"
                                         value={modalData.published_date}
                                         onChange={(e) => setModalData({ ...modalData, published_date: e.target.value })}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-theme-accent focus:border-transparent"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-theme-accent focus:border-transparent text-gray-900"
                                     />
                                 </div>
                             </div>
@@ -449,7 +449,7 @@ export default function GuideManager() {
                                     type="number"
                                     value={modalData.display_order}
                                     onChange={(e) => setModalData({ ...modalData, display_order: parseInt(e.target.value) || 0 })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-theme-accent focus:border-transparent"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-theme-accent focus:border-transparent text-gray-900"
                                 />
                                 <p className="text-xs text-gray-500 mt-1">
                                     Lower numbers appear first in the article list

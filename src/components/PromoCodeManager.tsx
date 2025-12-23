@@ -149,7 +149,7 @@ const PromoCodeManager: React.FC = () => {
                             placeholder="Search by code..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-navy-900 focus:border-transparent"
+                            className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-navy-900 focus:border-transparent text-black"
                         />
                     </div>
                 </div>
@@ -203,8 +203,8 @@ const PromoCodeManager: React.FC = () => {
                                         <button
                                             onClick={() => toggleActive(code.id, code.active)}
                                             className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${code.active
-                                                    ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                                                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                                                ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                                                : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
                                                 }`}
                                         >
                                             {code.active ? <CheckCircle className="w-3.5 h-3.5" /> : <XCircle className="w-3.5 h-3.5" />}
@@ -247,7 +247,7 @@ const PromoCodeManager: React.FC = () => {
                                 <input
                                     type="text"
                                     required
-                                    className="w-full px-4 py-2 border border-gray-200 rounded-lg uppercase placeholder-gray-400 focus:ring-2 focus:ring-navy-900 focus:border-transparent"
+                                    className="w-full px-4 py-2 border border-gray-200 rounded-lg uppercase placeholder-gray-400 focus:ring-2 focus:ring-navy-900 focus:border-transparent text-black"
                                     placeholder="e.g. SAVE100"
                                     value={formData.code}
                                     onChange={e => setFormData({ ...formData, code: e.target.value })}
@@ -258,7 +258,7 @@ const PromoCodeManager: React.FC = () => {
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
                                     <select
-                                        className="w-full px-4 py-2 border border-gray-200 rounded-lg bg-white"
+                                        className="w-full px-4 py-2 border border-gray-200 rounded-lg bg-white text-black"
                                         value={formData.discount_type}
                                         onChange={e => setFormData({ ...formData, discount_type: e.target.value as any })}
                                     >
@@ -272,7 +272,7 @@ const PromoCodeManager: React.FC = () => {
                                         type="number"
                                         required
                                         min="0"
-                                        className="w-full px-4 py-2 border border-gray-200 rounded-lg"
+                                        className="w-full px-4 py-2 border border-gray-200 rounded-lg text-black"
                                         value={formData.discount_value}
                                         onChange={e => setFormData({ ...formData, discount_value: Number(e.target.value) })}
                                     />
@@ -285,7 +285,7 @@ const PromoCodeManager: React.FC = () => {
                                     <input
                                         type="number"
                                         min="0"
-                                        className="w-full px-4 py-2 border border-gray-200 rounded-lg"
+                                        className="w-full px-4 py-2 border border-gray-200 rounded-lg text-black"
                                         value={formData.min_purchase_amount}
                                         onChange={e => setFormData({ ...formData, min_purchase_amount: Number(e.target.value) })}
                                     />
@@ -295,7 +295,7 @@ const PromoCodeManager: React.FC = () => {
                                     <input
                                         type="number"
                                         min="0"
-                                        className="w-full px-4 py-2 border border-gray-200 rounded-lg"
+                                        className="w-full px-4 py-2 border border-gray-200 rounded-lg text-black"
                                         placeholder="No limit"
                                         value={formData.usage_limit || ''}
                                         onChange={e => setFormData({ ...formData, usage_limit: e.target.value ? Number(e.target.value) : undefined })}
@@ -307,7 +307,7 @@ const PromoCodeManager: React.FC = () => {
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
                                 <input
                                     type="date"
-                                    className="w-full px-4 py-2 border border-gray-200 rounded-lg"
+                                    className="w-full px-4 py-2 border border-gray-200 rounded-lg text-black"
                                     value={formData.end_date ? formData.end_date.split('T')[0] : ''}
                                     onChange={e => setFormData({ ...formData, end_date: e.target.value ? new Date(e.target.value).toISOString() : undefined })}
                                 />

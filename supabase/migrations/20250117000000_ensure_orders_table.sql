@@ -35,9 +35,17 @@ CREATE TABLE IF NOT EXISTS orders (
   -- Contact Method
   contact_method TEXT, -- instagram, viber
   
+  -- Promo Codes
+  promo_code_id UUID,
+  promo_code TEXT,
+  discount_applied DECIMAL(10, 2) DEFAULT 0,
+
   -- Order Status
   order_status TEXT DEFAULT 'new', -- new, confirmed, processing, shipped, delivered, cancelled
   notes TEXT,
+  tracking_number TEXT,
+  shipping_provider TEXT DEFAULT 'jnt', -- jnt, spx
+  shipping_note TEXT,
   
   -- Timestamps
   created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -97,6 +105,50 @@ BEGIN
     WHERE table_name = 'orders' AND column_name = 'contact_method'
   ) THEN
     ALTER TABLE orders ADD COLUMN contact_method TEXT;
+  END IF;
+
+  -- Add promo columns if they don't exist
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'orders' AND column_name = 'promo_code_id'
+  ) THEN
+    ALTER TABLE orders ADD COLUMN promo_code_id UUID;
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'orders' AND column_name = 'promo_code'
+  ) THEN
+    ALTER TABLE orders ADD COLUMN promo_code TEXT;
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'orders' AND column_name = 'discount_applied'
+  ) THEN
+    ALTER TABLE orders ADD COLUMN discount_applied DECIMAL(10, 2) DEFAULT 0;
+  END IF;
+
+  -- Add tracking columns if they don't exist
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'orders' AND column_name = 'tracking_number'
+  ) THEN
+    ALTER TABLE orders ADD COLUMN tracking_number TEXT;
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'orders' AND column_name = 'shipping_provider'
+  ) THEN
+    ALTER TABLE orders ADD COLUMN shipping_provider TEXT DEFAULT 'jnt';
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'orders' AND column_name = 'shipping_note'
+  ) THEN
+    ALTER TABLE orders ADD COLUMN shipping_note TEXT;
   END IF;
 END $$;
 

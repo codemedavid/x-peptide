@@ -184,7 +184,7 @@ const VariationManager: React.FC<VariationManagerProps> = ({ product, onClose })
                               type="text"
                               value={editingVariation.name}
                               onChange={(e) => setEditingVariation({ ...editingVariation, name: e.target.value })}
-                              className="input-field"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                             />
                           </div>
 
@@ -197,7 +197,7 @@ const VariationManager: React.FC<VariationManagerProps> = ({ product, onClose })
                               step="0.1"
                               value={editingVariation.quantity_mg}
                               onChange={(e) => setEditingVariation({ ...editingVariation, quantity_mg: parseFloat(e.target.value) || 0 })}
-                              className="input-field"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                             />
                           </div>
 
@@ -210,7 +210,7 @@ const VariationManager: React.FC<VariationManagerProps> = ({ product, onClose })
                               step="0.01"
                               value={editingVariation.price}
                               onChange={(e) => setEditingVariation({ ...editingVariation, price: parseFloat(e.target.value) || 0 })}
-                              className="input-field"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                             />
                           </div>
 
@@ -222,7 +222,7 @@ const VariationManager: React.FC<VariationManagerProps> = ({ product, onClose })
                               type="number"
                               value={editingVariation.stock_quantity}
                               onChange={(e) => setEditingVariation({ ...editingVariation, stock_quantity: parseInt(e.target.value) || 0 })}
-                              className="input-field"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                             />
                           </div>
 
@@ -235,7 +235,7 @@ const VariationManager: React.FC<VariationManagerProps> = ({ product, onClose })
                               step="0.01"
                               value={editingVariation.discount_price || ''}
                               onChange={(e) => setEditingVariation({ ...editingVariation, discount_price: parseFloat(e.target.value) || null })}
-                              className="input-field"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                               placeholder="Leave empty for no discount"
                             />
                           </div>
@@ -349,7 +349,7 @@ const VariationManager: React.FC<VariationManagerProps> = ({ product, onClose })
                       value={newVariation.name}
                       onChange={(e) => setNewVariation({ ...newVariation, name: e.target.value })}
                       placeholder="e.g., 5mg, 10mg, 20mg"
-                      className="input-field"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                     />
                   </div>
 
@@ -362,7 +362,7 @@ const VariationManager: React.FC<VariationManagerProps> = ({ product, onClose })
                       step="0.1"
                       value={newVariation.quantity_mg}
                       onChange={(e) => setNewVariation({ ...newVariation, quantity_mg: parseFloat(e.target.value) || 0 })}
-                      className="input-field"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                     />
                   </div>
 
@@ -375,7 +375,7 @@ const VariationManager: React.FC<VariationManagerProps> = ({ product, onClose })
                       step="0.01"
                       value={newVariation.price}
                       onChange={(e) => setNewVariation({ ...newVariation, price: parseFloat(e.target.value) || 0 })}
-                      className="input-field"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                     />
                   </div>
 
@@ -387,7 +387,7 @@ const VariationManager: React.FC<VariationManagerProps> = ({ product, onClose })
                       type="number"
                       value={newVariation.stock_quantity}
                       onChange={(e) => setNewVariation({ ...newVariation, stock_quantity: parseInt(e.target.value) || 0 })}
-                      className="input-field"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                     />
                   </div>
 
@@ -400,7 +400,7 @@ const VariationManager: React.FC<VariationManagerProps> = ({ product, onClose })
                       step="0.01"
                       value={newVariation.discount_price || ''}
                       onChange={(e) => setNewVariation({ ...newVariation, discount_price: parseFloat(e.target.value) || null })}
-                      className="input-field"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                       placeholder="Leave empty for no discount"
                     />
                   </div>

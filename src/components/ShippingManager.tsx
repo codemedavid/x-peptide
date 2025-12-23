@@ -140,7 +140,7 @@ const ShippingManager: React.FC<ShippingManagerProps> = ({ onBack }) => {
                                     type="text"
                                     value={newLocation.id}
                                     onChange={(e) => setNewLocation({ ...newLocation, id: e.target.value.toUpperCase() })}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-black"
                                     placeholder="LOCATION_ID"
                                 />
                             </div>
@@ -150,7 +150,7 @@ const ShippingManager: React.FC<ShippingManagerProps> = ({ onBack }) => {
                                     type="text"
                                     value={newLocation.name}
                                     onChange={(e) => setNewLocation({ ...newLocation, name: e.target.value })}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-black"
                                     placeholder="Location Name"
                                 />
                             </div>
@@ -160,7 +160,7 @@ const ShippingManager: React.FC<ShippingManagerProps> = ({ onBack }) => {
                                     type="number"
                                     value={newLocation.fee}
                                     onChange={(e) => setNewLocation({ ...newLocation, fee: Number(e.target.value) })}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-black"
                                     min={0}
                                 />
                             </div>
@@ -198,7 +198,7 @@ const ShippingManager: React.FC<ShippingManagerProps> = ({ onBack }) => {
                                             type="text"
                                             value={editName}
                                             onChange={(e) => setEditName(e.target.value)}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-black"
                                         />
                                     </div>
                                     <div className="w-32">
@@ -207,7 +207,7 @@ const ShippingManager: React.FC<ShippingManagerProps> = ({ onBack }) => {
                                             type="number"
                                             value={editFee}
                                             onChange={(e) => setEditFee(Number(e.target.value))}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-black"
                                             min={0}
                                         />
                                     </div>

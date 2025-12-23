@@ -144,7 +144,7 @@ const SiteSettingsManager: React.FC = () => {
                   name="site_name"
                   value={formData.site_name}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-shadow"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-shadow text-gray-900"
                 />
               </div>
               <div>
@@ -154,7 +154,7 @@ const SiteSettingsManager: React.FC = () => {
                   value={formData.site_description}
                   onChange={handleInputChange}
                   rows={2}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-shadow"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-shadow text-gray-900"
                 />
               </div>
             </div>
@@ -162,11 +162,11 @@ const SiteSettingsManager: React.FC = () => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Currency Symbol</label>
-              <input type="text" name="currency" value={formData.currency} onChange={handleInputChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg" />
+              <input type="text" name="currency" value={formData.currency} onChange={handleInputChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Currency Code</label>
-              <input type="text" name="currency_code" value={formData.currency_code} onChange={handleInputChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg" />
+              <input type="text" name="currency_code" value={formData.currency_code} onChange={handleInputChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900" />
             </div>
           </div>
           <div className="flex justify-end">

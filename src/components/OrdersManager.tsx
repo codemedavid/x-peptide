@@ -39,6 +39,7 @@ interface Order {
   created_at: string;
   updated_at: string;
   tracking_number: string | null;
+  shipping_provider: string | null;
   shipping_note: string | null;
 }
 
@@ -219,13 +220,14 @@ const OrdersManager: React.FC<OrdersManagerProps> = ({ onBack }) => {
     }
   };
 
-  const handleSaveTracking = async (orderId: string, trackingNumber: string, shippingNote: string) => {
+  const handleSaveTracking = async (orderId: string, trackingNumber: string, shippingProvider: string, shippingNote: string) => {
     try {
       setIsProcessing(true);
       const { error } = await supabase
         .from('orders')
         .update({
           tracking_number: trackingNumber || null,
+          shipping_provider: shippingProvider || 'jnt',
           shipping_note: shippingNote || null,
           updated_at: new Date().toISOString()
         })
@@ -236,7 +238,7 @@ const OrdersManager: React.FC<OrdersManagerProps> = ({ onBack }) => {
       // Update local state
       const updatedOrders = orders.map(o =>
         o.id === orderId
-          ? { ...o, tracking_number: trackingNumber || null, shipping_note: shippingNote || null }
+          ? { ...o, tracking_number: trackingNumber || null, shipping_provider: shippingProvider || 'jnt', shipping_note: shippingNote || null }
           : o
       );
       setOrders(updatedOrders);
@@ -245,6 +247,7 @@ const OrdersManager: React.FC<OrdersManagerProps> = ({ onBack }) => {
         setSelectedOrder({
           ...selectedOrder,
           tracking_number: trackingNumber || null,
+          shipping_provider: shippingProvider || 'jnt',
           shipping_note: shippingNote || null
         });
       }
@@ -294,13 +297,13 @@ const OrdersManager: React.FC<OrdersManagerProps> = ({ onBack }) => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'new': return 'bg-gold-100 text-gold-800 border-navy-700';
-      case 'confirmed': return 'bg-gray-100 text-gray-800 border-gray-300';
-      case 'processing': return 'bg-gray-100 text-gray-800 border-gray-300';
-      case 'shipped': return 'bg-gray-100 text-gray-800 border-gray-300';
-      case 'delivered': return 'bg-green-100 text-green-800 border-green-300';
-      case 'cancelled': return 'bg-red-100 text-red-800 border-red-300';
-      default: return 'bg-gray-100 text-gray-800 border-gray-300';
+      case 'new': return 'bg-yellow-100 text-black border-yellow-400';
+      case 'confirmed': return 'bg-blue-100 text-black border-blue-300';
+      case 'processing': return 'bg-purple-100 text-black border-purple-300';
+      case 'shipped': return 'bg-indigo-100 text-black border-indigo-300';
+      case 'delivered': return 'bg-green-100 text-black border-green-300';
+      case 'cancelled': return 'bg-red-100 text-black border-red-300';
+      default: return 'bg-gray-100 text-black border-gray-300';
     }
   };
 
@@ -441,7 +444,7 @@ const OrdersManager: React.FC<OrdersManagerProps> = ({ onBack }) => {
                 placeholder="Search by customer name, email, phone, or order ID..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 md:pl-10 pr-3 md:pr-4 py-2 text-sm md:text-base border-2 border-gray-200 rounded-lg focus:border-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 transition-colors"
+                className="w-full pl-9 md:pl-10 pr-3 md:pr-4 py-2 text-sm md:text-base border-2 border-gray-200 rounded-lg focus:border-navy-900 focus:outline-none focus:ring-2 focus:ring-gold-500/20 transition-colors text-black"
               />
             </div>
           </div>
@@ -485,7 +488,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onView, getStatusColor, ge
   const finalTotal = order.total_price + (order.shipping_fee || 0);
 
   return (
-    <div className="bg-white rounded-lg md:rounded-xl shadow-md hover:shadow-lg p-3 md:p-4 lg:p-6 border border-navy-700/30 hover:border-navy-900 transition-all">
+    <div className="bg-white rounded-lg md:rounded-xl shadow-md hover:shadow-lg p-3 md:p-4 lg:p-6 border border-navy-700/30 hover:border-navy-900 transition-all text-gray-900">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 md:gap-3 mb-2 flex-wrap">
@@ -550,7 +553,7 @@ interface OrderDetailsViewProps {
   onBack: () => void;
   onConfirm: () => void;
   onUpdateStatus: (orderId: string, status: string) => void;
-  onSaveTracking: (orderId: string, trackingNumber: string, shippingNote: string) => void;
+  onSaveTracking: (orderId: string, trackingNumber: string, shippingProvider: string, shippingNote: string) => void;
   isProcessing: boolean;
 }
 
@@ -563,11 +566,13 @@ const OrderDetailsView: React.FC<OrderDetailsViewProps> = ({
   isProcessing
 }) => {
   const [trackingNumber, setTrackingNumber] = useState(order.tracking_number || '');
+  const [shippingProvider, setShippingProvider] = useState(order.shipping_provider || 'jnt');
   const [shippingNote, setShippingNote] = useState(order.shipping_note || '');
 
   // Update local state when order changes
   useEffect(() => {
     setTrackingNumber(order.tracking_number || '');
+    setShippingProvider(order.shipping_provider || 'jnt');
     setShippingNote(order.shipping_note || '');
   }, [order]);
   const totalItems = order.order_items.reduce((sum, item) => sum + item.quantity, 0);
@@ -575,7 +580,7 @@ const OrderDetailsView: React.FC<OrderDetailsViewProps> = ({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white">
-      <div className="bg-white shadow-md border-b border-navy-700/30">
+      <div className="bg-white shadow-md border-b border-navy-700/30 text-gray-900">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           <div className="flex items-center justify-between h-12 md:h-14 gap-2">
             <div className="flex items-center space-x-2 md:space-x-4 min-w-0 flex-1">
@@ -599,12 +604,12 @@ const OrderDetailsView: React.FC<OrderDetailsViewProps> = ({
           {/* Order Status */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 md:gap-4">
             <div>
-              <span className={`inline-flex items-center px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-semibold border ${order.order_status === 'new' ? 'bg-gold-100 text-gold-800 border-navy-700' :
-                order.order_status === 'confirmed' ? 'bg-gray-100 text-gray-800 border-gray-300' :
-                  order.order_status === 'processing' ? 'bg-gray-100 text-gray-800 border-gray-300' :
-                    order.order_status === 'shipped' ? 'bg-gray-100 text-gray-800 border-gray-300' :
-                      order.order_status === 'delivered' ? 'bg-green-100 text-green-800 border-green-300' :
-                        'bg-red-100 text-red-800 border-red-300'
+              <span className={`inline-flex items-center px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-semibold border ${order.order_status === 'new' ? 'bg-yellow-100 text-black border-yellow-400' :
+                order.order_status === 'confirmed' ? 'bg-blue-100 text-black border-blue-300' :
+                  order.order_status === 'processing' ? 'bg-purple-100 text-black border-purple-300' :
+                    order.order_status === 'shipped' ? 'bg-indigo-100 text-black border-indigo-300' :
+                      order.order_status === 'delivered' ? 'bg-green-100 text-black border-green-300' :
+                        'bg-red-100 text-black border-red-300'
                 }`}>
                 {order.order_status.charAt(0).toUpperCase() + order.order_status.slice(1)}
               </span>
@@ -625,7 +630,7 @@ const OrderDetailsView: React.FC<OrderDetailsViewProps> = ({
           {/* Customer Info */}
           <div>
             <h3 className="font-bold text-gray-900 mb-2 md:mb-3 text-sm md:text-base">Customer Information</h3>
-            <div className="bg-gray-50 rounded-lg p-3 md:p-4 space-y-1.5 md:space-y-2 text-xs md:text-sm">
+            <div className="bg-gray-50 rounded-lg p-3 md:p-4 space-y-1.5 md:space-y-2 text-xs md:text-sm text-gray-900">
               <p><span className="font-semibold">Name:</span> {order.customer_name}</p>
               <p><span className="font-semibold">Email:</span> {order.customer_email}</p>
               <p><span className="font-semibold">Phone:</span> {order.customer_phone}</p>
@@ -641,7 +646,7 @@ const OrderDetailsView: React.FC<OrderDetailsViewProps> = ({
           {/* Shipping Address */}
           <div>
             <h3 className="font-bold text-gray-900 mb-2 md:mb-3 text-sm md:text-base">Shipping Address</h3>
-            <div className="bg-gray-50 rounded-lg p-3 md:p-4 text-xs md:text-sm">
+            <div className="bg-gray-50 rounded-lg p-3 md:p-4 text-xs md:text-sm text-gray-900">
               <p>{order.shipping_address}</p>
               {order.shipping_barangay && (
                 <p>Barangay: {order.shipping_barangay}</p>
@@ -663,19 +668,29 @@ const OrderDetailsView: React.FC<OrderDetailsViewProps> = ({
             <div className="grid grid-cols-1 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  J&T Tracking Number
+                  Tracking Number
                 </label>
-                <div className="flex gap-2">
+                <div className="flex flex-col md:flex-row gap-2">
+                  <select
+                    value={shippingProvider}
+                    onChange={(e) => setShippingProvider(e.target.value)}
+                    className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-black bg-white"
+                  >
+                    <option value="jnt">J&T Express</option>
+                    <option value="spx">SPX Express</option>
+                  </select>
                   <input
                     type="text"
                     value={trackingNumber}
                     onChange={(e) => setTrackingNumber(e.target.value)}
                     placeholder="e.g., 78XXXX..."
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-black"
                   />
                   {trackingNumber && (
                     <a
-                      href={`https://www.jtexpress.ph/trajectoryQuery?bills=${trackingNumber}`}
+                      href={shippingProvider === 'spx'
+                        ? `https://spx.ph/track`
+                        : `https://www.jtexpress.ph/trajectoryQuery?bills=${trackingNumber}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 flex items-center justify-center"
@@ -695,11 +710,11 @@ const OrderDetailsView: React.FC<OrderDetailsViewProps> = ({
                   value={shippingNote}
                   onChange={(e) => setShippingNote(e.target.value)}
                   placeholder="e.g., Shipped via J&T Express..."
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-black"
                 />
               </div>
               <button
-                onClick={() => onSaveTracking(order.id, trackingNumber, shippingNote)}
+                onClick={() => onSaveTracking(order.id, trackingNumber, shippingProvider, shippingNote)}
                 disabled={isProcessing}
                 className="self-end px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium text-sm transition-colors shadow-sm disabled:opacity-50"
               >
@@ -759,7 +774,7 @@ const OrderDetailsView: React.FC<OrderDetailsViewProps> = ({
           {/* Payment Info */}
           <div>
             <h3 className="font-bold text-gray-900 mb-2 md:mb-3 text-sm md:text-base">Payment Information</h3>
-            <div className="bg-gray-50 rounded-lg p-3 md:p-4 space-y-1.5 md:space-y-2 text-xs md:text-sm">
+            <div className="bg-gray-50 rounded-lg p-3 md:p-4 space-y-1.5 md:space-y-2 text-xs md:text-sm text-gray-900">
               <p><span className="font-semibold">Method:</span> {order.payment_method_name || 'N/A'}</p>
               <p className="flex items-center gap-2 flex-wrap"><span className="font-semibold">Status:</span>
                 <span className={`px-2 py-1 rounded-full text-[10px] md:text-xs font-semibold ${order.payment_status === 'paid' ? 'bg-green-100 text-green-700' : 'bg-gold-100 text-gold-700'
@@ -771,7 +786,7 @@ const OrderDetailsView: React.FC<OrderDetailsViewProps> = ({
           </div>
 
           {/* Order Summary */}
-          <div className="border-t-2 border-gray-200 pt-3 md:pt-4">
+          <div className="border-t-2 border-gray-200 pt-3 md:pt-4 text-gray-900">
             <div className="space-y-1.5 md:space-y-2 text-xs md:text-sm">
               <div className="flex justify-between">
                 <span>Subtotal:</span>
@@ -794,8 +809,8 @@ const OrderDetailsView: React.FC<OrderDetailsViewProps> = ({
           {order.notes && (
             <div>
               <h3 className="font-bold text-gray-900 mb-2 md:mb-3 text-sm md:text-base">Notes</h3>
-              <div className="bg-gray-50 rounded-lg p-3 md:p-4">
-                <p className="text-gray-700 text-xs md:text-sm">{order.notes}</p>
+              <div className="bg-gray-50 rounded-lg p-3 md:p-4 text-gray-900">
+                <p className="text-gray-900 text-xs md:text-sm">{order.notes}</p>
               </div>
             </div>
           )}

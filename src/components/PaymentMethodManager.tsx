@@ -178,7 +178,7 @@ const PaymentMethodManager: React.FC<PaymentMethodManagerProps> = ({ onBack }) =
                   type="text"
                   value={formData.name}
                   onChange={(e) => handleNameChange(e.target.value)}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-navy-700/30 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-navy-900 transition-colors"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-navy-700/30 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-navy-900 transition-colors text-gray-900"
                   placeholder="e.g., GCash, Maya, Bank Transfer"
                 />
               </div>
@@ -189,7 +189,7 @@ const PaymentMethodManager: React.FC<PaymentMethodManagerProps> = ({ onBack }) =
                   type="text"
                   value={formData.id}
                   onChange={(e) => setFormData({ ...formData, id: e.target.value })}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-navy-700/30 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-navy-900 transition-colors disabled:bg-gray-50"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-navy-700/30 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-navy-900 transition-colors disabled:bg-gray-50 text-gray-900"
                   placeholder="kebab-case-id"
                   disabled={currentView === 'edit'}
                 />
@@ -207,7 +207,7 @@ const PaymentMethodManager: React.FC<PaymentMethodManagerProps> = ({ onBack }) =
                   type="text"
                   value={formData.account_number}
                   onChange={(e) => setFormData({ ...formData, account_number: e.target.value })}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-navy-700/30 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-navy-900 transition-colors"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-navy-700/30 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-navy-900 transition-colors text-gray-900"
                   placeholder="09XX XXX XXXX or Account: 1234-5678-9012"
                 />
               </div>
@@ -218,7 +218,7 @@ const PaymentMethodManager: React.FC<PaymentMethodManagerProps> = ({ onBack }) =
                   type="text"
                   value={formData.account_name}
                   onChange={(e) => setFormData({ ...formData, account_name: e.target.value })}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-navy-700/30 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-navy-900 transition-colors"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-navy-700/30 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-navy-900 transition-colors text-gray-900"
                   placeholder="Peptide Pulse"
                 />
               </div>
@@ -260,7 +260,7 @@ const PaymentMethodManager: React.FC<PaymentMethodManagerProps> = ({ onBack }) =
                   type="number"
                   value={formData.sort_order}
                   onChange={(e) => setFormData({ ...formData, sort_order: Number(e.target.value) })}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-navy-700/30 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-navy-900 transition-colors"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-navy-700/30 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-navy-900 transition-colors text-gray-900"
                   placeholder="0"
                 />
                 <p className="text-xs text-gray-500 mt-1">

@@ -10,12 +10,17 @@
     - SECURITY DEFINER: Runs with privileges of creator (allows bypassing RLS if enabled)
 */
 
+*/
+
+DROP FUNCTION IF EXISTS get_order_details(text);
+
 CREATE OR REPLACE FUNCTION get_order_details(order_id_input TEXT)
 RETURNS TABLE (
   id UUID,
   order_status TEXT,
   payment_status TEXT,
   tracking_number TEXT,
+  shipping_provider TEXT,
   shipping_note TEXT,
   total_price DECIMAL(10,2),
   shipping_fee DECIMAL(10,2),
@@ -33,6 +38,7 @@ BEGIN
     o.order_status,
     o.payment_status,
     o.tracking_number,
+    o.shipping_provider,
     o.shipping_note,
     o.total_price,
     o.shipping_fee,

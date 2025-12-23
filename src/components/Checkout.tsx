@@ -32,7 +32,7 @@ const Checkout: React.FC<CheckoutProps> = ({ cartItems, totalPrice, onBack }) =>
 
   // Payment
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
-  const [contactMethod, setContactMethod] = useState<'messenger' | ''>('messenger');
+  const [contactMethod, setContactMethod] = useState<'whatsapp' | ''>('whatsapp');
   const [notes, setNotes] = useState('');
 
   const [orderMessage, setOrderMessage] = useState<string>('');
@@ -170,7 +170,7 @@ const Checkout: React.FC<CheckoutProps> = ({ cartItems, totalPrice, onBack }) =>
 
   const handlePlaceOrder = async () => {
     if (!contactMethod) {
-      alert('Please select your preferred contact method (Messenger).');
+      alert('Please select your preferred contact method (WhatsApp).');
       return;
     }
 
@@ -319,13 +319,13 @@ ${discountAmount > 0 ? `Discount (${appliedPromo?.code}): -₱${discountAmount.t
 
 💳 PAYMENT METHOD
 ${paymentMethod?.name || 'N/A'}
-${paymentMethod ? `Account: ${paymentMethod.account_number}` : ''}
+      ${paymentMethod ? `Account: ${paymentMethod.account_number}` : ''}
 
 📸 PROOF OF PAYMENT
 ${paymentProofUrl ? 'Screenshot attached to order.' : 'Pending'}
 
 📱 CONTACT METHOD
-Messenger: https://m.me/PeptidePulse
+WhatsApp: https://wa.me/639691574175
 
 📋 ORDER ID: ${orderData.id}
 
@@ -344,9 +344,9 @@ Please confirm this order. Thank you!
       }
 
       // Open contact method based on selection
-      // Using m.me link with Page ID to open Messenger directly
-      const contactUrl = contactMethod === 'messenger'
-        ? `https://m.me/61555961135365?text=${encodeURIComponent(orderDetails)}`
+      // Using wa.me link to open WhatsApp directly
+      const contactUrl = contactMethod === 'whatsapp'
+        ? `https://wa.me/639691574175?text=${encodeURIComponent(orderDetails)}`
         : null;
 
       if (contactUrl) {
@@ -401,8 +401,8 @@ Please confirm this order. Thank you!
   };
 
   const handleOpenContact = () => {
-    const contactUrl = contactMethod === 'messenger'
-      ? `https://m.me/61555961135365?text=${encodeURIComponent(orderMessage)}`
+    const contactUrl = contactMethod === 'whatsapp'
+      ? `https://wa.me/639691574175?text=${encodeURIComponent(orderMessage)}`
       : null;
 
     if (contactUrl) {
@@ -423,7 +423,7 @@ Please confirm this order. Thank you!
               <Sparkles className="w-7 h-7 text-gold-600" />
             </h1>
             <p className="text-gray-600 mb-8 text-base md:text-lg leading-relaxed">
-              Copy the order message below and send it via Messenger along with your payment screenshot.
+              Copy the order message below and send it via WhatsApp along with your payment screenshot.
             </p>
 
             {/* Order Message Display */}
@@ -458,7 +458,7 @@ Please confirm this order. Thank you!
               {copied && (
                 <p className="text-green-600 text-sm mt-2 flex items-center gap-1">
                   <Check className="w-4 h-4" />
-                  Message copied to clipboard! Paste it in Messenger along with your payment screenshot.
+                  Message copied to clipboard! Paste it in WhatsApp along with your payment screenshot.
                 </p>
               )}
             </div>
@@ -470,12 +470,12 @@ Please confirm this order. Thank you!
                 className="w-full bg-navy-900 hover:bg-navy-800 text-white py-3 md:py-4 rounded-2xl font-bold text-base md:text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all flex items-center justify-center gap-2 border border-navy-900/20"
               >
                 <MessageCircle className="w-5 h-5" />
-                Open Messenger
+                Open WhatsApp
               </button>
 
               {!contactOpened && (
                 <p className="text-sm text-gray-600">
-                  💡 If Messenger doesn't open, copy the message above and visit our page manually
+                  💡 If WhatsApp doesn't open, copy the message above and visit our number manually: +63 969 157 4175
                 </p>
               )}
             </div>
@@ -500,7 +500,7 @@ Please confirm this order. Thank you!
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-2xl">4️⃣</span>
-                  <span>Tracking numbers are sent via Messenger from 11 PM onwards.</span>
+                  <span>Tracking numbers are sent via WhatsApp from 11 PM onwards.</span>
                 </li>
               </ul>
             </div>
@@ -558,7 +558,7 @@ Please confirm this order. Thank you!
                       type="text"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="input-field"
+                      className="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                       placeholder="Juan Dela Cruz"
                       required
                     />
@@ -571,7 +571,7 @@ Please confirm this order. Thank you!
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="input-field"
+                      className="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                       placeholder="juan@gmail.com"
                       required
                     />
@@ -584,7 +584,7 @@ Please confirm this order. Thank you!
                       type="tel"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="input-field"
+                      className="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                       placeholder="09XX XXX XXXX"
                       required
                     />
@@ -609,7 +609,7 @@ Please confirm this order. Thank you!
                       type="text"
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
-                      className="input-field"
+                      className="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                       placeholder="123 Rizal Street"
                       required
                     />
@@ -622,7 +622,7 @@ Please confirm this order. Thank you!
                       type="text"
                       value={barangay}
                       onChange={(e) => setBarangay(e.target.value)}
-                      className="input-field"
+                      className="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                       placeholder="Brgy. San Antonio"
                       required
                     />
@@ -636,7 +636,7 @@ Please confirm this order. Thank you!
                         type="text"
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
-                        className="input-field"
+                        className="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                         placeholder="Quezon City"
                         required
                       />
@@ -649,7 +649,7 @@ Please confirm this order. Thank you!
                         type="text"
                         value={state}
                         onChange={(e) => setState(e.target.value)}
-                        className="input-field"
+                        className="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                         placeholder="Metro Manila"
                         required
                       />
@@ -663,7 +663,7 @@ Please confirm this order. Thank you!
                       type="text"
                       value={zipCode}
                       onChange={(e) => setZipCode(e.target.value)}
-                      className="input-field"
+                      className="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                       placeholder="1100"
                       required
                     />
@@ -754,7 +754,7 @@ Please confirm this order. Thank you!
                         value={promoCode}
                         onChange={(e) => setPromoCode(e.target.value)}
                         placeholder="Enter code"
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gold-400 focus:border-transparent outline-none uppercase"
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gold-400 focus:border-transparent outline-none uppercase text-black"
                         disabled={!!appliedPromo || isApplyingPromo}
                       />
                       {appliedPromo ? (
@@ -990,8 +990,8 @@ Please confirm this order. Thank you!
               </h2>
               <div className="grid grid-cols-1 gap-3">
                 <button
-                  onClick={() => setContactMethod('messenger')}
-                  className={`p-4 rounded-lg border-2 transition-all flex items-center justify-between ${contactMethod === 'messenger'
+                  onClick={() => setContactMethod('whatsapp')}
+                  className={`p-4 rounded-lg border-2 transition-all flex items-center justify-between ${contactMethod === 'whatsapp'
                     ? 'border-navy-900 bg-gold-50'
                     : 'border-gray-200 hover:border-navy-700'
                     }`}
@@ -999,11 +999,11 @@ Please confirm this order. Thank you!
                   <div className="flex items-center gap-3">
                     <MessageCircle className="w-6 h-6 text-gold-600" />
                     <div className="text-left">
-                      <p className="font-semibold text-navy-900">Messenger</p>
-                      <p className="text-sm text-gray-500">Peptide Pulse</p>
+                      <p className="font-semibold text-navy-900">WhatsApp</p>
+                      <p className="text-sm text-gray-500">+63 969 157 4175</p>
                     </div>
                   </div>
-                  {contactMethod === 'messenger' && (
+                  {contactMethod === 'whatsapp' && (
                     <div className="w-6 h-6 bg-gold-600 rounded-full flex items-center justify-center">
                       <span className="text-black text-xs font-bold">✓</span>
                     </div>
@@ -1082,7 +1082,7 @@ Please confirm this order. Thank you!
               <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="input-field"
+                className="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-all bg-white text-black placeholder-gray-400"
                 rows={4}
                 placeholder="Any special instructions or notes for your order..."
               />
