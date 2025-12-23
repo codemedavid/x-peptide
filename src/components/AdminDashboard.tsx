@@ -1010,8 +1010,8 @@ const AdminDashboard: React.FC = () => {
                               }}
                               disabled={isProcessing}
                               className={`p-1.5 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed ${product.variations && product.variations.length > 0
-                                ? 'bg-gold-500 text-black hover:bg-gold-600 shadow-md hover:shadow-lg cursor-pointer'
-                                : 'text-theme-accent hover:bg-gray-100 cursor-pointer'
+                                ? 'bg-amber-500 text-black hover:bg-amber-600 shadow-md hover:shadow-lg cursor-pointer'
+                                : 'text-gray-400 hover:bg-gray-100 cursor-pointer'
                                 } `}
                               title="Manage Sizes - Click here to edit prices!"
                             >
