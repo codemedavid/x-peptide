@@ -369,29 +369,29 @@ const AdminDashboard: React.FC = () => {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-theme-bg flex items-center justify-center px-4">
-        <div className="bg-white rounded-xl shadow-soft p-6 md:p-8 w-full max-w-md border border-navy-900/20">
+        <div className="bg-[#121212] rounded-xl shadow-soft p-6 md:p-8 w-full max-w-md border border-white/20">
           <div className="text-center mb-6">
             <div className="relative mx-auto w-16 h-16 rounded-full overflow-hidden mb-4 border-2 border-theme-accent/30">
               <img
-                src="/assets/logo.jpeg"
-                alt="Peptide Pulse"
+                src="/assets/logo.jpg"
+                alt="X Peptide"
                 className="w-full h-full object-cover"
               />
             </div>
-            <h1 className="text-2xl font-bold text-theme-text mb-1">Admin Access</h1>
-            <p className="text-sm text-gray-500">
+            <h1 className="text-2xl font-bold text-white mb-1">Admin Access</h1>
+            <p className="text-sm text-gray-400">
               Enter password to continue
             </p>
           </div>
 
           <form onSubmit={handleLogin}>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-navy-900/20 rounded-lg focus:ring-2 focus:ring-theme-accent focus:border-theme-accent transition-colors"
+                className="w-full px-4 py-3 border border-white/20 rounded-lg bg-black text-white focus:ring-2 focus:ring-white focus:border-white transition-colors placeholder-gray-500"
                 placeholder="Enter admin password"
                 required
               />
@@ -402,7 +402,7 @@ const AdminDashboard: React.FC = () => {
               )}
             </div>
 
-            <button type="submit" className="w-full bg-navy-900 hover:bg-navy-800 text-white py-3 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg">
+            <button type="submit" className="w-full bg-white hover:bg-gray-200 text-black py-3 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg">
               Access Dashboard
             </button>
           </form>
@@ -415,8 +415,8 @@ const AdminDashboard: React.FC = () => {
     return (
       <div className="min-h-screen bg-theme-bg flex items-center justify-center px-4">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-navy-900/20 border-t-theme-accent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-sm text-gray-600 font-medium">Loading...</p>
+          <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-sm text-gray-400 font-medium">Loading...</p>
         </div>
       </div>
     );
@@ -427,8 +427,8 @@ const AdminDashboard: React.FC = () => {
     return (
       <>
         {variationManagerModal}
-        <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white">
-          <div className="bg-white shadow-md border-b border-gray-200">
+        <div className="min-h-screen bg-gradient-to-br from-black via-[#0a0a0a] to-[#121212]">
+          <div className="bg-black shadow-md border-b border-white/20">
             <div className="max-w-6xl mx-auto px-3 sm:px-4">
               <div className="flex items-center justify-between h-12 md:h-14 gap-2">
                 <div className="flex items-center space-x-2">
@@ -462,10 +462,10 @@ const AdminDashboard: React.FC = () => {
           </div>
 
           <div className="max-w-5xl mx-auto px-3 sm:px-4 py-3 md:py-4">
-            <div className="bg-white rounded-lg md:rounded-xl shadow-lg p-3 md:p-4 lg:p-5 space-y-3 md:space-y-4 border border-gray-200">
+            <div className="bg-[#121212] rounded-lg md:rounded-xl shadow-lg p-3 md:p-4 lg:p-5 space-y-3 md:space-y-4 border border-white/10">
               {/* Basic Information */}
               <div>
-                <h3 className="text-sm md:text-base font-bold text-gray-900 mb-2 md:mb-3 flex items-center gap-1.5">
+                <h3 className="text-sm md:text-base font-bold text-white mb-2 md:mb-3 flex items-center gap-1.5">
                   <span className="text-base md:text-lg">📝</span>
                   Basic Information
                 </h3>
@@ -766,8 +766,8 @@ const AdminDashboard: React.FC = () => {
     return (
       <>
         {variationManagerModal}
-        <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white">
-          <div className="bg-white shadow-md border-b border-gray-200">
+        <div className="min-h-screen bg-gradient-to-br from-black via-[#0a0a0a] to-[#121212]">
+          <div className="bg-black shadow-md border-b border-white/20">
             <div className="max-w-6xl mx-auto px-3 sm:px-4">
               <div className="flex items-center justify-between h-12 md:h-14">
                 <div className="flex items-center space-x-2">
@@ -1084,7 +1084,7 @@ const AdminDashboard: React.FC = () => {
   // Promo Codes View
   if (currentView === 'promo-codes') {
     return (
-      <div className="min-h-screen bg-gray-50 p-4">
+      <div className="min-h-screen bg-black p-4">
         <div className="max-w-4xl mx-auto">
           <button
             onClick={() => setCurrentView('dashboard')}
@@ -1122,7 +1122,7 @@ const AdminDashboard: React.FC = () => {
     // OR simply assume I'll fix SiteSettingsManager later.
     // BETTER: Render it inside the dashboard layout or add a wrapper here.
     return (
-      <div className="min-h-screen bg-gray-50 p-4">
+      <div className="min-h-screen bg-black p-4">
         <div className="max-w-4xl mx-auto">
           <button
             onClick={() => setCurrentView('dashboard')}
@@ -1141,25 +1141,28 @@ const AdminDashboard: React.FC = () => {
   return (
     <>
       {variationManagerModal}
-      <div className="min-h-screen bg-gray-50">
-        <div className="bg-white shadow-md border-b-4 border-navy-900">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="flex items-center justify-between h-14">
-              <div className="flex items-center space-x-3">
-                <div className="w-9 h-9 rounded-full overflow-hidden border border-navy-900/20">
+      <div className="min-h-screen bg-black font-outfit">
+        <div className="bg-black/80 backdrop-blur-md shadow-soft border-b border-white/10 sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16">
+              <div className="flex items-center space-x-4">
+                <div className="w-10 h-10 rounded-xl overflow-hidden border border-white/10 shadow-glow">
                   <img
-                    src="/assets/logo.jpeg"
+                    src="/assets/logo.jpg"
                     alt="Peptide Pulse"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div>
-                  <h1 className="text-base font-bold text-theme-text">
-                    Peptide Pulse
+                  <h1 className="text-lg font-bold text-white tracking-tight">
+                    PEPTIDE PULSE
                   </h1>
-                  <p className="text-xs text-gray-500">
-                    Admin Dashboard
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                    <p className="text-xs text-gray-400 font-medium tracking-wide border px-1.5 py-0.5 rounded-full border-white/10 bg-white/5">
+                      ADMIN DASHBOARD
+                    </p>
+                  </div>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
@@ -1167,13 +1170,13 @@ const AdminDashboard: React.FC = () => {
                   href="/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-theme-accent transition-colors font-medium text-sm hidden sm:block"
+                  className="text-gray-400 hover:text-white transition-colors font-medium text-sm hidden sm:block"
                 >
                   View Website
                 </a>
                 <button
                   onClick={handleLogout}
-                  className="bg-navy-900 hover:bg-navy-800 text-white px-4 py-2 rounded-lg transition-colors font-medium text-sm shadow-sm"
+                  className="bg-white hover:bg-gray-200 text-black px-4 py-2 rounded-lg transition-colors font-medium text-sm shadow-sm"
                 >
                   Logout
                 </button>
@@ -1184,201 +1187,245 @@ const AdminDashboard: React.FC = () => {
 
         <div className="max-w-6xl mx-auto px-4 py-4">
           {/* Stats Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <button
               onClick={() => setCurrentView('products')}
-              className="bg-white rounded-xl shadow-soft hover:shadow-md transition-all p-4 border border-gray-100 text-left cursor-pointer"
+              className="group relative overflow-hidden bg-white/5 backdrop-blur-sm rounded-2xl p-5 border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300 text-left"
             >
-              <div className="flex items-center">
-                <div className="p-2 bg-theme-accent/10 rounded-lg">
-                  <Package className="h-4 w-4 text-theme-accent" />
+              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Package className="w-24 h-24 text-white" />
+              </div>
+              <div className="relative z-10">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 border border-white/5">
+                  <Package className="h-5 w-5 text-blue-400" />
                 </div>
-                <div className="ml-3">
-                  <p className="text-xs font-medium text-gray-500">Total Products</p>
-                  <p className="text-xl font-bold text-theme-text">{totalProducts}</p>
-                </div>
+                <p className="text-sm font-medium text-gray-400 mb-1">Total Products</p>
+                <p className="text-3xl font-bold text-white tracking-tight">{totalProducts}</p>
               </div>
             </button>
 
             <button
               onClick={() => setCurrentView('products')}
-              className="bg-white rounded-xl shadow-soft hover:shadow-md transition-all p-4 border border-gray-100 text-left cursor-pointer"
+              className="group relative overflow-hidden bg-white/5 backdrop-blur-sm rounded-2xl p-5 border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300 text-left"
             >
-              <div className="flex items-center">
-                <div className="p-2 bg-green-50 rounded-lg">
-                  <TrendingUp className="h-4 w-4 text-green-600" />
+              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <TrendingUp className="w-24 h-24 text-green-500" />
+              </div>
+              <div className="relative z-10">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 border border-white/5">
+                  <TrendingUp className="h-5 w-5 text-green-400" />
                 </div>
-                <div className="ml-3">
-                  <p className="text-xs font-medium text-gray-500">Available</p>
-                  <p className="text-xl font-bold text-green-600">{availableProducts}</p>
-                </div>
+                <p className="text-sm font-medium text-gray-400 mb-1">Available Stock</p>
+                <p className="text-3xl font-bold text-white tracking-tight">{availableProducts}</p>
               </div>
             </button>
 
             <button
               onClick={() => setCurrentView('products')}
-              className="bg-white rounded-xl shadow-soft hover:shadow-md transition-all p-4 border border-gray-100 text-left cursor-pointer"
+              className="group relative overflow-hidden bg-white/5 backdrop-blur-sm rounded-2xl p-5 border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300 text-left"
             >
-              <div className="flex items-center">
-                <div className="p-2 bg-theme-secondary/10 rounded-lg">
-                  <Sparkles className="h-4 w-4 text-theme-secondary" />
+              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Sparkles className="w-24 h-24 text-amber-500" />
+              </div>
+              <div className="relative z-10">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 border border-white/5">
+                  <Sparkles className="h-5 w-5 text-amber-400" />
                 </div>
-                <div className="ml-3">
-                  <p className="text-xs font-medium text-gray-500">Featured</p>
-                  <p className="text-xl font-bold text-theme-secondary">{featuredProducts}</p>
-                </div>
+                <p className="text-sm font-medium text-gray-400 mb-1">Featured Items</p>
+                <p className="text-3xl font-bold text-white tracking-tight">{featuredProducts}</p>
               </div>
             </button>
 
             <button
               onClick={() => setCurrentView('categories')}
-              className="bg-white rounded-xl shadow-soft hover:shadow-md transition-all p-4 border border-gray-100 text-left cursor-pointer"
+              className="group relative overflow-hidden bg-white/5 backdrop-blur-sm rounded-2xl p-5 border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300 text-left"
             >
-              <div className="flex items-center">
-                <div className="p-2 bg-blue-50 rounded-lg">
-                  <Users className="h-4 w-4 text-blue-600" />
+              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Users className="w-24 h-24 text-purple-500" />
+              </div>
+              <div className="relative z-10">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 border border-white/5">
+                  <Users className="h-5 w-5 text-purple-400" />
                 </div>
-                <div className="ml-3">
-                  <p className="text-xs font-medium text-gray-500">Categories</p>
-                  <p className="text-xl font-bold text-blue-600">{categories.length}</p>
-                </div>
+                <p className="text-sm font-medium text-gray-400 mb-1">Categories</p>
+                <p className="text-3xl font-bold text-white tracking-tight">{categories.length}</p>
               </div>
             </button>
           </div>
 
-          {/* Quick Actions */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white rounded-xl shadow-soft p-4 border border-gray-100">
-              <h3 className="text-base font-bold text-theme-text mb-3">
+          {/* Quick Actions & Categories */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+              <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full"></div>
                 Quick Actions
               </h3>
-              <div className="space-y-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <button
                   onClick={handleAddProduct}
-                  className="w-full flex items-center gap-3 p-2 text-left hover:bg-gray-50 rounded-lg transition-all"
+                  className="group flex items-center gap-3 p-3 text-left hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/10"
                 >
-                  <div className="p-1.5 bg-navy-50 rounded-lg">
-                    <Plus className="h-4 w-4 text-navy-900" />
+                  <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Plus className="h-5 w-5 text-blue-400 font-bold" />
                   </div>
-                  <span className="text-sm font-medium text-navy-900">Add New Product</span>
+                  <div>
+                    <span className="block text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">Add Product</span>
+                    <span className="text-xs text-gray-500">Create new item</span>
+                  </div>
                 </button>
                 <button
                   onClick={() => setCurrentView('products')}
-                  className="w-full flex items-center gap-3 p-2 text-left hover:bg-gray-50 rounded-lg transition-all"
+                  className="group flex items-center gap-3 p-3 text-left hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/10"
                 >
-                  <div className="p-1.5 bg-navy-50 rounded-lg">
-                    <Package className="h-4 w-4 text-navy-900" />
+                  <div className="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Package className="h-5 w-5 text-emerald-400" />
                   </div>
-                  <span className="text-sm font-medium text-navy-900">Manage Products</span>
+                  <div>
+                    <span className="block text-sm font-semibold text-white group-hover:text-emerald-400 transition-colors">Manage Products</span>
+                    <span className="text-xs text-gray-500">Edit existing items</span>
+                  </div>
                 </button>
                 <button
                   onClick={() => setCurrentView('categories')}
-                  className="w-full flex items-center gap-3 p-2 text-left hover:bg-gray-50 rounded-lg transition-all"
+                  className="group flex items-center gap-3 p-3 text-left hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/10"
                 >
-                  <div className="p-1.5 bg-blue-50 rounded-lg">
-                    <FolderOpen className="h-4 w-4 text-blue-600" />
+                  <div className="w-10 h-10 rounded-lg bg-pink-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <FolderOpen className="h-5 w-5 text-pink-400" />
                   </div>
-                  <span className="text-sm font-medium text-gray-700">Manage Categories</span>
-                </button>
-                <button
-                  onClick={() => setCurrentView('payments')}
-                  className="w-full flex items-center gap-3 p-2 text-left hover:bg-gray-50 rounded-lg transition-all"
-                >
-                  <div className="p-1.5 bg-purple-50 rounded-lg">
-                    <CreditCard className="h-4 w-4 text-purple-600" />
+                  <div>
+                    <span className="block text-sm font-semibold text-white group-hover:text-pink-400 transition-colors">Categories</span>
+                    <span className="text-xs text-gray-500">Organize items</span>
                   </div>
-                  <span className="text-sm font-medium text-gray-700">Payment Methods</span>
-                </button>
-                <button
-                  onClick={() => setCurrentView('inventory')}
-                  className="w-full flex items-center gap-3 p-2 text-left hover:bg-gray-50 rounded-lg transition-all"
-                >
-                  <div className="p-1.5 bg-orange-50 rounded-lg">
-                    <Warehouse className="h-4 w-4 text-orange-600" />
-                  </div>
-                  <span className="text-sm font-medium text-gray-700">Peptide Inventory</span>
                 </button>
                 <button
                   onClick={() => setCurrentView('orders')}
-                  className="w-full flex items-center gap-3 p-2 text-left hover:bg-gray-50 rounded-lg transition-all"
+                  className="group flex items-center gap-3 p-3 text-left hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/10"
                 >
-                  <div className="p-1.5 bg-navy-50 rounded-lg">
-                    <ShoppingCart className="h-4 w-4 text-navy-900" />
+                  <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <ShoppingCart className="h-5 w-5 text-amber-400" />
                   </div>
-                  <span className="text-sm font-medium text-navy-900">Orders Management</span>
+                  <div>
+                    <span className="block text-sm font-semibold text-white group-hover:text-amber-400 transition-colors">Orders</span>
+                    <span className="text-xs text-gray-500">View transactions</span>
+                  </div>
+                </button>
+                <button
+                  onClick={() => setCurrentView('inventory')}
+                  className="group flex items-center gap-3 p-3 text-left hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/10"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Warehouse className="h-5 w-5 text-orange-400" />
+                  </div>
+                  <div>
+                    <span className="block text-sm font-semibold text-white group-hover:text-orange-400 transition-colors">Inventory</span>
+                    <span className="text-xs text-gray-500">Track stock</span>
+                  </div>
                 </button>
                 <button
                   onClick={() => setCurrentView('shipping')}
-                  className="w-full flex items-center gap-3 p-2 text-left hover:bg-gray-50 rounded-lg transition-all"
+                  className="group flex items-center gap-3 p-3 text-left hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/10"
                 >
-                  <div className="p-1.5 bg-green-50 rounded-lg">
-                    <MapPin className="h-4 w-4 text-green-600" />
+                  <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <MapPin className="h-5 w-5 text-cyan-400" />
                   </div>
-                  <span className="text-sm font-medium text-gray-700">Shipping Locations</span>
+                  <div>
+                    <span className="block text-sm font-semibold text-white group-hover:text-cyan-400 transition-colors">Shipping</span>
+                    <span className="text-xs text-gray-500">Manage rates</span>
+                  </div>
                 </button>
                 <button
                   onClick={() => setCurrentView('coa')}
-                  className="w-full flex items-center gap-3 p-2 text-left hover:bg-gray-50 rounded-lg transition-all"
+                  className="group flex items-center gap-3 p-3 text-left hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/10"
                 >
-                  <div className="p-1.5 bg-navy-50 rounded-lg">
-                    <Shield className="h-4 w-4 text-navy-900" />
+                  <div className="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Shield className="h-5 w-5 text-indigo-400" />
                   </div>
-                  <span className="text-sm font-medium text-navy-900">Lab Results (COA)</span>
-                </button>
-                <button
-                  onClick={() => setCurrentView('faq')}
-                  className="w-full flex items-center gap-3 p-2 text-left hover:bg-gray-50 rounded-lg transition-all"
-                >
-                  <div className="p-1.5 bg-navy-50 rounded-lg">
-                    <HelpCircle className="h-4 w-4 text-navy-900" />
+                  <div>
+                    <span className="block text-sm font-semibold text-white group-hover:text-indigo-400 transition-colors">Lab Results</span>
+                    <span className="text-xs text-gray-500">Manage COAs</span>
                   </div>
-                  <span className="text-sm font-medium text-navy-900">Manage FAQ</span>
                 </button>
                 <button
                   onClick={() => setCurrentView('promo-codes')}
-                  className="w-full flex items-center gap-3 p-2 text-left hover:bg-gray-50 rounded-lg transition-all"
+                  className="group flex items-center gap-3 p-3 text-left hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/10"
                 >
-                  <div className="p-1.5 bg-green-50 rounded-lg">
-                    <Tag className="h-4 w-4 text-green-700" />
+                  <div className="w-10 h-10 rounded-lg bg-rose-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Tag className="h-5 w-5 text-rose-400" />
                   </div>
-                  <span className="text-sm font-medium text-gray-900">Promo Codes</span>
+                  <div>
+                    <span className="block text-sm font-semibold text-white group-hover:text-rose-400 transition-colors">Promo Codes</span>
+                    <span className="text-xs text-gray-500">Manage discounts</span>
+                  </div>
                 </button>
-                {/* Peptalk button removed */}
+                <button
+                  onClick={() => setCurrentView('payments')}
+                  className="group flex items-center gap-3 p-3 text-left hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/10"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-violet-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <CreditCard className="h-5 w-5 text-violet-400" />
+                  </div>
+                  <div>
+                    <span className="block text-sm font-semibold text-white group-hover:text-violet-400 transition-colors">Payments</span>
+                    <span className="text-xs text-gray-500">Manage methods</span>
+                  </div>
+                </button>
+                <button
+                  onClick={() => setCurrentView('faq')}
+                  className="group flex items-center gap-3 p-3 text-left hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/10"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-teal-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <HelpCircle className="h-5 w-5 text-teal-400" />
+                  </div>
+                  <div>
+                    <span className="block text-sm font-semibold text-white group-hover:text-teal-400 transition-colors">FAQ</span>
+                    <span className="text-xs text-gray-500">Manage content</span>
+                  </div>
+                </button>
                 <button
                   onClick={() => setCurrentView('settings')}
-                  className="w-full flex items-center gap-3 p-2 text-left hover:bg-gray-50 rounded-lg transition-all"
+                  className="group flex items-center gap-3 p-3 text-left hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/10 col-span-1 sm:col-span-2"
                 >
-                  <div className="p-1.5 bg-gray-100 rounded-lg">
-                    <Settings className="h-4 w-4 text-gray-700" />
+                  <div className="w-10 h-10 rounded-lg bg-gray-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Settings className="h-5 w-5 text-gray-400" />
                   </div>
-                  <span className="text-sm font-medium text-gray-900">Site Settings</span>
+                  <div>
+                    <span className="block text-sm font-semibold text-white group-hover:text-gray-300 transition-colors">Site Settings</span>
+                    <span className="text-xs text-gray-500">Global configuration</span>
+                  </div>
                 </button>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-soft p-4 border border-gray-100">
-              <h3 className="text-base font-bold text-theme-text mb-3">
-                Categories Overview
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+              <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <div className="w-1 h-6 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full"></div>
+                Categories
               </h3>
-              <div className="space-y-2">
+              <div className="bg-black/20 rounded-xl p-2 space-y-1">
                 {categoryCounts.map((category, index) => {
                   const bgColors = [
-                    'bg-theme-accent',
-                    'bg-theme-secondary',
                     'bg-blue-500',
-                    'bg-green-500',
                     'bg-purple-500',
-                    'bg-orange-500'
+                    'bg-emerald-500',
+                    'bg-amber-500',
+                    'bg-rose-500',
+                    'bg-cyan-500'
                   ];
                   return (
-                    <div key={category.id} className="flex items-center justify-between py-2 px-3 hover:bg-gray-50 rounded-lg transition-all">
-                      <span className="text-sm font-medium text-gray-700">{category.name}</span>
-                      <span className={`text-xs font-bold text-white ${bgColors[index % bgColors.length]} px-2.5 py-1 rounded-full`}>
+                    <div key={category.id} className="group flex items-center justify-between py-2.5 px-3 hover:bg-white/5 rounded-lg transition-all cursor-default">
+                      <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">{category.name}</span>
+                      <span className={`text-[10px] font-bold text-white ${bgColors[index % bgColors.length]} px-2.5 py-1 rounded-full shadow-sm`}>
                         {category.count}
                       </span>
                     </div>
                   );
                 })}
+              </div>
+              <div className="mt-6 p-4 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-xl border border-white/5">
+                <p className="text-xs text-gray-400 text-center leading-relaxed">
+                  Tip: Manage your categories inventory and product distribution from the "Categories" tab.
+                </p>
               </div>
             </div>
           </div>

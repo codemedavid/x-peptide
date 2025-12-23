@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Award, CheckCircle, X, ExternalLink, Download, Sparkles, ArrowLeft } from 'lucide-react';
+import { Shield, Award, CheckCircle, X, ExternalLink, Download, Sparkles, ArrowLeft, Copy, Check } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useCOAPageSetting } from '../hooks/useCOAPageSetting';
 
@@ -21,6 +21,13 @@ const COA: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [coaReports, setCOAReports] = useState<COAReport[]>([]);
   const [loading, setLoading] = useState(true);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const handleCopy = (text: string, id: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
 
   useEffect(() => {
     fetchCOAReports();
@@ -92,7 +99,7 @@ const COA: React.FC = () => {
               <span className="text-xs md:text-sm font-bold text-sky-600">Lab Verified</span>
             </div>
 
-            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4 text-gray-800 px-2">
+            <h1 className="font-outfit text-2xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4 text-gray-800 px-2">
               <span className="bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent">
                 Lab Reports
               </span>
@@ -185,7 +192,37 @@ const COA: React.FC = () => {
                     </div>
                     <div className="flex items-center justify-between py-1.5 md:py-2 border-b border-sky-100">
                       <span className="text-xs md:text-sm text-gray-600 font-medium">Task:</span>
-                      <span className="text-xs md:text-sm text-gray-800 font-mono">{report.task_number}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs md:text-sm text-gray-800 font-mono">#{report.task_number}</span>
+                        <button
+                          onClick={() => handleCopy(report.task_number, `${report.id}-task`)}
+                          className="p-1 hover:bg-sky-50 rounded-full transition-colors"
+                          title="Copy Task Number"
+                        >
+                          {copiedId === `${report.id}-task` ? (
+                            <Check className="w-3.5 h-3.5 text-green-500" />
+                          ) : (
+                            <Copy className="w-3.5 h-3.5 text-sky-400" />
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between py-1.5 md:py-2 border-b border-sky-100">
+                      <span className="text-xs md:text-sm text-gray-600 font-medium">Unique Key:</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs md:text-sm text-gray-800 font-mono">{report.verification_key}</span>
+                        <button
+                          onClick={() => handleCopy(report.verification_key, `${report.id}-key`)}
+                          className="p-1 hover:bg-sky-50 rounded-full transition-colors"
+                          title="Copy Unique Key"
+                        >
+                          {copiedId === `${report.id}-key` ? (
+                            <Check className="w-3.5 h-3.5 text-green-500" />
+                          ) : (
+                            <Copy className="w-3.5 h-3.5 text-sky-400" />
+                          )}
+                        </button>
+                      </div>
                     </div>
                   </div>
 

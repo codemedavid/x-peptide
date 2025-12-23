@@ -1,63 +1,53 @@
 import React from 'react';
-import { MessageCircle, Shield, Heart, HelpCircle, Calculator, FileText, Truck } from 'lucide-react';
+import { MessageCircle, Heart, HelpCircle, Calculator, FileText, Truck } from 'lucide-react';
 import { useCOAPageSetting } from '../hooks/useCOAPageSetting';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
   const { coaPageEnabled } = useCOAPageSetting();
 
-  // Contact Links
-  //   const whatsappMessage = encodeURIComponent('Hi! I would like to inquire about your products.');
-  //   const whatsappUrl = `https://wa.me/639062349763?text=${whatsappMessage}`;
-
   return (
-    <footer className="bg-white border-t border-gray-100 pt-12 pb-6">
+    <footer className="bg-[#0a0a0a] border-t border-white/10 pt-16 pb-8">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-10">
 
           {/* Brand Section */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-100">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl overflow-hidden border border-white/20 shadow-glow">
               <img
-                src="/assets/logo.jpeg"
+                src="/assets/logo.jpg"
                 alt="Peptide Pulse"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="text-left">
-              <div className="font-bold text-theme-text text-lg tracking-tight">
-                Peptide Pulse
+              <div className="font-black text-white text-xl tracking-tight">
+                PEPTIDE PULSE
               </div>
-              <div className="text-xs text-gray-500">Premium Peptide Solutions</div>
+              <div className="text-xs text-gray-500">Premium Research Peptides</div>
             </div>
           </div>
 
           {/* Contact Emails */}
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-sm text-gray-500">
-            <span className="text-xs font-medium text-gray-400 uppercase">Contact Us:</span>
-            <a href="mailto:whisperer@gmail.com" className="hover:text-theme-accent transition-colors">
-              whisperer@gmail.com
-            </a>
-            <span className="hidden sm:inline text-gray-300">|</span>
-            <a href="mailto:thepeptidepulse@gmail.com" className="hover:text-theme-accent transition-colors">
+            <span className="text-xs font-medium text-gray-600 uppercase tracking-wider">Contact:</span>
+            <a href="mailto:thepeptidepulse@gmail.com" className="hover:text-white transition-colors">
               thepeptidepulse@gmail.com
             </a>
           </div>
 
           {/* Quick Links */}
           <div className="flex flex-wrap items-center gap-4 justify-center md:justify-end">
-            {/* Lab Reports & FAQ Removed */}
-            {/* WhatsApp Removed */}
             <a
               href="/track-order"
-              className="text-gray-500 hover:text-theme-accent transition-colors flex items-center gap-2 text-sm font-medium"
+              className="text-gray-500 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium"
             >
               <Truck className="w-4 h-4" />
-              Track Order
+              Track
             </a>
             <a
               href="/calculator"
-              className="text-gray-500 hover:text-theme-accent transition-colors flex items-center gap-2 text-sm font-medium"
+              className="text-gray-500 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium"
             >
               <Calculator className="w-4 h-4" />
               Calculator
@@ -65,7 +55,7 @@ const Footer: React.FC = () => {
             {coaPageEnabled && (
               <a
                 href="/coa"
-                className="text-gray-500 hover:text-theme-accent transition-colors flex items-center gap-2 text-sm font-medium"
+                className="text-gray-500 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium"
               >
                 <FileText className="w-4 h-4" />
                 Lab Tests
@@ -73,7 +63,7 @@ const Footer: React.FC = () => {
             )}
             <a
               href="/faq"
-              className="text-gray-500 hover:text-theme-accent transition-colors flex items-center gap-2 text-sm font-medium"
+              className="text-gray-500 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium"
             >
               <HelpCircle className="w-4 h-4" />
               FAQ
@@ -82,21 +72,23 @@ const Footer: React.FC = () => {
               href="https://t.me/+kdn_GOqZXxI1Y2Jl"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-500 hover:text-[#0088cc] transition-colors flex items-center gap-2 text-sm font-medium"
+              className="text-gray-500 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium"
             >
               <MessageCircle className="w-4 h-4" />
-              Join Community
+              Community
             </a>
           </div>
-
         </div>
 
+        {/* Divider */}
+        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-6" />
+
         {/* Footer Bottom */}
-        <div className="border-t border-gray-100 pt-6 text-center">
-          <p className="text-xs text-gray-400 flex items-center justify-center gap-1">
+        <div className="text-center">
+          <p className="text-xs text-gray-600 flex items-center justify-center gap-1">
             Made with
-            <Heart className="w-3 h-3 text-theme-secondary fill-theme-secondary" />
-            © {currentYear} Peptide Pulse.
+            <Heart className="w-3 h-3 text-white/50 fill-white/50" />
+            © {currentYear} Peptide Pulse. All rights reserved.
           </p>
         </div>
       </div>

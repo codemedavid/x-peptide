@@ -19,7 +19,7 @@ export const useCategories = () => {
   const fetchCategories = async () => {
     try {
       setLoading(true);
-      
+
       const { data, error: fetchError } = await supabase
         .from('categories')
         .select('*')
@@ -28,7 +28,17 @@ export const useCategories = () => {
 
       if (fetchError) throw fetchError;
 
-      setCategories(data || []);
+      const allCategory: Category = {
+        id: 'all',
+        name: 'All Peptides',
+        icon: 'Grid',
+        sort_order: 0,
+        active: true,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+
+      setCategories([allCategory, ...(data || [])]);
       setError(null);
     } catch (err) {
       console.error('Error fetching categories:', err);

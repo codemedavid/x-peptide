@@ -129,7 +129,7 @@ const PeptideCalculator: React.FC = () => {
                                             const syringe = SYRINGE_OPTIONS.find(s => s.id === e.target.value);
                                             if (syringe) setSelectedSyringe(syringe);
                                         }}
-                                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-navy-900 focus:border-navy-900 transition-all outline-none bg-white appearance-none cursor-pointer"
+                                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-navy-900 focus:border-navy-900 transition-all outline-none bg-white text-black appearance-none cursor-pointer"
                                         style={{ backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'/%3e%3c/svg%3e")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1em' }}
                                     >
                                         {SYRINGE_OPTIONS.map((option) => (
@@ -153,7 +153,7 @@ const PeptideCalculator: React.FC = () => {
                                             value={vialQuantityMg}
                                             onChange={(e) => setVialQuantityMg(Number(e.target.value))}
                                             placeholder="e.g. 5, 10, 15"
-                                            className="w-full pl-4 pr-12 py-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-navy-900 focus:border-navy-900 transition-all outline-none"
+                                            className="w-full pl-4 pr-12 py-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-navy-900 focus:border-navy-900 transition-all outline-none text-black"
                                         />
                                         <div className="absolute inset-y-0 right-0 flex items-center px-4 bg-gray-50 border-l border-gray-200 rounded-r-lg text-gray-500 text-sm font-medium">
                                             mg
@@ -174,7 +174,7 @@ const PeptideCalculator: React.FC = () => {
                                             value={waterAddedMl}
                                             onChange={(e) => setWaterAddedMl(Number(e.target.value))}
                                             placeholder="e.g. 1, 2, 3"
-                                            className="w-full pl-4 pr-12 py-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-navy-900 focus:border-navy-900 transition-all outline-none"
+                                            className="w-full pl-4 pr-12 py-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-navy-900 focus:border-navy-900 transition-all outline-none text-black"
                                         />
                                         <div className="absolute inset-y-0 right-0 flex items-center px-4 bg-gray-50 border-l border-gray-200 rounded-r-lg text-gray-500 text-sm font-medium">
                                             ml
@@ -196,7 +196,7 @@ const PeptideCalculator: React.FC = () => {
                                                 value={desiredDoseMg}
                                                 onChange={(e) => setDesiredDoseMg(Number(e.target.value))}
                                                 placeholder={selectedUnit === 'mg' ? 'e.g. 0.25, 0.5' : 'e.g. 250, 500'}
-                                                className="w-full pl-4 pr-16 py-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-navy-900 focus:border-navy-900 transition-all outline-none"
+                                                className="w-full pl-4 pr-16 py-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-navy-900 focus:border-navy-900 transition-all outline-none text-black"
                                             />
                                             <div className="absolute inset-y-0 right-0 flex items-center px-4 bg-gray-50 border-l border-gray-200 rounded-r-lg text-gray-500 text-sm font-medium">
                                                 {selectedUnit}

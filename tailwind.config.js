@@ -7,86 +7,90 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Magenta-led SlimDose Brand Theme
-        'theme-bg': '#FFFFFF',        // Pure white background
-        'theme-text': '#111111',      // Charcoal black (headings)
-        'theme-accent': '#E91E63',    // Primary Magenta (hero color)
-        'theme-accent-hover': '#FF4F9A', // Neon pink for hover
-        'theme-secondary': '#F4F4F6', // Soft gray (UI backgrounds)
-        'text-secondary': '#4A4A4A',  // Cool dark gray (body text)
+        // X Peptide Premium Black & White Theme
+        'theme-bg': '#000000',        // Jet Black (backgrounds)
+        'theme-text': '#FFFFFF',      // Pure White (text, icons)
+        'theme-accent': '#FFFFFF',    // Pure White (contrast accent)
+        'theme-accent-hover': '#E5E5E5', // Light Ash Gray (hover states)
+        'theme-secondary': '#0D0D0D', // Near Black (sections, cards)
+        'text-secondary': '#B0B0B0',  // Silver Gray (secondary text)
 
-        // Magenta scale (primary brand color)
-        magenta: {
-          50: '#FCE4EC',
-          100: '#F8BBD9',
-          200: '#F48FB1',
-          300: '#F06292',
-          400: '#EC407A',
-          500: '#E91E63', // Primary magenta
-          600: '#D81B60',
-          700: '#C2185B',
-          800: '#AD1457',
-          900: '#880E4F',
+        // Silver/Metallic accent
+        silver: {
+          50: '#FAFAFA',
+          100: '#F5F5F5',
+          200: '#E5E5E5',
+          300: '#D4D4D4',
+          400: '#A3A3A3',
+          500: '#737373',
+          600: '#525252',
+          700: '#404040',
+          800: '#262626',
+          900: '#171717',
         },
-        // Primary scale mapped to magenta for compatibility
+        // Primary scale - white/gray for premium look
         primary: {
-          50: '#FCE4EC',
-          100: '#F8BBD9',
-          200: '#F48FB1',
-          300: '#F06292',
-          400: '#EC407A',
-          500: '#E91E63',
-          600: '#D81B60',
-          700: '#C2185B',
-          800: '#AD1457',
-          900: '#880E4F',
+          50: '#FFFFFF',
+          100: '#FAFAFA',
+          200: '#E5E5E5',
+          300: '#D4D4D4',
+          400: '#A3A3A3',
+          500: '#FFFFFF',
+          600: '#E5E5E5',
+          700: '#D4D4D4',
+          800: '#262626',
+          900: '#171717',
         },
-        // Accent colors
+        // Accent colors - premium black & white
         accent: {
-          light: '#FF4F9A',   // Neon pink
-          DEFAULT: '#E91E63', // Magenta
-          dark: '#C2185B',
+          light: '#F5F5F5',
+          DEFAULT: '#FFFFFF',
+          dark: '#E5E5E5',
           white: '#FFFFFF',
-          black: '#111111',
+          black: '#000000',
         },
-        // Teal for biotech credibility (optional contrast)
-        teal: {
-          50: '#E0F7F5',
-          100: '#B2EBE5',
-          200: '#80DED3',
-          300: '#4DD0C1',
-          400: '#26C6B3',
-          500: '#00B3A4', // Main teal
-          600: '#00A396',
-          700: '#009085',
-          800: '#007D73',
-          900: '#005C55',
+        // Charcoal for depth
+        charcoal: {
+          50: '#FAFAFA',
+          100: '#F5F5F5',
+          200: '#E5E5E5',
+          300: '#D4D4D4',
+          400: '#525252',
+          500: '#262626',
+          600: '#1A1A1A',
+          700: '#0D0D0D',
+          800: '#0A0A0A',
+          900: '#000000',
         },
-        // Navy kept for backward compatibility, mapped to magenta tones
+        // Legacy compatibility
+        magenta: {
+          500: '#FFFFFF',
+          400: '#F5F5F5',
+        },
         navy: {
-          50: '#FCE4EC',
-          100: '#F8BBD9',
-          200: '#F48FB1',
-          300: '#F06292',
-          400: '#EC407A',
-          500: '#E91E63',
-          600: '#D81B60',
-          700: '#C2185B',
-          800: '#AD1457',
-          900: '#880E4F',
+          50: '#F5F5F5',
+          900: '#000000',
         },
       },
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
+        outfit: ['Outfit', 'sans-serif'],
       },
       boxShadow: {
-        'soft': '0 2px 10px rgba(0, 0, 0, 0.03)',
-        'medium': '0 4px 15px rgba(0, 0, 0, 0.05)',
-        'hover': '0 8px 25px rgba(0, 0, 0, 0.08)',
+        'soft': '0 2px 15px rgba(255, 255, 255, 0.03)',
+        'medium': '0 4px 25px rgba(255, 255, 255, 0.05)',
+        'hover': '0 8px 35px rgba(255, 255, 255, 0.08)',
+        'glow': '0 0 20px rgba(255, 255, 255, 0.15)',
+        'glow-lg': '0 0 40px rgba(255, 255, 255, 0.2)',
+        'inner-glow': 'inset 0 0 20px rgba(255, 255, 255, 0.05)',
+        'premium': '0 25px 50px -12px rgba(0, 0, 0, 0.8)',
       },
       animation: {
         'fadeIn': 'fadeIn 0.5s ease-out',
         'slideIn': 'slideIn 0.4s ease-out',
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+        'shimmer': 'shimmer 2s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -97,8 +101,25 @@ export default {
           '0%': { opacity: '0', transform: 'translateX(-10px)' },
           '100%': { opacity: '1', transform: 'translateX(0)' },
         },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        pulseGlow: {
+          '0%, 100%': { boxShadow: '0 0 20px rgba(255, 255, 255, 0.1)' },
+          '50%': { boxShadow: '0 0 40px rgba(255, 255, 255, 0.25)' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'shimmer': 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
       },
     },
   },
   plugins: [],
 }
+
